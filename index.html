@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>ZenX — Learn Smarter</title>
+<style>
+:root{--bg:#07111f;--card:#0d1b2e;--text:#eef6ff;--muted:#9bb0c8;--accent:#7c5cff;--accent2:#19d3ae}
+*{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui,Arial;background:radial-gradient(circle at 20% 10%,#1a2455 0,#07111f 40%,#050b14 100%);color:var(--text)}
+nav{display:flex;justify-content:space-between;align-items:center;padding:22px 7%;position:sticky;top:0;background:#07111fe8;backdrop-filter:blur(14px);z-index:2}
+.logo{font-size:25px;font-weight:900}.logo span{color:var(--accent2)}
+nav a{color:var(--muted);text-decoration:none;margin-left:22px}.btn{border:0;border-radius:12px;padding:12px 18px;font-weight:800;cursor:pointer;background:var(--accent);color:white}
+.hero{max-width:1100px;margin:80px auto;padding:0 24px;text-align:center}.badge{display:inline-block;padding:8px 12px;border:1px solid #ffffff20;border-radius:99px;color:#b9c8ff;background:#ffffff08}
+h1{font-size:clamp(42px,7vw,76px);line-height:.98;margin:22px 0}h1 em{font-style:normal;color:#9c8cff}.hero p{font-size:19px;color:var(--muted);max-width:700px;margin:0 auto 28px;line-height:1.6}
+.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}.ghost{background:#ffffff0c;border:1px solid #ffffff18}
+.grid{max-width:1100px;margin:30px auto 90px;padding:0 24px;display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.card{background:linear-gradient(180deg,#10223a,#0b1727);border:1px solid #ffffff12;border-radius:20px;padding:22px}.card h3{margin:10px 0}.card p{color:var(--muted);line-height:1.5}.icon{font-size:28px}
+section{max-width:900px;margin:0 auto 80px;padding:0 24px}section h2{font-size:36px}.demo{background:#0b1727;border:1px solid #ffffff12;border-radius:20px;padding:20px}.row{display:flex;gap:10px}.row input{flex:1;background:#07111f;color:white;border:1px solid #ffffff20;border-radius:10px;padding:13px}.answer{margin-top:15px;color:#c8d6e8;line-height:1.6;white-space:pre-wrap}
+footer{text-align:center;padding:35px;color:#71849d;border-top:1px solid #ffffff0d}
+@media(max-width:800px){.grid{grid-template-columns:1fr 1fr}}@media(max-width:500px){.grid{grid-template-columns:1fr}nav a{display:none}}
+</style>
+</head>
+<body>
+<nav><div class="logo">Zen<span>X</span></div><div><a href="#features">Features</a><a href="#demo">Try AI</a><button class="btn" onclick="alert('Sign-up will be connected to the backend after you add your API/database keys.')">Get Started</button></div></nav>
+<main>
+<div class="hero"><span class="badge">⚡ Student AI • Built for focused learning</span><h1>Study smarter.<br><em>Go further.</em></h1><p>ZenX brings doubt solving, study planning, notes and practice into one clean student workspace.</p><div class="actions"><a class="btn" href="#demo">Try ZenX</a><a class="btn ghost" href="#features">Explore features</a></div></div>
+<div id="features" class="grid">
+<div class="card"><div class="icon">🧠</div><h3>AI Doubt Solver</h3><p>Ask questions and get step-by-step explanations designed for learning.</p></div>
+<div class="card"><div class="icon">📚</div><h3>Smart Notes</h3><p>Turn long topics into concise revision-friendly notes.</p></div>
+<div class="card"><div class="icon">🎯</div><h3>Study Planner</h3><p>Break your syllabus into realistic daily study targets.</p></div>
+<div class="card"><div class="icon">📝</div><h3>Practice</h3><p>Generate topic-wise practice and review mistakes.</p></div>
+</div>
+<section id="demo"><h2>Try the ZenX AI demo</h2><div class="demo"><div class="row"><input id="q" placeholder="e.g. Explain Newton's second law simply"><button class="btn" onclick="ask()">Ask</button></div><div id="a" class="answer">Your answer will appear here.</div></div></section>
+<section><h2>Built around one goal</h2><p style="color:var(--muted);font-size:18px;line-height:1.7">Less app-hopping. More learning. ZenX is designed as a focused student workspace where understanding, planning and practice stay together.</p></section>
+</main>
+<footer>© 2026 ZenX • Student learning platform</footer>
+<script>
+async function ask(){
+ const q=document.getElementById('q').value.trim(), a=document.getElementById('a');
+ if(!q){a.textContent='Please enter a question.';return}
+ a.textContent='Thinking…';
+ try{
+  const r=await fetch('http://localhost:8000/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q})});
+  const d=await r.json(); a.textContent=d.answer||d.error||'No answer.';
+ }catch(e){a.textContent='Demo backend is not running. Start the backend with: pip install -r requirements.txt && uvicorn main:app --reload';}
+}
+</script>
+</body>
+</html>
