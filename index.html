@@ -39,7 +39,7 @@ async function ask(){
  if(!q){a.textContent='Please enter a question.';return}
  a.textContent='Thinking…';
  try{
-  const r=await fetch('https://zenx-1r68.onrender.com/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q})});
+  const r=await fetch('https://zenx-lr68.onrender.com/api/ask',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({question:q})});
   const d=await r.json(); a.textContent=d.answer||d.error||'No answer.';
  }catch(e){a.textContent='Demo backend is not running. Start the backend with: pip install -r requirements.txt && uvicorn main:app --reload';}
 }
