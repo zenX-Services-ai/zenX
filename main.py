@@ -1,8 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from google import genai
-import os
 
 app = FastAPI(title="ZenX API", version="1.0.0")
 
@@ -14,27 +12,23 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
-
-
 class AskRequest(BaseModel):
     question: str
 
-
 @app.get("/")
 def home():
-    return {"message": "ZenX AI is live 🚀"}
-
+    return {"message": "ZenX API is live"}
 
 @app.get("/api/health")
 def health():
-    return {"status": "ok", "service": "ZenX AI"}
-
+    return {"status": "ok"}
 
 @app.post("/api/ask")
 def ask(body: AskRequest):
     q = body.question.strip()
-
+    if not q:
+        return {"error": "Question is required."}
+    return {"answer": f"ZenX received: {q}"}
     if not q:
         return {"error": "Question is required."}
 
