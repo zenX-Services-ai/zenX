@@ -7,7 +7,9 @@ import os
 import base64
 
 app = FastAPI(title="ZenX AI", version="2027.0")
-
+@app.get("/health")
+def health():
+    return {"status": "healthy", "gemini_configured": client is not None}
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
