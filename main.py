@@ -46,6 +46,18 @@ def ask(body: AskRequest):
         return {"answer": response.text}
 
     except Exception as e:
+        return {"error": str(e)}
+    if not q:
+        return {"error": "Question is required."}
+
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=q,
+        )
+        return {"answer": response.text}
+
+    except Exception as e:
         return {"error": str(e)}    q = body.question.strip()
 
     if not q:
