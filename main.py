@@ -58,7 +58,8 @@ def ask(body: AskRequest):
         return {"answer": response.text}
 
     except Exception as e:
-        return {"error": str(e)}    q = body.question.strip()
+        return {"error": str(e)}   
+        q = body.question.strip()
 
     if not q:
         return {"error": "Question is required."}
