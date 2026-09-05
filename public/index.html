@@ -1,1041 +1,730 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>ZenX — Learn Smarter</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<style>
-:root{
-  --bg:#050b14;
-  --card:#0c1829;
-  --card2:#101f34;
-  --text:#f4f8ff;
-  --muted:#9badc3;
-  --purple:#7c5cff;
-  --cyan:#19d3ae;
-  --border:#ffffff14;
-}
+  <title>ZenX AI</title>
+  <meta name="description" content="ZenX AI - Your smart student AI assistant">
 
-*{box-sizing:border-box}
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
 
-html{scroll-behavior:smooth}
+    body {
+      min-height: 100vh;
+      color: white;
+      background:
+        radial-gradient(circle at top left, #312e81 0%, transparent 35%),
+        radial-gradient(circle at bottom right, #0f766e 0%, transparent 35%),
+        #050816;
+    }
 
-body{
-  margin:0;
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
-  color:var(--text);
-  background:
-    radial-gradient(circle at 15% 10%,#24205e 0,transparent 32%),
-    radial-gradient(circle at 85% 30%,#063d42 0,transparent 28%),
-    var(--bg);
-}
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      padding: 18px 7%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(5, 8, 22, 0.8);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
 
-nav{
-  position:sticky;
-  top:0;
-  z-index:10;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  padding:18px 7%;
-  background:#050b14dd;
-  backdrop-filter:blur(18px);
-  border-bottom:1px solid var(--border);
-}
+    .logo {
+      font-size: 27px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
 
-.logo{
-  font-size:28px;
-  font-weight:900;
-  letter-spacing:-1px;
-}
+    .logo span {
+      color: #7c3aed;
+    }
 
-.logo span{color:var(--cyan)}
+    nav {
+      display: flex;
+      gap: 10px;
+    }
 
-.nav-links{
-  display:flex;
-  align-items:center;
-  gap:25px;
-}
+    button {
+      border: none;
+      cursor: pointer;
+      color: white;
+      font-weight: 700;
+    }
 
-.nav-links a{
-  color:var(--muted);
-  text-decoration:none;
-}
+    .nav-btn {
+      padding: 10px 17px;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.08);
+    }
 
-.btn{
-  border:0;
-  border-radius:13px;
-  padding:13px 19px;
-  font-weight:800;
-  cursor:pointer;
-  color:white;
-  background:linear-gradient(135deg,var(--purple),#5c43e8);
-  box-shadow:0 10px 30px #7c5cff25;
-}
+    .signup-btn {
+      padding: 11px 18px;
+      border-radius: 10px;
+      background: linear-gradient(135deg,#7c3aed,#2563eb);
+    }
 
-.btn:hover{transform:translateY(-1px)}
+    .hero {
+      min-height: 75vh;
+      padding: 80px 7% 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 40px;
+    }
 
-.hero{
-  max-width:1150px;
-  margin:95px auto 80px;
-  padding:0 25px;
-  text-align:center;
-}
+    .hero-text {
+      max-width: 650px;
+    }
 
-.badge{
-  display:inline-block;
-  padding:9px 14px;
-  border:1px solid #ffffff20;
-  border-radius:999px;
-  color:#c9d3ff;
-  background:#ffffff08;
-}
+    .badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 30px;
+      background: rgba(124,58,237,0.15);
+      border: 1px solid rgba(124,58,237,0.35);
+      color: #c4b5fd;
+      margin-bottom: 20px;
+    }
 
-.hero h1{
-  font-size:clamp(48px,8vw,86px);
-  line-height:.96;
-  letter-spacing:-4px;
-  margin:25px 0;
-}
+    h1 {
+      font-size: clamp(45px, 7vw, 78px);
+      line-height: 1;
+      margin-bottom: 25px;
+    }
 
-.hero h1 em{
-  color:#a596ff;
-  font-style:normal;
-}
+    h1 span {
+      color: #8b5cf6;
+    }
 
-.hero p{
-  max-width:720px;
-  margin:0 auto 32px;
-  color:var(--muted);
-  font-size:20px;
-  line-height:1.65;
-}
+    .hero p {
+      color: #b8bfd3;
+      font-size: 18px;
+      line-height: 1.7;
+      margin-bottom: 30px;
+    }
 
-.actions{
-  display:flex;
-  justify-content:center;
-  gap:13px;
-  flex-wrap:wrap;
-}
+    .hero-btn {
+      padding: 15px 25px;
+      border-radius: 13px;
+      background: linear-gradient(135deg,#7c3aed,#2563eb);
+      font-size: 16px;
+    }
 
-.ghost{
-  background:#ffffff09;
-  border:1px solid var(--border);
-  box-shadow:none;
-}
+    .hero-card {
+      width: 330px;
+      padding: 30px;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      box-shadow: 0 25px 70px rgba(0,0,0,0.3);
+    }
 
-.container{
-  max-width:1150px;
-  margin:auto;
-  padding:0 25px;
-}
+    .orb {
+      width: 150px;
+      height: 150px;
+      margin: auto auto 25px;
+      border-radius: 50%;
+      background: linear-gradient(135deg,#8b5cf6,#06b6d4);
+      box-shadow: 0 0 70px rgba(124,58,237,0.5);
+    }
 
-.section{
-  margin:90px auto;
-}
+    .hero-card h2 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
 
-.section-title{
-  text-align:center;
-  font-size:42px;
-  margin-bottom:14px;
-}
+    .hero-card p {
+      text-align: center;
+      font-size: 14px;
+      margin: 0;
+    }
 
-.section-subtitle{
-  text-align:center;
-  color:var(--muted);
-  font-size:17px;
-  margin-bottom:35px;
-}
+    section {
+      padding: 70px 7%;
+    }
 
-.features{
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:18px;
-}
+    .section-title {
+      text-align: center;
+      font-size: 38px;
+      margin-bottom: 40px;
+    }
 
-.card{
-  padding:28px;
-  min-height:210px;
-  border-radius:23px;
-  background:linear-gradient(180deg,var(--card2),var(--card));
-  border:1px solid var(--border);
-  box-shadow:0 20px 50px #00000025;
-}
+    .features {
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      gap: 20px;
+    }
 
-.card .icon{font-size:34px}
+    .feature {
+      padding: 25px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
 
-.card h3{
-  font-size:21px;
-  margin:18px 0 10px;
-}
+    .feature-icon {
+      font-size: 35px;
+      margin-bottom: 15px;
+    }
 
-.card p{
-  color:var(--muted);
-  line-height:1.6;
-}
+    .feature h3 {
+      margin-bottom: 10px;
+    }
 
-.ai-box{
-  padding:30px;
-  border-radius:27px;
-  background:linear-gradient(180deg,#101e34,#091525);
-  border:1px solid var(--border);
-  box-shadow:0 25px 70px #00000035;
-}
+    .feature p {
+      color: #aeb6ca;
+      line-height: 1.6;
+    }
 
-.input-row{
-  display:flex;
-  gap:12px;
-}
+    .ai-box {
+      max-width: 850px;
+      margin: auto;
+      padding: 25px;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
 
-#q{
-  flex:1;
-  min-width:0;
-  padding:17px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:#050d18;
-  color:white;
-  font-size:16px;
-  outline:none;
-}
+    textarea {
+      width: 100%;
+      min-height: 130px;
+      resize: vertical;
+      padding: 18px;
+      border-radius: 15px;
+      border: 1px solid rgba(255,255,255,0.1);
+      outline: none;
+      background: rgba(0,0,0,0.25);
+      color: white;
+      font-size: 16px;
+    }
 
-#q:focus{
-  border-color:#7c5cff88;
-}
+    textarea::placeholder {
+      color: #7f879b;
+    }
 
-.answer{
-  margin-top:22px;
-  min-height:180px;
-  padding:24px;
-  border-radius:18px;
-  background:#050d18;
-  border:1px solid var(--border);
-  color:#dbe7f5;
-  font-size:17px;
-  line-height:1.8;
-  white-space:pre-wrap;
-}
+    .ai-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 15px;
+      flex-wrap: wrap;
+    }
 
-.answer-actions{
-  display:flex;
-  gap:10px;
-  margin-top:14px;
-}
+    .ask-btn {
+      padding: 13px 22px;
+      border-radius: 12px;
+      background: linear-gradient(135deg,#7c3aed,#2563eb);
+    }
 
-.hidden{display:none}
+    .upload-btn {
+      padding: 13px 20px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.1);
+    }
 
-.about{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:25px;
-  align-items:stretch;
-}
+    #imageInput {
+      display: none;
+    }
 
-.about-card{
-  padding:35px;
-  border-radius:25px;
-  background:linear-gradient(180deg,var(--card2),var(--card));
-  border:1px solid var(--border);
-}
+    #imagePreview {
+      display: none;
+      max-width: 220px;
+      max-height: 220px;
+      margin-top: 20px;
+      border-radius: 15px;
+    }
 
-.founder-name{
-  font-size:35px;
-  font-weight:900;
-  margin:10px 0;
-}
+    .answer {
+      display: none;
+      margin-top: 25px;
+      padding: 22px;
+      border-radius: 17px;
+      background: rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
 
-.founder-role{
-  color:var(--cyan);
-  font-weight:800;
-}
+    .answer h3 {
+      margin-bottom: 15px;
+    }
 
-.upload{
-  border:2px dashed #ffffff20;
-  border-radius:18px;
-  padding:30px;
-  text-align:center;
-  cursor:pointer;
-  color:var(--muted);
-}
+    #answerText {
+      white-space: pre-wrap;
+      color: #dce1ee;
+      line-height: 1.7;
+    }
 
-.upload:hover{
-  border-color:#7c5cff88;
-}
+    .answer-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 20px;
+    }
 
-#preview{
-  max-width:100%;
-  max-height:300px;
-  margin-top:20px;
-  border-radius:15px;
-  display:none;
-}
+    .small-btn {
+      padding: 10px 15px;
+      border-radius: 9px;
+      background: rgba(255,255,255,0.1);
+    }
 
-footer{
-  margin-top:100px;
-  padding:40px 20px;
-  text-align:center;
-  color:#71849d;
-  border-top:1px solid var(--border);
-}
+    .founder {
+      text-align: center;
+    }
 
-.modal{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  display:none;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  background:#000000aa;
-  backdrop-filter:blur(8px);
-}
+    .founder-card {
+      max-width: 550px;
+      margin: auto;
+      padding: 35px;
+      border-radius: 25px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
 
-.modal-box{
-  width:min(440px,100%);
-  padding:30px;
-  border-radius:25px;
-  background:#0c1829;
-  border:1px solid var(--border);
-  box-shadow:0 30px 100px #000;
-}
+    .founder-avatar {
+      width: 90px;
+      height: 90px;
+      margin: auto auto 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg,#7c3aed,#2563eb);
+      font-size: 30px;
+      font-weight: 800;
+    }
 
-.modal-box h2{margin-top:0}
+    .founder-card p {
+      color: #aeb6ca;
+      margin-top: 10px;
+      line-height: 1.6;
+    }
 
-.modal-box input{
-  width:100%;
-  padding:14px;
-  margin:8px 0;
-  border-radius:12px;
-  border:1px solid var(--border);
-  background:#050d18;
-  color:white;
-}
+    footer {
+      text-align: center;
+      padding: 30px;
+      color: #7f879b;
+      border-top: 1px solid rgba(255,255,255,0.07);
+    }
 
-.close{
-  float:right;
-  background:none;
-  border:0;
-  color:white;
-  font-size:25px;
-  cursor:pointer;
-}
+    .modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,0,0.75);
+      padding: 20px;
+    }
 
-@media(max-width:850px){
-  .features{grid-template-columns:1fr 1fr}
-  .about{grid-template-columns:1fr}
-}
+    .modal-box {
+      width: 100%;
+      max-width: 420px;
+      padding: 30px;
+      border-radius: 22px;
+      background: #101426;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
 
-@media(max-width:600px){
-  nav{padding:16px 20px}
-  .nav-links a{display:none}
-  .hero{margin-top:65px}
-  .hero h1{letter-spacing:-2px}
-  .features{grid-template-columns:1fr}
-  .input-row{flex-direction:column}
-  .answer-actions{flex-wrap:wrap}
-}
-</style>
+    .modal-box h2 {
+      margin-bottom: 20px;
+    }
+
+    .input {
+      width: 100%;
+      padding: 14px;
+      margin-bottom: 12px;
+      border-radius: 10px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.05);
+      color: white;
+      outline: none;
+    }
+
+    .modal-submit {
+      width: 100%;
+      padding: 14px;
+      border-radius: 10px;
+      background: linear-gradient(135deg,#7c3aed,#2563eb);
+      margin-top: 5px;
+    }
+
+    .close {
+      float: right;
+      font-size: 24px;
+      background: transparent;
+      color: #aaa;
+    }
+
+    @media (max-width: 800px) {
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding-top: 60px;
+      }
+
+      .hero-card {
+        width: 100%;
+        max-width: 330px;
+      }
+
+      .features {
+        grid-template-columns: 1fr;
+      }
+
+      nav .nav-btn {
+        display: none;
+      }
+
+      header {
+        padding: 15px 5%;
+      }
+
+      section {
+        padding: 55px 5%;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<nav>
-  <div class="logo">Zen<span>X</span></div>
+  <header>
+    <div class="logo">zen<span>X</span></div>
 
-  <div class="nav-links">
-    <a href="#features">Features</a>
-    <a href="#ai">Try AI</a>
-    <a href="#founder">Founder</a>
-    <button class="btn" onclick="openSignup()">Sign Up</button>
-  </div>
-</nav>
+    <nav>
+      <button class="nav-btn" onclick="scrollToAI()">AI Assistant</button>
+      <button class="signup-btn" onclick="openSignup()">Sign Up</button>
+    </nav>
+  </header>
 
-<main>
+  <main>
 
-<section class="hero">
-  <span class="badge">⚡ Student AI • Built for focused learning</span>
+    <section class="hero">
+      <div class="hero-text">
+        <div class="badge">⚡ Student AI Assistant</div>
 
-  <h1>
-    Study smarter.<br>
-    <em>Go further.</em>
-  </h1>
+        <h1>Study smarter with <span>ZenX</span></h1>
 
-  <p>
-    ZenX brings AI doubt solving, smart notes, study planning
-    and practice into one focused student workspace.
-  </p>
+        <p>
+          Ask questions, solve doubts, understand concepts and
+          make your learning journey smarter with ZenX AI.
+        </p>
 
-  <div class="actions">
-    <a class="btn" href="#ai">Try ZenX AI</a>
-    <button class="btn ghost" onclick="openSignup()">Create Account</button>
-  </div>
-</section>
+        <button class="hero-btn" onclick="scrollToAI()">
+          Start Asking →
+        </button>
+      </div>
 
-<section id="features" class="section container">
+      <div class="hero-card">
+        <div class="orb"></div>
+        <h2>ZenX AI</h2>
+        <p>Your intelligent study companion.</p>
+      </div>
+    </section>
 
-  <h2 class="section-title">Everything for smarter learning</h2>
+    <section>
+      <h2 class="section-title">Everything Students Need</h2>
 
-  <p class="section-subtitle">
-    One workspace for understanding, planning and practice.
-  </p>
+      <div class="features">
 
-  <div class="features">
+        <div class="feature">
+          <div class="feature-icon">🤖</div>
+          <h3>AI Doubt Solving</h3>
+          <p>
+            Ask your questions and get AI-powered answers.
+          </p>
+        </div>
 
-    <div class="card">
-      <div class="icon">🧠</div>
-      <h3>AI Doubt Solver</h3>
-      <p>Ask questions and get clear, step-by-step explanations.</p>
-    </div>
+        <div class="feature">
+          <div class="feature-icon">📚</div>
+          <h3>Study Support</h3>
+          <p>
+            Understand difficult concepts and improve your preparation.
+          </p>
+        </div>
 
-    <div class="card">
-      <div class="icon">📚</div>
-      <h3>Smart Notes</h3>
-      <p>Organize important concepts for faster revision.</p>
-    </div>
+        <div class="feature">
+          <div class="feature-icon">🖼️</div>
+          <h3>Image Support</h3>
+          <p>
+            Upload an image from your device for quick reference.
+          </p>
+        </div>
 
-    <div class="card">
-      <div class="icon">🎯</div>
-      <h3>Study Planner</h3>
-      <p>Turn your syllabus into manageable study targets.</p>
-    </div>
+      </div>
+    </section>
 
-    <div class="card">
-      <div class="icon">📝</div>
-      <h3>Practice</h3>
-      <p>Practice topics and improve through mistakes.</p>
-    </div>
+    <section id="ai">
+      <h2 class="section-title">Ask ZenX AI</h2>
 
-  </div>
+      <div class="ai-box">
 
-</section>
+        <textarea
+          id="question"
+          placeholder="Ask anything... e.g. Explain Newton's laws in simple words."
+        ></textarea>
 
-<section id="ai" class="section container">
+        <div class="ai-actions">
 
-  <h2 class="section-title">Ask ZenX AI</h2>
+          <button class="ask-btn" onclick="askAI()">
+            Ask ZenX ⚡
+          </button>
 
-  <p class="section-subtitle">
-    Ask a study question and get your answer in one place.
-  </p>
+          <label class="upload-btn" for="imageInput">
+            🖼️ Upload Image
+          </label>
 
-  <div class="ai-box">
+          <input
+            type="file"
+            id="imageInput"
+            accept="image/*"
+            onchange="previewImage(event)"
+          >
 
-    <div class="input-row">
+        </div>
+
+        <img id="imagePreview" alt="Uploaded image preview">
+
+        <div class="answer" id="answerBox">
+          <h3>ZenX Answer</h3>
+
+          <div id="answerText"></div>
+
+          <div class="answer-actions">
+            <button class="small-btn" onclick="copyAnswer()">
+              📋 Copy
+            </button>
+
+            <button class="small-btn" onclick="downloadAnswer()">
+              ⬇️ Download
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="founder">
+      <h2 class="section-title">About ZenX</h2>
+
+      <div class="founder-card">
+
+        <div class="founder-avatar">AS</div>
+
+        <h2>Abhay Srivastava</h2>
+
+        <p>
+          Founder of ZenX. Building a smarter AI experience
+          for students and learners.
+        </p>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    © 2026 ZenX. All rights reserved.
+  </footer>
+
+
+  <!-- SIGNUP MODAL -->
+
+  <div class="modal" id="signupModal">
+
+    <div class="modal-box">
+
+      <button class="close" onclick="closeSignup()">×</button>
+
+      <h2>Create your ZenX account</h2>
 
       <input
-        id="q"
+        class="input"
+        id="name"
         type="text"
-        placeholder="e.g. Explain Newton's second law simply"
-        onkeydown="if(event.key==='Enter') ask()"
+        placeholder="Your name"
       >
 
-      <button class="btn" onclick="ask()">Ask AI</button>
-
-    </div>
-
-    <div id="a" class="answer">
-      Your AI answer will appear here.
-    </div>
-
-    <div id="answerActions" class="answer-actions hidden">
-
-      <button class="btn ghost" onclick="downloadAnswer()">
-        ⬇ Download Answer
-      </button>
-
-      <button class="btn ghost" onclick="copyAnswer()">
-        📋 Copy
-      </button>
-
-    </div>
-
-  </div>
-
-</section>
-
-<section class="section container">
-
-  <h2 class="section-title">Images & Resources</h2>
-
-  <p class="section-subtitle">
-    Upload an image or study material for your workspace.
-  </p>
-
-  <div class="about-card">
-
-    <label class="upload">
-      📷 Click to upload an image
       <input
-        id="imageInput"
-        type="file"
-        accept="image/*"
-        hidden
-        onchange="previewImage(event)"
+        class="input"
+        id="email"
+        type="email"
+        placeholder="Email address"
       >
-    </label>
 
-    <img id="preview" alt="Uploaded image preview">
+      <input
+        class="input"
+        id="password"
+        type="password"
+        placeholder="Password"
+      >
 
-  </div>
+      <button class="modal-submit" onclick="signup()">
+        Create Account
+      </button>
 
-</section>
-
-<section id="founder" class="section container">
-
-  <h2 class="section-title">Meet the Founder</h2>
-
-  <div class="about">
-
-    <div class="about-card">
-      <div class="founder-role">Founder • ZenX</div>
-      <div class="founder-name">Abhay Srivastava</div>
-
-      <p style="color:var(--muted);line-height:1.8">
-        Building ZenX with the vision of creating a focused,
-        useful and accessible AI learning platform for students.
-      </p>
-    </div>
-
-    <div class="about-card">
-      <h3>Our Goal</h3>
-
-      <p style="color:var(--muted);line-height:1.8">
-        Less app-hopping. More learning.
-        ZenX brings understanding, planning and practice together
-        in one simple student workspace.
-      </p>
     </div>
 
   </div>
 
-</section>
 
-</main>
+  <script>
 
-<footer>
-  © 2026 ZenX • Student learning platform
-</footer>
+    const API_URL = "https://zenx-hnkl.onrender.com/api/ask";
 
-<!-- SIGN UP MODAL -->
+    function scrollToAI() {
+      document.getElementById("ai").scrollIntoView({
+        behavior: "smooth"
+      });
+    }
 
-<div id="signupModal" class="modal">
+    function openSignup() {
+      document.getElementById("signupModal").style.display = "flex";
+    }
 
-  <div class="modal-box">
+    function closeSignup() {
+      document.getElementById("signupModal").style.display = "none";
+    }
 
-    <button class="close" onclick="closeSignup()">×</button>
+    function signup() {
 
-    <h2>Create your ZenX account</h2>
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
 
-    <p style="color:var(--muted)">
-      Sign-up interface is ready. Real account authentication
-      will be connected to the backend.
-    </p>
+      if (!name || !email || !password) {
+        alert("Please fill all fields.");
+        return;
+      }
 
-    <input id="name" placeholder="Your name">
+      alert(
+        "Account UI is ready! Real authentication will be connected to the ZenX backend next."
+      );
 
-    <input id="email" type="email" placeholder="Email address">
+      closeSignup();
+    }
 
-    <button class="btn" style="width:100%;margin-top:12px" onclick="signup()">
-      Continue
-    </button>
+    function previewImage(event) {
 
-    <p id="signupMsg" style="color:#19d3ae"></p>
+      const file = event.target.files[0];
 
-  </div>
+      if (!file) return;
 
-</div>
+      const preview = document.getElementById("imagePreview");
 
-<script>
+      preview.src = URL.createObjectURL(file);
+      preview.style.display = "block";
+    }
 
-const API_URL =
-  "https://zenx-hnkl.onrender.com/api/ask";
+    async function askAI() {
 
-let lastAnswer = "";
+      const question =
+        document.getElementById("question").value.trim();
 
+      const answerBox =
+        document.getElementById("answerBox");
 
-async function ask(){
+      const answerText =
+        document.getElementById("answerText");
 
-  const input = document.getElementById("q");
-  const answer = document.getElementById("a");
-  const actions = document.getElementById("answerActions");
+      if (!question) {
+        alert("Please enter a question.");
+        return;
+      }
 
-  const question = input.value.trim();
+      answerBox.style.display = "block";
+      answerText.textContent = "ZenX is thinking...";
 
-  if(!question){
-    answer.textContent = "Please enter a question.";
-    actions.classList.add("hidden");
-    return;
-  }
+      try {
 
-  answer.textContent = "🤔 ZenX AI is thinking...";
-  actions.classList.add("hidden");
+        const response = await fetch(API_URL, {
+          method: "POST",
 
-  try{
+          headers: {
+            "accept": "application/json",
+            "Content-Type": "application/json"
+          },
 
-    const response = await fetch(API_URL,{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
-        question:question
-      })
+          body: JSON.stringify({
+            question: question
+          })
+        });
+
+        if (!response.ok) {
+          throw new Error("API request failed");
+        }
+
+        const data = await response.json();
+
+        const answer =
+          data.answer ||
+          data.response ||
+          data.message ||
+          JSON.stringify(data);
+
+        answerText.textContent = answer;
+
+      } catch (error) {
+
+        answerText.textContent =
+          "Unable to connect to ZenX AI right now. Please check the Render API.";
+
+        console.error(error);
+      }
+    }
+
+    function copyAnswer() {
+
+      const text =
+        document.getElementById("answerText").textContent;
+
+      navigator.clipboard.writeText(text);
+
+      alert("Answer copied!");
+    }
+
+    function downloadAnswer() {
+
+      const text =
+        document.getElementById("answerText").textContent;
+
+      const blob =
+        new Blob([text], { type: "text/plain" });
+
+      const url =
+        URL.createObjectURL(blob);
+
+      const a =
+        document.createElement("a");
+
+      a.href = url;
+      a.download = "ZenX-answer.txt";
+
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+
+      URL.revokeObjectURL(url);
+    }
+
+    window.addEventListener("click", function(event) {
+
+      const modal =
+        document.getElementById("signupModal");
+
+      if (event.target === modal) {
+        closeSignup();
+      }
+
     });
 
-    if(!response.ok){
-      throw new Error("API request failed");
-    }
-
-    const data = await response.json();
-
-    lastAnswer =
-      data.answer ||
-      data.error ||
-      "ZenX could not generate an answer.";
-
-    answer.textContent = lastAnswer;
-
-    actions.classList.remove("hidden");
-
-  }catch(error){
-
-    answer.textContent =
-      "⚠️ ZenX AI could not connect to the backend. Please make sure the Render API is running.";
-
-  }
-
-}
-
-
-function downloadAnswer(){
-
-  if(!lastAnswer)return;
-
-  const blob = new Blob(
-    [lastAnswer],
-    {type:"text/plain"}
-  );
-
-  const url = URL.createObjectURL(blob);
-
-  const link = document.createElement("a");
-
-  link.href = url;
-  link.download = "ZenX-AI-Answer.txt";
-
-  link.click();
-
-  URL.revokeObjectURL(url);
-
-}
-
-
-async function copyAnswer(){
-
-  if(!lastAnswer)return;
-
-  try{
-
-    await navigator.clipboard.writeText(lastAnswer);
-
-    alert("Answer copied!");
-
-  }catch(e){
-
-    alert("Copy failed. Please select and copy the answer manually.");
-
-  }
-
-}
-
-
-function previewImage(event){
-
-  const file = event.target.files[0];
-
-  if(!file)return;
-
-  const preview =
-    document.getElementById("preview");
-
-  preview.src =
-    URL.createObjectURL(file);
-
-  preview.style.display = "block";
-
-}
-
-
-function openSignup(){
-
-  document.getElementById("signupModal").style.display = "flex";
-
-}
-
-
-function closeSignup(){
-
-  document.getElementById("signupModal").style.display = "none";
-
-}
-
-
-function signup(){
-
-  const name =
-    document.getElementById("name").value.trim();
-
-  const email =
-    document.getElementById("email").value.trim();
-
-  const msg =
-    document.getElementById("signupMsg");
-
-  if(!name || !email){
-
-    msg.textContent =
-      "Please enter your name and email.";
-
-    return;
-
-  }
-
-  msg.textContent =
-    "✓ Details received. Real authentication will be connected next.";
-
-}
-
-
-window.onclick = function(event){
-
-  const modal =
-    document.getElementById("signupModal");
-
-  if(event.target === modal){
-    closeSignup();
-  }
-
-};
-
-</script>
+  </script>
 
 </body>
-</html>}
-
-.logo{
-  font-size:25px;
-  font-weight:900
-}
-
-.logo span{color:var(--accent2)}
-
-nav a{
-  color:var(--muted);
-  text-decoration:none;
-  margin-left:22px
-}
-
-.btn{
-  border:0;
-  border-radius:12px;
-  padding:12px 18px;
-  font-weight:800;
-  cursor:pointer;
-  background:var(--accent);
-  color:white
-}
-
-.hero{
-  max-width:1100px;
-  margin:80px auto;
-  padding:0 24px;
-  text-align:center
-}
-
-.badge{
-  display:inline-block;
-  padding:8px 12px;
-  border:1px solid #ffffff20;
-  border-radius:99px;
-  color:#b9c8ff;
-  background:#ffffff08
-}
-
-h1{
-  font-size:clamp(42px,7vw,76px);
-  line-height:.98;
-  margin:22px 0
-}
-
-h1 em{
-  font-style:normal;
-  color:#9c8cff
-}
-
-.hero p{
-  font-size:19px;
-  color:var(--muted);
-  max-width:700px;
-  margin:0 auto 28px;
-  line-height:1.6
-}
-
-.actions{
-  display:flex;
-  gap:12px;
-  justify-content:center;
-  flex-wrap:wrap
-}
-
-.ghost{
-  background:#ffffff0c;
-  border:1px solid #ffffff18
-}
-
-.grid{
-  max-width:1100px;
-  margin:30px auto 90px;
-  padding:0 24px;
-  display:grid;
-  grid-template-columns:repeat(4,1fr);
-  gap:16px
-}
-
-.card{
-  background:linear-gradient(180deg,#10223a,#0b1727);
-  border:1px solid #ffffff12;
-  border-radius:20px;
-  padding:22px
-}
-
-.card h3{margin:10px 0}
-
-.card p{
-  color:var(--muted);
-  line-height:1.5
-}
-
-.icon{font-size:28px}
-
-section{
-  max-width:900px;
-  margin:0 auto 80px;
-  padding:0 24px
-}
-
-section h2{font-size:36px}
-
-.demo{
-  background:#0b1727;
-  border:1px solid #ffffff12;
-  border-radius:20px;
-  padding:20px
-}
-
-.row{
-  display:flex;
-  gap:10px
-}
-
-.row input{
-  flex:1;
-  background:#07111f;
-  color:white;
-  border:1px solid #ffffff20;
-  border-radius:10px;
-  padding:13px
-}
-
-.answer{
-  margin-top:15px;
-  color:#c8d6e8;
-  line-height:1.6;
-  white-space:pre-wrap
-}
-
-footer{
-  text-align:center;
-  padding:35px;
-  color:#71849d;
-  border-top:1px solid #ffffff0d
-}
-
-@media(max-width:800px){
-  .grid{grid-template-columns:1fr 1fr}
-}
-
-@media(max-width:500px){
-  .grid{grid-template-columns:1fr}
-  nav a{display:none}
-}
-</style>
-</head>
-
-<body>
-
-<nav>
-  <div class="logo">Zen<span>X</span></div>
-
-  <div>
-    <a href="#features">Features</a>
-    <a href="#demo">Try AI</a>
-    <button class="btn" onclick="alert('Sign-up will be connected soon.')">
-      Get Started
-    </button>
-  </div>
-</nav>
-
-<main>
-
-<div class="hero">
-  <span class="badge">⚡ Student AI • Built for focused learning</span>
-
-  <h1>
-    Study smarter.<br>
-    <em>Go further.</em>
-  </h1>
-
-  <p>
-    ZenX brings doubt solving, study planning, notes and practice
-    into one clean student workspace.
-  </p>
-
-  <div class="actions">
-    <a class="btn" href="#demo">Try ZenX</a>
-    <a class="btn ghost" href="#features">Explore features</a>
-  </div>
-</div>
-
-<div id="features" class="grid">
-
-  <div class="card">
-    <div class="icon">🧠</div>
-    <h3>AI Doubt Solver</h3>
-    <p>
-      Ask questions and get step-by-step explanations designed for learning.
-    </p>
-  </div>
-
-  <div class="card">
-    <div class="icon">📚</div>
-    <h3>Smart Notes</h3>
-    <p>
-      Turn long topics into concise revision-friendly notes.
-    </p>
-  </div>
-
-  <div class="card">
-    <div class="icon">🎯</div>
-    <h3>Study Planner</h3>
-    <p>
-      Break your syllabus into realistic daily study targets.
-    </p>
-  </div>
-
-  <div class="card">
-    <div class="icon">📝</div>
-    <h3>Practice</h3>
-    <p>
-      Generate topic-wise practice and review mistakes.
-    </p>
-  </div>
-
-</div>
-
-<section id="demo">
-
-  <h2>Try the ZenX AI demo</h2>
-
-  <div class="demo">
-
-    <div class="row">
-
-      <input
-        id="q"
-        placeholder="e.g. Explain Newton's second law simply"
-      >
-
-      <button class="btn" onclick="ask()">
-        Ask
-      </button>
-
-    </div>
-
-    <div id="a" class="answer">
-      Your answer will appear here.
-    </div>
-
-  </div>
-
-</section>
-
-<section>
-
-  <h2>Built around one goal</h2>
-
-  <p style="color:var(--muted);font-size:18px;line-height:1.7">
-    Less app-hopping. More learning. ZenX is designed as a focused
-    student workspace where understanding, planning and practice stay together.
-  </p>
-
-</section>
-
-</main>
-
-<footer>
-  © 2026 ZenX • Student learning platform
-</footer>
-
-<script>
-
-async function ask(){
-
-  const q = document.getElementById('q').value.trim();
-  const a = document.getElementById('a');
-
-  if(!q){
-    a.textContent = 'Please enter a question.';
-    return;
-  }
-
-  a.textContent = 'Thinking…';
-
-  try{
-
-    const r = await fetch(
-      'https://zenx-hnkl.onrender.com/api/ask',
-      {
-        method:'POST',
-        headers:{
-          'Content-Type':'application/json'
-        },
-        body:JSON.stringify({
-          question:q
-        })
-      }
-    );
-
-    if(!r.ok){
-      throw new Error('API request failed');
-    }
-
-    const d = await r.json();
-
-    a.textContent =
-      d.answer ||
-      d.error ||
-      'No answer received.';
-
-  }catch(e){
-
-    a.textContent =
-      'Unable to connect to ZenX AI right now. Please try again.';
-
-  }
-
-}
-
-</script>
-
-</body>
-</html>
+        </html>
