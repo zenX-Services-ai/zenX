@@ -1,3 +1,4 @@
+from google.genai import types
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
@@ -54,9 +55,6 @@ def ask(body: AskRequest):
 
     except Exception as e:
         return {"error": str(e)}
-
-
-# TEXT → IMAGE
 @app.post("/api/generate-image")
 def generate_image(body: ImageRequest):
     prompt = body.prompt.strip()
@@ -67,11 +65,16 @@ def generate_image(body: ImageRequest):
     try:
         response = client.models.generate_content(
             model="gemini-3.1-flash-image",
-            contents=prompt
+            contents=[prompt],
+            config=types.GenerateContentConfig(
+                response_modalities=["IMAGE"]
+            )
         )
 
         for part in response.parts:
             if part.inline_data is not None:
+                import base64
+
                 image_data = base64.b64encode(
                     part.inline_data.data
                 ).decode("utf-8")
@@ -86,3 +89,4 @@ def generate_image(body: ImageRequest):
 
     except Exception as e:
         return {"error": str(e)}
+
