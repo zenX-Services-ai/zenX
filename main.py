@@ -1,18 +1,12 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
-from openai import OpenAI
+from google import genai
+from google.genai import types
 import os
 import base64
 
-app = FastAPI(
-    title="ZenX AI",
-    version="2.0.0"
-)
-
-# --------------------------------------------------
-# CORS
-# --------------------------------------------------
+app = FastAPI(title="ZenX AI", version="2027.0")
 
 app.add_middleware(
     CORSMiddleware,
@@ -22,30 +16,15 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --------------------------------------------------
-# OPENAI
-# --------------------------------------------------
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+client = genai.Client(api_key=GEMINI_API_KEY) if GEMINI_API_KEY else None
 
-if OPENAI_API_KEY:
-    client = OpenAI(api_key=OPENAI_API_KEY)
-else:
-    client = None
-
-CHAT_MODEL = os.getenv(
-    "OPENAI_MODEL",
-    "gpt-4o-mini"
+MODEL = os.getenv(
+    "GEMINI_MODEL",
+    "gemini-2.5-flash"
 )
 
-IMAGE_MODEL = os.getenv(
-    "OPENAI_IMAGE_MODEL",
-    "gpt-image-1"
-)
-
-# --------------------------------------------------
-# REQUEST MODELS
-# --------------------------------------------------
 
 class AskRequest(BaseModel):
     question: str
@@ -59,98 +38,37 @@ class ImageRequest(BaseModel):
     user_id: str | None = None
 
 
-# --------------------------------------------------
-# SYSTEM PROMPT
-# --------------------------------------------------
-
-def get_system_prompt(mode: str) -> str:
-
-    base = """
-You are ZenX AI, a helpful educational AI assistant.
-
-Your goal is to help students understand concepts clearly,
-solve problems step by step, create revision material,
-practice questions, and learn efficiently.
-
-Be accurate, concise when possible, and explain difficult
-ideas in simple language.
-
-For mathematics and physics, show useful equations and
-logical steps.
-
-For chemistry, explain concepts, reactions, formulas and
-reasoning clearly.
-
-Never pretend to have performed an action that you did not
-actually perform.
-"""
-
-    modes = {
-
-        "student": """
-Focus on school and student learning.
-Adapt explanations to the student's level.
-""",
-
-        "jee": """
-You are in JEE preparation mode.
-Focus on JEE Main and JEE Advanced level Physics,
-Chemistry and Mathematics.
-Give conceptual explanations, shortcuts only when valid,
-and step-by-step solutions.
-""",
-
-        "school": """
-Focus on school-level learning, NCERT-style concepts,
-exam preparation, revision and homework understanding.
-""",
-
-        "coding": """
-You are in coding mode.
-Explain programming concepts, debug code,
-write clean examples and explain why the code works.
-""",
-
-        "general": """
-Answer general questions accurately and clearly.
-"""
+def system_prompt(mode):
+    prompts = {
+        "student": "You are ZenX AI, a friendly student AI tutor. Explain concepts simply and accurately.",
+        "jee": "You are ZenX JEE AI. Teach Physics, Chemistry and Mathematics for JEE Main and Advanced with step-by-step solutions.",
+        "school": "You are ZenX School AI. Help students understand school concepts, revision and exam preparation.",
+        "coding": "You are ZenX Coding AI. Explain programming clearly, debug code and provide clean examples.",
+        "general": "You are ZenX AI. Answer questions accurately and clearly."
     }
 
-    return base + modes.get(
-        mode,
-        modes["student"]
-    )
+    return prompts.get(mode, prompts["student"])
 
-
-# --------------------------------------------------
-# HEALTH CHECK
-# --------------------------------------------------
 
 @app.get("/")
 def root():
-
     return {
         "status": "online",
         "name": "ZenX AI",
-        "version": "2.0.0"
+        "version": "2027"
     }
 
 
 @app.get("/health")
 def health():
-
     return {
         "status": "healthy",
-        "ai_configured": client is not None
+        "gemini_configured": client is not None
     }
 
 
-# --------------------------------------------------
-# AI CHAT
-# --------------------------------------------------
-
 @app.post("/api/ask")
-def ask_ai(request: AskRequest):
+def ask(request: AskRequest):
 
     if not request.question.strip():
         raise HTTPException(
@@ -161,56 +79,41 @@ def ask_ai(request: AskRequest):
     if client is None:
         raise HTTPException(
             status_code=503,
-            detail="AI service is not configured. Add OPENAI_API_KEY in Render Environment Variables."
+            detail="GEMINI_API_KEY is not configured."
         )
 
-    messages = [
-        {
-            "role": "system",
-            "content": get_system_prompt(request.mode)
-        }
-    ]
+    prompt = system_prompt(request.mode)
 
-    # Keep only recent conversation
-    history = request.history[-20:]
+    recent_history = request.history[-20:]
 
-    for item in history:
+    if recent_history:
+        prompt += "\n\nConversation history:\n"
 
-        role = item.get("role")
-        content = item.get("content")
+        for item in recent_history:
+            role = item.get("role")
+            content = item.get("content")
 
-        if role not in ["user", "assistant"]:
-            continue
+            if content:
+                prompt += f"{role}: {content}\n"
 
-        if not content:
-            continue
-
-        messages.append({
-            "role": role,
-            "content": str(content)
-        })
-
-    # Avoid duplicating the current question
-    if not history or history[-1].get("content") != request.question:
-
-        messages.append({
-            "role": "user",
-            "content": request.question
-        })
+    prompt += f"\n\nCurrent question:\n{request.question}"
 
     try:
 
-        response = client.chat.completions.create(
-            model=CHAT_MODEL,
-            messages=messages
+        response = client.models.generate_content(
+            model=MODEL,
+            contents=prompt,
+            config=types.GenerateContentConfig(
+                temperature=0.7
+            )
         )
 
-        answer = response.choices[0].message.content
+        answer = response.text
 
         if not answer:
             raise HTTPException(
                 status_code=500,
-                detail="AI returned an empty response."
+                detail="Gemini returned an empty response."
             )
 
         return {
@@ -222,18 +125,13 @@ def ask_ai(request: AskRequest):
         raise
 
     except Exception as error:
-
-        print("AI ERROR:", error)
+        print("GEMINI ERROR:", error)
 
         raise HTTPException(
             status_code=500,
-            detail="AI request failed."
+            detail="Gemini AI request failed."
         )
 
-
-# --------------------------------------------------
-# IMAGE GENERATION
-# --------------------------------------------------
 
 @app.post("/api/image")
 def generate_image(request: ImageRequest):
@@ -247,45 +145,42 @@ def generate_image(request: ImageRequest):
     if client is None:
         raise HTTPException(
             status_code=503,
-            detail="Image AI is not configured. Add OPENAI_API_KEY in Render Environment Variables."
+            detail="GEMINI_API_KEY is not configured."
         )
 
     try:
 
-        result = client.images.generate(
-            model=IMAGE_MODEL,
-            prompt=request.prompt,
-            size="1024x1024"
+        response = client.models.generate_content(
+            model="gemini-2.5-flash-image",
+            contents=request.prompt,
+            config=types.GenerateContentConfig(
+                response_modalities=["TEXT", "IMAGE"]
+            )
         )
 
-        image_data = result.data[0]
+        for part in response.candidates[0].content.parts:
 
-        # Some API responses provide a URL
-        if getattr(image_data, "url", None):
+            if getattr(part, "inline_data", None):
 
-            return {
-                "image_url": image_data.url
-            }
+                image_bytes = part.inline_data.data
 
-        # Some image models provide base64
-        if getattr(image_data, "b64_json", None):
+                mime_type = (
+                    part.inline_data.mime_type
+                    or "image/png"
+                )
 
-            image_bytes = base64.b64decode(
-                image_data.b64_json
-            )
+                encoded = base64.b64encode(
+                    image_bytes
+                ).decode("utf-8")
 
-            image_url = (
-                "data:image/png;base64,"
-                + base64.b64encode(image_bytes).decode()
-            )
-
-            return {
-                "image_url": image_url
-            }
+                return {
+                    "image_url":
+                    f"data:{mime_type};base64,{encoded}"
+                }
 
         raise HTTPException(
             status_code=500,
-            detail="Image was generated but no image data was returned."
+            detail="No image was returned by Gemini."
         )
 
     except HTTPException:
@@ -297,13 +192,9 @@ def generate_image(request: ImageRequest):
 
         raise HTTPException(
             status_code=500,
-            detail="Image generation failed."
+            detail="Gemini image generation failed."
         )
 
-
-# --------------------------------------------------
-# RUN LOCALLY
-# --------------------------------------------------
 
 if __name__ == "__main__":
 
