@@ -4,6 +4,9 @@ from pydantic import BaseModel
 import os
 
 app = FastAPI(title="ZenX API", version="1.0.0")
+@app.get("/")
+def home():
+    return {"message": "ZenX API is live 🚀"}
 app.add_middleware(CORSMiddleware, allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"])
 
 class AskRequest(BaseModel):
