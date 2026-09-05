@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#080812">
 <title>ZenX AI — Student AI 2027</title>
 
@@ -10,1843 +10,1785 @@
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
-:root{
- --bg:#070711;
- --panel:#10101d;
- --panel2:#151526;
- --border:rgba(255,255,255,.09);
- --text:#f7f7ff;
- --muted:#9c9cb4;
- --purple:#8b5cf6;
- --cyan:#22d3ee;
- --pink:#ec4899;
- --danger:#ef4444;
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
 }
+
 body{
- font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
- background:
- radial-gradient(circle at 20% 10%,rgba(139,92,246,.16),transparent 28%),
- radial-gradient(circle at 90% 80%,rgba(34,211,238,.10),transparent 25%),
- var(--bg);
- color:var(--text);
- min-height:100vh;
- overflow:hidden;
+  font-family:Inter,Arial,sans-serif;
+  background:#080812;
+  color:#fff;
+  min-height:100vh;
 }
-button,input,textarea{font:inherit}
-button{cursor:pointer}
-.hidden{display:none!important}
+
+button,input,textarea,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.hidden{
+  display:none!important;
+}
 
 /* AUTH */
+
 #authScreen{
- min-height:100vh;
- display:flex;
- align-items:center;
- justify-content:center;
- padding:20px;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:
+    radial-gradient(circle at 20% 20%,#642cff33,transparent 35%),
+    radial-gradient(circle at 80% 80%,#00e5ff22,transparent 35%),
+    #080812;
 }
-.auth-card{
- width:min(430px,100%);
- background:rgba(16,16,29,.88);
- backdrop-filter:blur(25px);
- border:1px solid var(--border);
- border-radius:25px;
- padding:30px;
- box-shadow:0 25px 80px rgba(0,0,0,.45);
+
+.authBox{
+  width:100%;
+  max-width:430px;
+  padding:32px;
+  border:1px solid #ffffff18;
+  border-radius:25px;
+  background:#11111dcc;
+  backdrop-filter:blur(20px);
+  box-shadow:0 25px 80px #0008;
 }
+
 .logo{
- font-size:34px;
- font-weight:900;
- text-align:center;
- letter-spacing:-2px;
- background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink));
- -webkit-background-clip:text;
- color:transparent;
+  text-align:center;
+  font-size:42px;
+  font-weight:900;
+  background:linear-gradient(90deg,#8b5cff,#00e5ff,#ff4fd8);
+  -webkit-background-clip:text;
+  color:transparent;
 }
-.tagline{
- text-align:center;
- color:var(--muted);
- margin:8px 0 28px;
+
+.subtitle{
+  text-align:center;
+  color:#aaa;
+  margin:8px 0 25px;
 }
-.auth-title{
- font-size:23px;
- margin-bottom:18px;
+
+.authBox h2{
+  margin-bottom:18px;
 }
-.field{margin-bottom:14px}
-.field label{
- display:block;
- font-size:13px;
- color:var(--muted);
- margin-bottom:7px;
+
+.authBox input{
+  width:100%;
+  padding:14px 15px;
+  margin:7px 0;
+  border:1px solid #ffffff18;
+  border-radius:13px;
+  background:#080812;
+  color:white;
+  outline:none;
 }
-.field input{
- width:100%;
- background:#0b0b16;
- color:white;
- border:1px solid var(--border);
- padding:13px 14px;
- border-radius:12px;
- outline:none;
+
+.authBox input:focus{
+  border-color:#8b5cff;
 }
-.field input:focus{border-color:var(--purple)}
+
 .primary{
- width:100%;
- border:0;
- border-radius:12px;
- padding:13px;
- color:white;
- font-weight:700;
- background:linear-gradient(90deg,var(--purple),#6d4aff,var(--cyan));
- margin-top:4px;
+  width:100%;
+  padding:14px;
+  border:0;
+  border-radius:13px;
+  margin-top:12px;
+  color:white;
+  font-weight:800;
+  background:linear-gradient(90deg,#7546ff,#00bde8);
 }
+
 .secondary{
- width:100%;
- background:transparent;
- color:#c7c7dc;
- border:1px solid var(--border);
- padding:11px;
- border-radius:11px;
- margin-top:10px;
+  width:100%;
+  padding:13px;
+  border:1px solid #ffffff18;
+  border-radius:13px;
+  margin-top:10px;
+  color:#ddd;
+  background:#ffffff08;
 }
-.auth-links{
- display:flex;
- justify-content:space-between;
- margin-top:15px;
- font-size:13px;
+
+.linkBtn{
+  background:none;
+  border:0;
+  color:#64dfff;
+  margin-top:14px;
 }
-.auth-links button{
- border:0;background:none;color:#a78bfa;
-}
-#authMsg{
- margin-top:12px;
- text-align:center;
- font-size:13px;
- min-height:18px;
- color:#fca5a5;
+
+.authMessage{
+  min-height:22px;
+  margin-top:12px;
+  text-align:center;
+  color:#ffcf70;
+  font-size:14px;
 }
 
 /* APP */
-#app{
- display:flex;
- height:100vh;
+
+#appScreen{
+  min-height:100vh;
+  display:flex;
 }
+
 .sidebar{
- width:275px;
- background:rgba(9,9,18,.94);
- border-right:1px solid var(--border);
- display:flex;
- flex-direction:column;
- padding:17px;
- flex-shrink:0;
-}
-.brand{
- display:flex;
- align-items:center;
- gap:10px;
- padding:5px 5px 18px;
-}
-.brand-icon{
- width:38px;height:38px;
- border-radius:12px;
- display:grid;
- place-items:center;
- background:linear-gradient(135deg,var(--purple),var(--cyan));
- font-weight:900;
-}
-.brand-name{font-weight:900;font-size:20px}
-.version{
- margin-left:auto;
- font-size:10px;
- color:#9ca3af;
- border:1px solid var(--border);
- padding:3px 6px;
- border-radius:6px;
-}
-.new-chat{
- width:100%;
- border:1px solid rgba(139,92,246,.45);
- background:rgba(139,92,246,.12);
- color:white;
- padding:12px;
- border-radius:12px;
- font-weight:700;
- margin-bottom:18px;
-}
-.section-title{
- font-size:11px;
- text-transform:uppercase;
- letter-spacing:1px;
- color:#66667e;
- margin:8px 5px;
-}
-.recents{
- overflow:auto;
- flex:1;
-}
-.recent{
- display:flex;
- align-items:center;
- gap:8px;
- padding:10px;
- border-radius:10px;
- color:#c5c5d7;
- margin-bottom:4px;
- cursor:pointer;
- font-size:13px;
-}
-.recent:hover{background:rgba(255,255,255,.05)}
-.recent-text{
- flex:1;
- white-space:nowrap;
- overflow:hidden;
- text-overflow:ellipsis;
-}
-.delete-recent{
- border:0;
- background:none;
- color:#68687c;
- padding:3px;
-}
-.delete-recent:hover{color:#f87171}
-.sidebar-bottom{
- border-top:1px solid var(--border);
- padding-top:14px;
-}
-.user-box{
- display:flex;
- align-items:center;
- gap:9px;
- padding:9px;
- margin-bottom:8px;
-}
-.avatar{
- width:34px;height:34px;
- border-radius:50%;
- display:grid;
- place-items:center;
- background:linear-gradient(135deg,#7c3aed,#06b6d4);
- font-weight:800;
-}
-.user-email{
- font-size:12px;
- overflow:hidden;
- text-overflow:ellipsis;
- white-space:nowrap;
-}
-.small-btn{
- width:100%;
- background:transparent;
- color:#aaaabd;
- border:1px solid var(--border);
- border-radius:9px;
- padding:9px;
-}
-
-/* MAIN */
-.main{
- flex:1;
- min-width:0;
- display:flex;
- flex-direction:column;
-}
-.topbar{
- height:64px;
- border-bottom:1px solid var(--border);
- display:flex;
- align-items:center;
- padding:0 18px;
- gap:10px;
- background:rgba(7,7,17,.72);
- backdrop-filter:blur(15px);
-}
-.menu-btn{
- display:none;
- border:0;
- background:none;
- color:white;
- font-size:22px;
-}
-.mode{
- padding:8px 11px;
- background:#11111e;
- border:1px solid var(--border);
- border-radius:10px;
- color:#d6d6e5;
-}
-.top-spacer{flex:1}
-.icon-btn{
- border:1px solid var(--border);
- background:#10101b;
- color:#d5d5e5;
- width:38px;height:38px;
- border-radius:10px;
-}
-.icon-btn:hover{border-color:#7255d8}
-
-.chat{
- flex:1;
- overflow-y:auto;
- padding:28px max(16px,5vw);
-}
-.welcome{
- max-width:800px;
- margin:7vh auto 0;
- text-align:center;
-}
-.welcome h1{
- font-size:clamp(32px,6vw,58px);
- letter-spacing:-3px;
- line-height:1;
- background:linear-gradient(90deg,#fff,#a78bfa,#67e8f9);
- -webkit-background-clip:text;
- color:transparent;
-}
-.welcome p{
- color:var(--muted);
- margin:15px auto 28px;
- max-width:620px;
-}
-.quick-grid{
- display:grid;
- grid-template-columns:repeat(2,1fr);
- gap:10px;
- max-width:680px;
- margin:auto;
-}
-.quick{
- text-align:left;
- padding:15px;
- border-radius:15px;
- border:1px solid var(--border);
- background:rgba(255,255,255,.025);
- color:#ddd;
-}
-.quick:hover{background:rgba(139,92,246,.10)}
-.quick b{display:block;margin-bottom:5px}
-.quick span{font-size:12px;color:#85859d}
-
-.message{
- max-width:900px;
- margin:0 auto 20px;
- display:flex;
- gap:12px;
-}
-.message.user{justify-content:flex-end}
-.bubble{
- max-width:min(820px,90%);
- padding:13px 16px;
- border-radius:17px;
- line-height:1.6;
- font-size:14px;
- overflow-wrap:anywhere;
-}
-.user .bubble{
- background:linear-gradient(135deg,#6941d8,#5631b9);
- border-bottom-right-radius:5px;
-}
-.assistant .bubble{
- background:#11111f;
- border:1px solid var(--border);
- border-bottom-left-radius:5px;
-}
-.bubble pre{
- overflow:auto;
- background:#080812;
- border:1px solid var(--border);
- padding:13px;
- border-radius:10px;
- margin:10px 0;
-}
-.bubble code{
- font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
- font-size:12px;
-}
-.bubble p{margin:5px 0}
-.bubble ul,.bubble ol{padding-left:22px}
-.msg-actions{
- display:flex;
- gap:5px;
- margin-top:7px;
-}
-.msg-actions button{
- background:none;
- border:0;
- color:#77778e;
- font-size:11px;
-}
-.msg-actions button:hover{color:#bbb}
-
-/* INPUT */
-.composer-wrap{
- padding:12px max(16px,5vw) 18px;
- background:linear-gradient(transparent,var(--bg) 22%);
-}
-.composer{
- max-width:900px;
- margin:auto;
- background:#11111e;
- border:1px solid var(--border);
- border-radius:19px;
- padding:9px;
- box-shadow:0 15px 50px rgba(0,0,0,.28);
-}
-.tools{
- display:flex;
- gap:6px;
- margin-bottom:6px;
-}
-.tool{
- border:1px solid transparent;
- background:transparent;
- color:#89899e;
- padding:6px 9px;
- border-radius:8px;
- font-size:12px;
-}
-.tool:hover{background:#1c1c2b;color:#ddd}
-.input-row{
- display:flex;
- align-items:flex-end;
- gap:8px;
-}
-#prompt{
- flex:1;
- resize:none;
- border:0;
- outline:0;
- background:transparent;
- color:white;
- min-height:45px;
- max-height:160px;
- padding:11px 8px;
-}
-.send{
- width:44px;height:44px;
- border:0;
- border-radius:13px;
- color:white;
- background:linear-gradient(135deg,var(--purple),var(--cyan));
- font-size:18px;
-}
-.send:disabled{opacity:.45}
-.status{
- max-width:900px;
- margin:6px auto 0;
- color:#66667c;
- font-size:10px;
- text-align:center;
-}
-
-/* MOBILE */
-@media(max-width:750px){
- .sidebar{
+  width:270px;
+  min-height:100vh;
+  background:#0d0d18;
+  border-right:1px solid #ffffff10;
+  padding:18px;
   position:fixed;
-  z-index:50;
-  left:-290px;
+  left:0;
   top:0;
   bottom:0;
-  transition:.25s;
- }
- .sidebar.open{left:0}
- .menu-btn{display:block}
- .quick-grid{grid-template-columns:1fr}
- .chat{padding:18px 12px}
- .composer-wrap{padding:8px 10px 12px}
- .topbar{padding:0 10px}
- .welcome{margin-top:5vh}
- .welcome h1{letter-spacing:-2px}
+  overflow-y:auto;
+}
+
+.sideLogo{
+  font-size:27px;
+  font-weight:900;
+  margin-bottom:25px;
+  background:linear-gradient(90deg,#8b5cff,#00e5ff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.sideButton{
+  width:100%;
+  border:1px solid #ffffff12;
+  background:#ffffff06;
+  color:#ddd;
+  padding:12px;
+  border-radius:12px;
+  margin-bottom:9px;
+  text-align:left;
+}
+
+.sideButton:hover{
+  background:#ffffff10;
+}
+
+.sectionTitle{
+  color:#777;
+  font-size:12px;
+  text-transform:uppercase;
+  margin:22px 5px 10px;
+}
+
+.recent{
+  display:flex;
+  align-items:center;
+  gap:7px;
+  margin-bottom:7px;
+}
+
+.recent button:first-child{
+  flex:1;
+  overflow:hidden;
+  white-space:nowrap;
+  text-overflow:ellipsis;
+  border:0;
+  background:#ffffff06;
+  color:#bbb;
+  padding:10px;
+  border-radius:10px;
+  text-align:left;
+}
+
+.deleteRecent{
+  width:34px;
+  height:34px;
+  border:0;
+  border-radius:9px;
+  background:#ff335511;
+  color:#ff6680;
+}
+
+.main{
+  width:100%;
+  margin-left:270px;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+}
+
+.topbar{
+  height:65px;
+  border-bottom:1px solid #ffffff10;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 22px;
+  background:#080812dd;
+  backdrop-filter:blur(15px);
+  position:sticky;
+  top:0;
+  z-index:10;
+}
+
+.topTitle{
+  font-weight:800;
+}
+
+.userEmail{
+  color:#888;
+  font-size:12px;
+}
+
+.chat{
+  flex:1;
+  width:100%;
+  max-width:950px;
+  margin:auto;
+  padding:30px 20px 160px;
+}
+
+.welcome{
+  text-align:center;
+  padding:70px 10px 35px;
+}
+
+.welcome h1{
+  font-size:48px;
+  margin-bottom:12px;
+  background:linear-gradient(90deg,#fff,#9e7cff,#51e7ff);
+  -webkit-background-clip:text;
+  color:transparent;
+}
+
+.welcome p{
+  color:#999;
+}
+
+.message{
+  display:flex;
+  gap:12px;
+  margin:18px 0;
+}
+
+.avatar{
+  min-width:38px;
+  height:38px;
+  border-radius:12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:#ffffff0c;
+}
+
+.bubble{
+  max-width:850px;
+  padding:15px 17px;
+  border-radius:17px;
+  line-height:1.6;
+  overflow-wrap:anywhere;
+}
+
+.user .bubble{
+  background:linear-gradient(135deg,#7048ff,#4430a8);
+}
+
+.ai .bubble{
+  background:#12121e;
+  border:1px solid #ffffff0c;
+}
+
+.bubble pre{
+  overflow:auto;
+  background:#050509;
+  padding:14px;
+  border-radius:10px;
+  margin:10px 0;
+}
+
+.bubble code{
+  font-family:monospace;
+}
+
+.bubble p{
+  margin-bottom:8px;
+}
+
+.bubble ul,
+.bubble ol{
+  padding-left:22px;
+}
+
+/* INPUT */
+
+.composerWrap{
+  position:fixed;
+  bottom:0;
+  left:270px;
+  right:0;
+  padding:15px 20px 20px;
+  background:linear-gradient(transparent,#080812 25%);
+}
+
+.composer{
+  max-width:950px;
+  margin:auto;
+  display:flex;
+  align-items:end;
+  gap:8px;
+  padding:9px;
+  border:1px solid #ffffff18;
+  border-radius:18px;
+  background:#11111eeF;
+  backdrop-filter:blur(20px);
+}
+
+#prompt{
+  flex:1;
+  min-height:45px;
+  max-height:150px;
+  resize:none;
+  border:0;
+  outline:0;
+  background:transparent;
+  color:white;
+  padding:12px;
+}
+
+.toolBtn{
+  width:43px;
+  height:43px;
+  border:0;
+  border-radius:12px;
+  color:#ddd;
+  background:#ffffff08;
+}
+
+.sendBtn{
+  width:48px;
+  height:43px;
+  border:0;
+  border-radius:12px;
+  color:white;
+  font-weight:bold;
+  background:linear-gradient(90deg,#7546ff,#00bde8);
+}
+
+.mode{
+  position:absolute;
+  bottom:92px;
+  left:calc(50% - 475px);
+  padding:8px 12px;
+  border:1px solid #ffffff12;
+  border-radius:10px;
+  background:#11111e;
+  color:#aaa;
+}
+
+/* MODAL */
+
+.modal{
+  position:fixed;
+  inset:0;
+  background:#0009;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  z-index:100;
+}
+
+.modalBox{
+  width:100%;
+  max-width:500px;
+  padding:25px;
+  border-radius:20px;
+  background:#11111e;
+  border:1px solid #ffffff15;
+}
+
+.modalBox h2{
+  margin-bottom:15px;
+}
+
+.modalBox input{
+  width:100%;
+  padding:13px;
+  border:1px solid #ffffff15;
+  background:#080812;
+  color:white;
+  border-radius:10px;
+}
+
+.closeBtn{
+  float:right;
+  background:none;
+  color:#aaa;
+  border:0;
+  font-size:22px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:800px){
+
+  .sidebar{
+    display:none;
+  }
+
+  .main{
+    margin-left:0;
+  }
+
+  .composerWrap{
+    left:0;
+  }
+
+  .welcome h1{
+    font-size:35px;
+  }
+
+  .chat{
+    padding-left:12px;
+    padding-right:12px;
+  }
+
+  .mode{
+    left:15px;
+    bottom:92px;
+  }
+
+  .topbar{
+    padding:0 13px;
+  }
+
+  .bubble{
+    max-width:calc(100vw - 75px);
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- AUTH SCREEN -->
+<!-- AUTH -->
+
 <section id="authScreen">
- <div class="auth-card">
 
-  <div class="logo">ZenX</div>
-  <div class="tagline">Student AI • Built for the 2027 generation</div>
+  <div class="authBox">
 
-  <h2 class="auth-title" id="authTitle">Welcome back</h2>
+    <div class="logo">ZenX</div>
+    <div class="subtitle">Student AI • 2027</div>
 
-  <form id="authForm">
+    <div id="loginForm">
 
-   <div class="field hidden" id="nameField">
-    <label>Name</label>
-    <input id="nameInput" type="text" placeholder="Your name">
-   </div>
+      <h2 id="authTitle">Welcome back</h2>
 
-   <div class="field">
-    <label>Email</label>
-    <input id="emailInput" type="email" autocomplete="email"
-           placeholder="you@example.com" required>
-   </div>
+      <input
+        id="email"
+        type="email"
+        placeholder="Email address"
+        autocomplete="email"
+      >
 
-   <div class="field">
-    <label>Password</label>
-    <input id="passwordInput" type="password"
-           autocomplete="current-password"
-           placeholder="Password" required>
-   </div>
+      <input
+        id="password"
+        type="password"
+        placeholder="Password"
+        autocomplete="current-password"
+      >
 
-   <button class="primary" id="authButton" type="submit">
-    Sign In
-   </button>
+      <button class="primary" onclick="handleAuth()">
+        <span id="authButtonText">Sign In</span>
+      </button>
 
-  </form>
+      <button class="linkBtn" onclick="showForgotPassword()">
+        Forgot password?
+      </button>
 
-  <div class="auth-links">
-   <button type="button" onclick="toggleAuth()" id="toggleAuthBtn">
-    Create account
-   </button>
-   <button type="button" onclick="showForgotPassword()">
-    Forgot password?
-   </button>
+      <button class="secondary" onclick="toggleAuth()">
+        Create new account
+      </button>
+
+      <div id="authMessage" class="authMessage"></div>
+
+    </div>
+
+    <div id="forgotForm" class="hidden">
+
+      <h2>Reset password</h2>
+
+      <input
+        id="forgotEmail"
+        type="email"
+        placeholder="Enter your email"
+      >
+
+      <button class="primary" onclick="sendResetEmail()">
+        Send Reset Email
+      </button>
+
+      <button class="secondary" onclick="hideForgotPassword()">
+        Back to Sign In
+      </button>
+
+      <div id="forgotMessage" class="authMessage"></div>
+
+    </div>
+
   </div>
 
-  <button class="secondary hidden" id="backLogin"
-          onclick="backToLogin()">
-   Back to login
-  </button>
-
-  <div id="authMsg"></div>
- </div>
 </section>
 
 
 <!-- APP -->
-<section id="app" class="hidden">
 
- <aside class="sidebar" id="sidebar">
+<section id="appScreen" class="hidden">
 
-  <div class="brand">
-   <div class="brand-icon">Z</div>
-   <div class="brand-name">ZenX</div>
-   <span class="version">2027</span>
-  </div>
+  <aside class="sidebar">
 
-  <button class="new-chat" onclick="newChat()">
-   ＋ New Chat
-  </button>
+    <div class="sideLogo">ZenX AI</div>
 
-  <div class="section-title">Recent Chats</div>
+    <button class="sideButton" onclick="newChat()">
+      ＋ New Chat
+    </button>
 
-  <div class="recents" id="recents"></div>
+    <button class="sideButton" onclick="refreshChat()">
+      ↻ Refresh
+    </button>
 
-  <div class="sidebar-bottom">
+    <button class="sideButton" onclick="clearRecents()">
+      🗑 Clear Recents
+    </button>
 
-   <div class="user-box">
-    <div class="avatar" id="avatar">Z</div>
-    <div class="user-email" id="userEmail">Loading...</div>
-   </div>
+    <div class="sectionTitle">
+      Recent Chats
+    </div>
 
-   <button class="small-btn" onclick="logout()">
-    Log out
-   </button>
+    <div id="recentList"></div>
 
-  </div>
+    <div class="sectionTitle">
+      Student Tools
+    </div>
 
- </aside>
+    <button class="sideButton" onclick="quickPrompt('Explain this topic like a Class 11 student')">
+      📚 Explain Topic
+    </button>
 
+    <button class="sideButton" onclick="quickPrompt('Create a JEE practice quiz for me')">
+      📝 JEE Quiz
+    </button>
 
- <main class="main">
+    <button class="sideButton" onclick="quickPrompt('Give me a step-by-step solution')">
+      🧮 Solve Problem
+    </button>
 
-  <header class="topbar">
+    <button class="sideButton" onclick="quickPrompt('Make short revision notes')">
+      📖 Revision Notes
+    </button>
 
-   <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+    <button class="sideButton" onclick="logout()">
+      🚪 Logout
+    </button>
 
-   <select class="mode" id="mode">
-    <option value="student">🎓 Student</option>
-    <option value="jee">⚡ JEE Mode</option>
-    <option value="school">📚 School</option>
-    <option value="coding">💻 Coding</option>
-    <option value="general">🤖 General</option>
-   </select>
-
-   <div class="top-spacer"></div>
-
-   <button class="icon-btn" title="New Chat"
-           onclick="newChat()">＋</button>
-
-   <button class="icon-btn" title="Refresh"
-           onclick="refreshChat()">↻</button>
-
-  </header>
+  </aside>
 
 
-  <div class="chat" id="chat">
+  <main class="main">
 
-   <div class="welcome" id="welcome">
+    <header class="topbar">
 
-    <h1>What are you learning today?</h1>
+      <div class="topTitle">
+        ZenX AI
+      </div>
 
-    <p>
-     ZenX is your AI study companion for concepts,
-     questions, coding, revision and exam preparation.
-    </p>
+      <div>
+        <div id="modeLabel">Student Mode</div>
+        <div id="userEmail" class="userEmail"></div>
+      </div>
 
-    <div class="quick-grid">
+    </header>
 
-     <button class="quick"
-       onclick="quickPrompt('Explain this concept to me step by step like a Class 11 student.')">
-      <b>🧠 Explain a concept</b>
-      <span>Simple → advanced explanation</span>
-     </button>
 
-     <button class="quick"
-       onclick="quickPrompt('Give me a JEE level practice question and then check my answer.')">
-      <b>⚡ Practice JEE</b>
-      <span>Build concepts with questions</span>
-     </button>
+    <div id="chat" class="chat">
 
-     <button class="quick"
-       onclick="quickPrompt('Create a short revision quiz from my current topic.')">
-      <b>📝 Make a quiz</b>
-      <span>Fast revision</span>
-     </button>
+      <div id="welcome" class="welcome">
 
-     <button class="quick"
-       onclick="quickPrompt('Help me understand and debug this code.')">
-      <b>💻 Coding help</b>
-      <span>Debug and learn</span>
-     </button>
+        <h1>What can I help you learn?</h1>
+
+        <p>
+          Your AI study companion for school, JEE, coding and everyday learning.
+        </p>
+
+      </div>
 
     </div>
 
-   </div>
 
-   <div id="messages"></div>
+    <div class="composerWrap">
 
-  </div>
+      <select id="mode" class="mode" onchange="changeMode()">
+        <option value="student">Student</option>
+        <option value="jee">JEE</option>
+        <option value="school">School</option>
+        <option value="coding">Coding</option>
+        <option value="general">General</option>
+      </select>
 
+      <div class="composer">
 
-  <div class="composer-wrap">
+        <button class="toolBtn" onclick="startVoice()" title="Voice">
+          🎙️
+        </button>
 
-   <div class="composer">
+        <button class="toolBtn" onclick="showImagePrompt()" title="Generate image">
+          🖼️
+        </button>
 
-    <div class="tools">
+        <textarea
+          id="prompt"
+          placeholder="Ask ZenX anything..."
+          onkeydown="handleEnter(event)"
+        ></textarea>
 
-     <button class="tool" onclick="insertTool('Explain: ')">
-      🧠 Explain
-     </button>
+        <button class="toolBtn" onclick="speakLast()" title="Read last answer">
+          🔊
+        </button>
 
-     <button class="tool" onclick="insertTool('Solve: ')">
-      🧮 Solve
-     </button>
+        <button class="sendBtn" onclick="sendMessage()">
+          ➤
+        </button>
 
-     <button class="tool" onclick="insertTool('Quiz me on: ')">
-      📝 Quiz
-     </button>
-
-     <button class="tool" onclick="generateImage()">
-      🖼️ Image
-     </button>
-
-     <button class="tool" onclick="startVoice()">
-      🎤 Voice
-     </button>
-
-    </div>
-
-    <div class="input-row">
-
-     <textarea id="prompt"
-       placeholder="Ask ZenX anything..."
-       rows="1"></textarea>
-
-     <button class="send" id="sendBtn"
-             onclick="sendMessage()">
-      ↑
-     </button>
+      </div>
 
     </div>
 
-   </div>
-
-   <div class="status" id="status">
-    ZenX AI • Student-first AI • 2027
-   </div>
-
-  </div>
-
- </main>
+  </main>
 
 </section>
 
 
+<!-- IMAGE MODAL -->
+
+<div id="imageModal" class="modal hidden">
+
+  <div class="modalBox">
+
+    <button class="closeBtn" onclick="closeImagePrompt()">×</button>
+
+    <h2>Generate Image</h2>
+
+    <input
+      id="imagePrompt"
+      placeholder="Describe the image..."
+    >
+
+    <button class="primary" onclick="generateImage()">
+      Generate
+    </button>
+
+    <div id="imageMessage" class="authMessage"></div>
+
+  </div>
+
+</div>
+
+
 <script>
-/* =========================================================
-   ZENX CONFIG
-   ========================================================= */
+
+/* =========================
+   CONFIG
+========================= */
 
 const SUPABASE_URL =
 "https://srlftvbiqoufejhhfsrh.supabase.co";
 
-/*
- IMPORTANT:
- Put ONLY your Supabase ANON/PUBLIC key here.
- Never put service_role key here.
-*/
 const SUPABASE_ANON_KEY =
-"PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
+"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNybGZ0dmJpcW91ZmVqaGhmc3JoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1OTI0NzAsImV4cCI6MjEwNDE2ODQ3MH0.vJ1CQ-Zz_kaRhDDT5J7y1nssgqccd2zPxQ4_FrJI4fs";
 
 const API_URL =
-"https://zenx-hnkl.onrender.com/api/ask";
+"https://zenx-hnkl.onrender.com";
+
+const supabaseClient =
+window.supabase.createClient(
+  SUPABASE_URL,
+  SUPABASE_ANON_KEY
+);
 
 
-/* =========================================================
-   SUPABASE
-   ========================================================= */
-
-let supabaseClient = null;
-
-if(
- SUPABASE_URL &&
- SUPABASE_ANON_KEY &&
- !SUPABASE_ANON_KEY.includes("PASTE_")
-){
- supabaseClient =
-  window.supabase.createClient(
-   SUPABASE_URL,
-   SUPABASE_ANON_KEY
-  );
-}
-
-
-/* =========================================================
+/* =========================
    STATE
-   ========================================================= */
+========================= */
 
 let currentUser = null;
 let messages = [];
-let chatId = null;
+let lastAIAnswer = "";
+let currentChatId = null;
 let isSignup = false;
-let forgotMode = false;
 
 
-/* =========================================================
-   DOM
-   ========================================================= */
+/* =========================
+   START
+========================= */
 
-const authScreen =
- document.getElementById("authScreen");
+document.addEventListener("DOMContentLoaded", async () => {
 
-const app =
- document.getElementById("app");
+  setupTextarea();
 
-const authForm =
- document.getElementById("authForm");
+  const {
+    data:{
+      session
+    }
+  } = await supabaseClient.auth.getSession();
 
-const authTitle =
- document.getElementById("authTitle");
+  if(session){
 
-const authButton =
- document.getElementById("authButton");
+    currentUser = session.user;
 
-const toggleAuthBtn =
- document.getElementById("toggleAuthBtn");
+    openApp();
 
-const backLogin =
- document.getElementById("backLogin");
+  }else{
 
-const nameField =
- document.getElementById("nameField");
+    showAuth();
 
-const nameInput =
- document.getElementById("nameInput");
-
-const emailInput =
- document.getElementById("emailInput");
-
-const passwordInput =
- document.getElementById("passwordInput");
-
-const authMsg =
- document.getElementById("authMsg");
-
-const promptInput =
- document.getElementById("prompt");
-
-const messagesBox =
- document.getElementById("messages");
-
-const welcome =
- document.getElementById("welcome");
-
-const sendBtn =
- document.getElementById("sendBtn");
-
-const statusBox =
- document.getElementById("status");
-
-const recents =
- document.getElementById("recents");
-
-
-/* =========================================================
-   INIT
-   ========================================================= */
-
-document.addEventListener("DOMContentLoaded", async()=>{
- await checkAuth();
-
- promptInput.addEventListener("keydown",(e)=>{
-  if(e.key==="Enter" && !e.shiftKey){
-   e.preventDefault();
-   sendMessage();
   }
- });
 
- promptInput.addEventListener("input",()=>{
-  promptInput.style.height="auto";
-  promptInput.style.height =
-   Math.min(promptInput.scrollHeight,160)+"px";
- });
 });
 
 
-/* =========================================================
-   AUTH CHECK
-   ========================================================= */
+supabaseClient.auth.onAuthStateChange(
+  async(event,session)=>{
 
-async function checkAuth(){
-
- if(!supabaseClient){
-  showAuthError(
-   "Supabase anon key add karo. Phir page refresh karo."
-  );
-  return;
- }
-
- try{
-
-  const {data,error} =
-   await supabaseClient.auth.getSession();
-
-  if(error) throw error;
-
-  if(data.session){
-   currentUser=data.session.user;
-   showApp();
-  }else{
-   showAuth();
-  }
-
-  supabaseClient.auth.onAuthStateChange(
-   async(event,session)=>{
     if(session){
-     currentUser=session.user;
-     showApp();
-    }else{
-     currentUser=null;
-     showAuth();
+
+      currentUser = session.user;
+
+      openApp();
+
     }
-   }
-  );
 
- }catch(error){
-  console.error(error);
-  showAuthError(error.message);
- }
-}
+  }
+);
 
 
-/* =========================================================
-   AUTH UI
-   ========================================================= */
+/* =========================
+   AUTH
+========================= */
 
 function showAuth(){
- authScreen.classList.remove("hidden");
- app.classList.add("hidden");
+
+  document
+    .getElementById("authScreen")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("appScreen")
+    .classList.add("hidden");
+
 }
 
-function showApp(){
-
- authScreen.classList.add("hidden");
- app.classList.remove("hidden");
-
- updateUserUI();
- loadRecents();
- loadCurrentChat();
-}
-
-function updateUserUI(){
-
- if(!currentUser)return;
-
- const email =
-  currentUser.email || "ZenX Student";
-
- document.getElementById("userEmail")
-  .textContent=email;
-
- document.getElementById("avatar")
-  .textContent=
-   email.charAt(0).toUpperCase();
-}
 
 function toggleAuth(){
 
- forgotMode=false;
- isSignup=!isSignup;
+  isSignup = !isSignup;
 
- authMsg.textContent="";
+  document
+    .getElementById("authTitle")
+    .textContent =
+    isSignup
+    ? "Create your account"
+    : "Welcome back";
 
- if(isSignup){
+  document
+    .getElementById("authButtonText")
+    .textContent =
+    isSignup
+    ? "Sign Up"
+    : "Sign In";
 
-  authTitle.textContent="Create your ZenX account";
-  authButton.textContent="Sign Up";
-  toggleAuthBtn.textContent="Already have an account?";
-  nameField.classList.remove("hidden");
-  passwordInput.required=true;
+  document
+    .querySelector(".secondary")
+    .textContent =
+    isSignup
+    ? "Already have an account?"
+    : "Create new account";
 
- }else{
+  document
+    .getElementById("authMessage")
+    .textContent = "";
 
-  authTitle.textContent="Welcome back";
-  authButton.textContent="Sign In";
-  toggleAuthBtn.textContent="Create account";
-  nameField.classList.add("hidden");
-  passwordInput.required=true;
-
- }
-
- backLogin.classList.add("hidden");
 }
 
-function backToLogin(){
 
- forgotMode=false;
- isSignup=false;
+async function handleAuth(){
 
- authTitle.textContent="Welcome back";
- authButton.textContent="Sign In";
- toggleAuthBtn.textContent="Create account";
+  const email =
+    document.getElementById("email").value.trim();
 
- nameField.classList.add("hidden");
- backLogin.classList.add("hidden");
+  const password =
+    document.getElementById("password").value;
 
- passwordInput.classList.remove("hidden");
- passwordInput.required=true;
-}
+  const message =
+    document.getElementById("authMessage");
 
-async function showForgotPassword(){
+  if(!email || !password){
 
- if(!supabaseClient){
-  showAuthError("Supabase configuration missing.");
-  return;
- }
+    message.textContent =
+      "Please enter email and password.";
 
- forgotMode=true;
- isSignup=false;
-
- authTitle.textContent="Reset password";
- authButton.textContent="Send reset email";
-
- nameField.classList.add("hidden");
- passwordInput.required=false;
- passwordInput.value="";
- passwordInput.classList.add("hidden");
-
- toggleAuthBtn.textContent="Back to login";
- backLogin.classList.remove("hidden");
-
- authMsg.textContent="";
-}
-
-authForm.addEventListener("submit",async(e)=>{
-
- e.preventDefault();
-
- if(!supabaseClient){
-  showAuthError("Supabase anon key add karo.");
-  return;
- }
-
- const email=emailInput.value.trim();
- const password=passwordInput.value;
-
- if(!email){
-  showAuthError("Email enter karo.");
-  return;
- }
-
- authButton.disabled=true;
-
- try{
-
-  if(forgotMode){
-
-   const redirect =
-    window.location.origin +
-    window.location.pathname;
-
-   const {error} =
-    await supabaseClient.auth.resetPasswordForEmail(
-     email,
-     {redirectTo:redirect}
-    );
-
-   if(error)throw error;
-
-   showAuthSuccess(
-    "Password reset email sent. Inbox/spam check karo."
-   );
-
-   return;
-  }
-
-  if(isSignup){
-
-   if(password.length<6){
-    showAuthError(
-     "Password minimum 6 characters ka hona chahiye."
-    );
     return;
-   }
 
-   const {data,error} =
-    await supabaseClient.auth.signUp({
-     email,
-     password,
-     options:{
-      data:{
-       full_name:nameInput.value.trim()
-      }
-     }
-    });
-
-   if(error)throw error;
-
-   if(data.session){
-    currentUser=data.user;
-    showApp();
-   }else{
-    showAuthSuccess(
-     "Account created. Agar email verification enabled hai to inbox check karo."
-    );
-   }
-
-  }else{
-
-   const {data,error} =
-    await supabaseClient.auth.signInWithPassword({
-     email,
-     password
-    });
-
-   if(error)throw error;
-
-   currentUser=data.user;
-   showApp();
   }
 
- }catch(error){
-
-  console.error(error);
-
-  showAuthError(
-   error.message || "Authentication failed."
-  );
-
- }finally{
-  authButton.disabled=false;
- }
-});
+  message.textContent =
+    isSignup
+    ? "Creating account..."
+    : "Signing in...";
 
 
-function showAuthError(text){
- authMsg.style.color="#fca5a5";
- authMsg.textContent=text;
+  try{
+
+    if(isSignup){
+
+      const {
+        data,
+        error
+      } =
+      await supabaseClient.auth.signUp({
+        email,
+        password
+      });
+
+      if(error) throw error;
+
+      if(data.session){
+
+        currentUser = data.user;
+
+        openApp();
+
+      }else{
+
+        message.textContent =
+          "Account created. Check your email for verification.";
+
+      }
+
+    }else{
+
+      const {
+        data,
+        error
+      } =
+      await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if(error) throw error;
+
+      currentUser = data.user;
+
+      openApp();
+
+    }
+
+  }catch(error){
+
+    message.textContent =
+      error.message || "Authentication failed.";
+
+  }
+
 }
 
-function showAuthSuccess(text){
- authMsg.style.color="#86efac";
- authMsg.textContent=text;
+
+function showForgotPassword(){
+
+  document
+    .getElementById("loginForm")
+    .classList.add("hidden");
+
+  document
+    .getElementById("forgotForm")
+    .classList.remove("hidden");
+
 }
 
 
-/* =========================================================
-   LOGOUT
-   ========================================================= */
+function hideForgotPassword(){
+
+  document
+    .getElementById("forgotForm")
+    .classList.add("hidden");
+
+  document
+    .getElementById("loginForm")
+    .classList.remove("hidden");
+
+}
+
+
+async function sendResetEmail(){
+
+  const email =
+    document
+      .getElementById("forgotEmail")
+      .value
+      .trim();
+
+  const message =
+    document.getElementById("forgotMessage");
+
+  if(!email){
+
+    message.textContent =
+      "Enter your email.";
+
+    return;
+
+  }
+
+  try{
+
+    const {
+      error
+    } =
+    await supabaseClient.auth.resetPasswordForEmail(
+      email,
+      {
+        redirectTo:
+          window.location.origin +
+          window.location.pathname
+      }
+    );
+
+    if(error) throw error;
+
+    message.textContent =
+      "Password reset email sent.";
+
+  }catch(error){
+
+    message.textContent =
+      error.message;
+
+  }
+
+}
+
+
+/* =========================
+   APP
+========================= */
+
+function openApp(){
+
+  document
+    .getElementById("authScreen")
+    .classList.add("hidden");
+
+  document
+    .getElementById("appScreen")
+    .classList.remove("hidden");
+
+  document
+    .getElementById("userEmail")
+    .textContent =
+    currentUser?.email || "";
+
+  loadMessages();
+
+}
+
 
 async function logout(){
 
- if(!supabaseClient)return;
+  await supabaseClient.auth.signOut();
 
- await supabaseClient.auth.signOut();
+  currentUser = null;
+  messages = [];
 
- currentUser=null;
- messages=[];
- chatId=null;
+  showAuth();
 
- showAuth();
 }
 
 
-/* =========================================================
-   STORAGE
-   ========================================================= */
+/* =========================
+   CHAT
+========================= */
 
 function getStorageKey(){
 
- if(!currentUser)return "zenx_guest";
+  return currentUser
+    ? "zenx_messages_" + currentUser.id
+    : "zenx_messages_guest";
 
- return "zenx_chats_"+currentUser.id;
 }
+
 
 function saveMessages(){
 
- try{
+  try{
 
-  localStorage.setItem(
-   getStorageKey(),
-   JSON.stringify(messages)
-  );
+    localStorage.setItem(
+      getStorageKey(),
+      JSON.stringify(messages)
+    );
 
- }catch(error){
-  console.error(error);
- }
-}
+  }catch(error){
 
-function loadCurrentChat(){
+    console.error(error);
 
- try{
+  }
 
-  const saved =
-   localStorage.getItem(getStorageKey());
-
-  messages =
-   saved
-   ? JSON.parse(saved)
-   : [];
-
- }catch(error){
-  messages=[];
- }
-
- renderMessages();
- updateHistory();
-}
-
-function saveRecents(){
-
- try{
-
-  localStorage.setItem(
-   getStorageKey()+"_recents",
-   JSON.stringify(
-    getRecentData()
-   )
-  );
-
- }catch(error){
-  console.error(error);
- }
-}
-
-function getRecentData(){
-
- return messages
-  .filter(m=>m.role==="user")
-  .slice(0,30)
-  .map((m,i)=>({
-   id:i,
-   title:m.content.slice(0,60)
-  }));
-}
-
-function loadRecents(){
-
- if(!currentUser){
-  recents.innerHTML="";
-  return;
- }
-
- let data=[];
-
- try{
-
-  data=JSON.parse(
-   localStorage.getItem(
-    getStorageKey()+"_recents"
-   )
-  ) || [];
-
- }catch(e){
-  data=[];
- }
-
- if(!data.length){
-  recents.innerHTML=
-   `<div style="color:#66667c;font-size:12px;padding:10px">
-    No recent chats
-   </div>`;
-  return;
- }
-
- recents.innerHTML="";
-
- data.forEach((item,index)=>{
-
-  const row=document.createElement("div");
-  row.className="recent";
-
-  row.innerHTML=`
-   <span>💬</span>
-   <span class="recent-text"></span>
-   <button class="delete-recent"
-           title="Delete"
-           onclick="event.stopPropagation();deleteRecent(${index})">
-    ×
-   </button>
-  `;
-
-  row.querySelector(".recent-text")
-   .textContent=item.title;
-
-  row.onclick=()=>{
-   scrollToMessage(index);
-  };
-
-  recents.appendChild(row);
- });
 }
 
 
-/* =========================================================
-   CHAT
-   ========================================================= */
+function loadMessages(){
 
-function newChat(){
+  try{
 
- messages=[];
- chatId=null;
+    const saved =
+      localStorage.getItem(
+        getStorageKey()
+      );
 
- saveMessages();
+    messages =
+      saved
+      ? JSON.parse(saved)
+      : [];
 
- messagesBox.innerHTML="";
- welcome.classList.remove("hidden");
+  }catch(error){
 
- promptInput.value="";
- promptInput.style.height="auto";
+    messages = [];
 
- updateHistory();
+  }
+
+  renderMessages();
+  updateHistory();
+
 }
 
-function refreshChat(){
-
- loadCurrentChat();
-
- statusBox.textContent=
-  "Chat refreshed";
-}
-
-function scrollToMessage(index){
-
- const all=
-  messagesBox.querySelectorAll(".message");
-
- if(all[index]){
-  all[index].scrollIntoView({
-   behavior:"smooth",
-   block:"center"
-  });
- }
-}
-
-function updateHistory(){
-
- saveRecents();
- loadRecents();
-}
-
-
-/* =========================================================
-   RENDER
-   ========================================================= */
 
 function renderMessages(){
 
- messagesBox.innerHTML="";
+  const chat =
+    document.getElementById("chat");
 
- if(messages.length){
-  welcome.classList.add("hidden");
- }else{
-  welcome.classList.remove("hidden");
- }
+  chat.innerHTML = "";
 
- messages.forEach((m,index)=>{
-  addMessageToDOM(
-   m.role,
-   m.content,
-   index
-  );
- });
+  if(messages.length === 0){
+
+    chat.innerHTML = `
+      <div id="welcome" class="welcome">
+        <h1>What can I help you learn?</h1>
+        <p>Your AI study companion for school, JEE, coding and everyday learning.</p>
+      </div>
+    `;
+
+    return;
+
+  }
+
+  messages.forEach(message=>{
+
+    addMessageToUI(
+      message.role,
+      message.content,
+      false
+    );
+
+  });
+
 }
 
-function addMessageToDOM(
- role,
- content,
- index
+
+function addMessageToUI(
+  role,
+  content,
+  scroll=true
 ){
 
- const wrapper=
-  document.createElement("div");
+  const chat =
+    document.getElementById("chat");
 
- wrapper.className=
-  "message "+role;
-
- const bubble=
-  document.createElement("div");
-
- bubble.className="bubble";
-
- if(role==="assistant"){
-
-  try{
-   bubble.innerHTML=
-    marked.parse(content || "");
-  }catch(e){
-   bubble.textContent=content;
-  }
-
- }else{
-
-  bubble.textContent=content;
- }
-
- wrapper.appendChild(bubble);
-
- if(role==="assistant"){
-
-  const actions=
-   document.createElement("div");
-
-  actions.className="msg-actions";
-
-  actions.innerHTML=`
-   <button onclick="speakText(${index})">🔊 Read</button>
-   <button onclick="copyMessage(${index})">📋 Copy</button>
-  `;
-
-  bubble.appendChild(actions);
- }
-
- messagesBox.appendChild(wrapper);
-
- return wrapper;
-}
-
-
-/* =========================================================
-   SEND MESSAGE
-   ========================================================= */
-
-async function sendMessage(){
-
- const text=
-  promptInput.value.trim();
-
- if(!text || sendBtn.disabled)return;
-
- if(!currentUser){
-  statusBox.textContent=
-   "Please sign in first.";
-  return;
- }
-
- messages.push({
-  role:"user",
-  content:text
- });
-
- welcome.classList.add("hidden");
-
- addMessageToDOM(
-  "user",
-  text,
-  messages.length-1
- );
-
- promptInput.value="";
- promptInput.style.height="auto";
-
- saveMessages();
- updateHistory();
-
- sendBtn.disabled=true;
-
- const loading=
-  addMessageToDOM(
-   "assistant",
-   "Thinking…",
-   -1
-  );
-
- statusBox.textContent=
-  "ZenX is thinking...";
-
- try{
-
-  const mode=
-   document.getElementById("mode").value;
-
-  const response=
-   await fetch(API_URL,{
-    method:"POST",
-    headers:{
-     "Content-Type":"application/json",
-     "Accept":"application/json"
-    },
-    body:JSON.stringify({
-     question:text,
-     mode:mode,
-     history:messages.slice(-12),
-     user_id:currentUser.id
-    })
-  });
-
-  if(!response.ok){
-
-   let errText=
-    "API error "+response.status;
-
-   try{
-    const err=await response.json();
-    errText=
-     err.detail ||
-     err.message ||
-     errText;
-   }catch(e){}
-
-   throw new Error(errText);
-  }
-
-  const data=
-   await response.json();
-
-  const answer=
-   data.answer ||
-   data.response ||
-   data.message ||
-   data.result;
-
-  if(!answer){
-   throw new Error(
-    "Backend ne AI response nahi diya."
-   );
-  }
-
-  loading.remove();
-
-  messages.push({
-   role:"assistant",
-   content:String(answer)
-  });
-
-  addMessageToDOM(
-   "assistant",
-   String(answer),
-   messages.length-1
-  );
-
-  saveMessages();
-  updateHistory();
-
-  statusBox.textContent=
-   "ZenX AI • Ready";
-
- }catch(error){
-
-  console.error(error);
-
-  loading.remove();
-
-  const errorMessage=
-   "⚠️ AI connection problem.\n\n"+
-   error.message+
-   "\n\nBackend/Render API check karo.";
-
-  messages.push({
-   role:"assistant",
-   content:errorMessage
-  });
-
-  addMessageToDOM(
-   "assistant",
-   errorMessage,
-   messages.length-1
-  );
-
-  saveMessages();
-
-  statusBox.textContent=
-   "Connection error";
-
- }finally{
-
-  sendBtn.disabled=false;
-  promptInput.focus();
- }
-}
-
-
-/* =========================================================
-   QUICK PROMPTS
-   ========================================================= */
-
-function quickPrompt(text){
-
- promptInput.value=text;
- promptInput.focus();
- promptInput.dispatchEvent(
-  new Event("input")
- );
-}
-
-
-/* =========================================================
-   TOOLS
-   ========================================================= */
-
-function insertTool(text){
-
- promptInput.value=
-  text+promptInput.value;
-
- promptInput.focus();
-
- promptInput.dispatchEvent(
-  new Event("input")
- );
-}
-
-
-/* =========================================================
-   COPY
-   ========================================================= */
-
-async function copyMessage(index){
-
- if(!messages[index])return;
-
- try{
-
-  await navigator.clipboard.writeText(
-   messages[index].content
-  );
-
-  statusBox.textContent=
-   "Copied";
-
-  setTimeout(()=>{
-   statusBox.textContent=
-    "ZenX AI • Student-first AI • 2027";
-  },1200);
-
- }catch(e){
-  console.error(e);
- }
-}
-
-
-/* =========================================================
-   TEXT TO SPEECH
-   ========================================================= */
-
-function speakText(index){
-
- if(!messages[index])return;
-
- if(!("speechSynthesis" in window)){
-  statusBox.textContent=
-   "Voice playback browser mein available nahi hai.";
-  return;
- }
-
- window.speechSynthesis.cancel();
-
- const text=
-  messages[index].content
-   .replace(/[#*_`]/g," ");
-
- const utterance=
-  new SpeechSynthesisUtterance(text);
-
- utterance.rate=.95;
- utterance.pitch=1;
-
- window.speechSynthesis.speak(
-  utterance
- );
-}
-
-
-/* =========================================================
-   VOICE INPUT
-   ========================================================= */
-
-function startVoice(){
-
- const SpeechRecognition=
-  window.SpeechRecognition ||
-  window.webkitSpeechRecognition;
-
- if(!SpeechRecognition){
-
-  statusBox.textContent=
-   "Voice input is not supported in this browser.";
-
-  return;
- }
-
- const recognition=
-  new SpeechRecognition();
-
- recognition.lang="en-IN";
- recognition.interimResults=false;
- recognition.continuous=false;
-
- statusBox.textContent=
-  "🎤 Listening...";
-
- recognition.onresult=(event)=>{
-
-  const text=
-   event.results[0][0].transcript;
-
-  promptInput.value +=
-   (promptInput.value ? " " : "")+
-   text;
-
-  promptInput.dispatchEvent(
-   new Event("input")
-  );
-
-  statusBox.textContent=
-   "Voice captured";
- };
-
- recognition.onerror=(event)=>{
-
-  console.error(event);
-
-  statusBox.textContent=
-   "Voice input error";
- };
-
- recognition.onend=()=>{
-
-  setTimeout(()=>{
-   statusBox.textContent=
-    "ZenX AI • Ready";
-  },1000);
- };
-
- recognition.start();
-}
-
-
-/* =========================================================
-   IMAGE GENERATION
-   ========================================================= */
-
-async function generateImage(){
-
- const prompt=
-  window.prompt(
-   "What image should ZenX generate?"
-  );
-
- if(!prompt || !prompt.trim())return;
-
- if(!currentUser){
-  alert("Please sign in first.");
-  return;
- }
-
- sendBtn.disabled=true;
-
- statusBox.textContent=
-  "🖼️ Generating image...";
-
- const loading=
-  addMessageToDOM(
-   "assistant",
-   "🖼️ Creating your image…",
-   -1
-  );
-
- try{
-
-  /*
-   This endpoint will be implemented
-   in main.py next.
-  */
-
-  const response=
-   await fetch(
-    API_URL.replace(
-     "/api/ask",
-     "/api/image"
-    ),
-    {
-     method:"POST",
-     headers:{
-      "Content-Type":"application/json",
-      "Accept":"application/json"
-     },
-     body:JSON.stringify({
-      prompt:prompt.trim(),
-      user_id:currentUser.id
-     })
-    }
-   );
-
-  if(!response.ok){
-   throw new Error(
-    "Image API error "+response.status
-   );
-  }
-
-  const data=
-   await response.json();
-
-  loading.remove();
-
-  if(data.image_url){
-
-   const imageHTML=
-    `<p>🖼️ Generated image:</p>
-     <img src="${escapeHTML(data.image_url)}"
-          alt="Generated image"
-          style="max-width:100%;border-radius:14px;margin-top:8px">`;
-
-   const wrapper=
+  const wrapper =
     document.createElement("div");
 
-   wrapper.className=
-    "message assistant";
+  wrapper.className =
+    "message " +
+    (role === "user" ? "user" : "ai");
 
-   const bubble=
+  const avatar =
     document.createElement("div");
 
-   bubble.className="bubble";
-   bubble.innerHTML=imageHTML;
+  avatar.className = "avatar";
 
-   wrapper.appendChild(bubble);
-   messagesBox.appendChild(wrapper);
+  avatar.textContent =
+    role === "user"
+    ? "👤"
+    : "Z";
 
-   messages.push({
-    role:"assistant",
-    content:
-     "Generated image for: "+prompt
-   });
+  const bubble =
+    document.createElement("div");
 
-   saveMessages();
+  bubble.className = "bubble";
+
+  if(role === "assistant"){
+
+    bubble.innerHTML =
+      marked.parse(content || "");
 
   }else{
 
-   throw new Error(
-    "Image URL missing from backend."
-   );
+    bubble.textContent =
+      content;
+
   }
 
-  statusBox.textContent=
-   "Image generated";
+  wrapper.appendChild(avatar);
+  wrapper.appendChild(bubble);
 
- }catch(error){
+  chat.appendChild(wrapper);
 
-  loading.remove();
+  if(scroll){
 
-  const errorText=
-   "⚠️ Image generation unavailable.\n\n"+
-   error.message;
+    wrapper.scrollIntoView({
+      behavior:"smooth",
+      block:"end"
+    });
+
+  }
+
+}
+
+
+async function sendMessage(){
+
+  const input =
+    document.getElementById("prompt");
+
+  const question =
+    input.value.trim();
+
+  if(!question) return;
+
+  input.value = "";
+
+  const welcome =
+    document.getElementById("welcome");
+
+  if(welcome) welcome.remove();
 
   messages.push({
-   role:"assistant",
-   content:errorText
+    role:"user",
+    content:question
   });
 
-  addMessageToDOM(
-   "assistant",
-   errorText,
-   messages.length-1
+  addMessageToUI(
+    "user",
+    question
   );
 
   saveMessages();
 
-  statusBox.textContent=
-   "Image generation error";
+  const loading =
+    document.createElement("div");
 
- }finally{
-  sendBtn.disabled=false;
- }
+  loading.className =
+    "message ai";
+
+  loading.id = "loadingMessage";
+
+  loading.innerHTML = `
+    <div class="avatar">Z</div>
+    <div class="bubble">ZenX is thinking...</div>
+  `;
+
+  document
+    .getElementById("chat")
+    .appendChild(loading);
+
+  loading.scrollIntoView({
+    behavior:"smooth"
+  });
+
+
+  try{
+
+    const response =
+      await fetch(
+        API_URL + "/api/ask",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+
+            question,
+
+            mode:
+              document.getElementById("mode").value,
+
+            history:
+              messages.slice(-20),
+
+            user_id:
+              currentUser?.id || null
+
+          })
+
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(!response.ok){
+
+      throw new Error(
+        data.detail ||
+        data.error ||
+        "AI request failed."
+      );
+
+    }
+
+
+    const answer =
+      data.answer ||
+      data.response ||
+      data.message ||
+      "No answer received.";
+
+    lastAIAnswer = answer;
+
+
+    messages.push({
+      role:"assistant",
+      content:answer
+    });
+
+    saveMessages();
+
+    loading.remove();
+
+    addMessageToUI(
+      "assistant",
+      answer
+    );
+
+    updateHistory();
+
+  }catch(error){
+
+    loading.remove();
+
+    const errorText =
+      "Sorry, ZenX could not connect to the AI server. Please try again.";
+
+    messages.push({
+      role:"assistant",
+      content:errorText
+    });
+
+    saveMessages();
+
+    addMessageToUI(
+      "assistant",
+      errorText
+    );
+
+    console.error(error);
+
+  }
+
 }
 
 
-/* =========================================================
-   DELETE RECENT
-   ========================================================= */
+/* =========================
+   CHAT CONTROLS
+========================= */
 
-function deleteRecent(index){
+function newChat(){
 
- let data=[];
+  messages = [];
 
- try{
-  data=JSON.parse(
-   localStorage.getItem(
-    getStorageKey()+"_recents"
-   )
-  ) || [];
- }catch(e){}
+  currentChatId =
+    Date.now();
 
- data.splice(index,1);
+  saveMessages();
 
- localStorage.setItem(
-  getStorageKey()+"_recents",
-  JSON.stringify(data)
- );
+  renderMessages();
 
- loadRecents();
 }
 
 
-/* =========================================================
-   SIDEBAR
-   ========================================================= */
+function refreshChat(){
 
-function toggleSidebar(){
+  renderMessages();
 
- document
-  .getElementById("sidebar")
-  .classList.toggle("open");
 }
 
 
-/* =========================================================
-   ESCAPE
-   ========================================================= */
+function clearRecents(){
 
-function escapeHTML(text){
+  if(!confirm(
+    "Delete all recent chats?"
+  )) return;
 
- return String(text)
-  .replaceAll("&","&amp;")
-  .replaceAll("<","&lt;")
-  .replaceAll(">","&gt;")
-  .replaceAll('"',"&quot;")
-  .replaceAll("'","&#039;");
+  messages = [];
+
+  saveMessages();
+
+  renderMessages();
+
+  updateHistory();
+
 }
 
 
-/* =========================================================
-   PWA / PAGE SAFETY
-   ========================================================= */
+function updateHistory(){
 
-window.addEventListener("beforeunload",()=>{
- saveMessages();
-});
+  const list =
+    document.getElementById("recentList");
+
+  list.innerHTML = "";
+
+  if(!messages.length){
+
+    list.innerHTML =
+      `<div style="color:#666;font-size:13px;padding:8px">
+        No recent chats
+      </div>`;
+
+    return;
+
+  }
+
+
+  const userMessages =
+    messages
+      .filter(m=>m.role==="user")
+      .slice(-10)
+      .reverse();
+
+
+  userMessages.forEach(
+    (message,index)=>{
+
+      const row =
+        document.createElement("div");
+
+      row.className =
+        "recent";
+
+      const button =
+        document.createElement("button");
+
+      button.textContent =
+        message.content;
+
+      button.onclick = ()=>{
+
+        document
+          .getElementById("prompt")
+          .value =
+          message.content;
+
+      };
+
+
+      const del =
+        document.createElement("button");
+
+      del.className =
+        "deleteRecent";
+
+      del.textContent = "×";
+
+      del.onclick = (event)=>{
+
+        event.stopPropagation();
+
+        const actualIndex =
+          messages.lastIndexOf(message);
+
+        if(actualIndex >= 0){
+
+          messages.splice(
+            actualIndex,
+            1
+          );
+
+          saveMessages();
+
+          renderMessages();
+
+          updateHistory();
+
+        }
+
+      };
+
+
+      row.appendChild(button);
+      row.appendChild(del);
+
+      list.appendChild(row);
+
+    }
+  );
+
+}
+
+
+function quickPrompt(text){
+
+  document
+    .getElementById("prompt")
+    .value = text;
+
+  document
+    .getElementById("prompt")
+    .focus();
+
+}
+
+
+/* =========================
+   MODE
+========================= */
+
+function changeMode(){
+
+  const mode =
+    document.getElementById("mode").value;
+
+  const labels = {
+    student:"Student Mode",
+    jee:"JEE Mode",
+    school:"School Mode",
+    coding:"Coding Mode",
+    general:"General Mode"
+  };
+
+  document
+    .getElementById("modeLabel")
+    .textContent =
+    labels[mode] || "Student Mode";
+
+}
+
+
+/* =========================
+   VOICE
+========================= */
+
+function startVoice(){
+
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+  if(!SpeechRecognition){
+
+    alert(
+      "Voice recognition is not supported in this browser."
+    );
+
+    return;
+
+  }
+
+  const recognition =
+    new SpeechRecognition();
+
+  recognition.lang = "en-IN";
+
+  recognition.interimResults = false;
+
+  recognition.maxAlternatives = 1;
+
+  recognition.start();
+
+
+  recognition.onresult =
+    event=>{
+
+      const text =
+        event.results[0][0].transcript;
+
+      document
+        .getElementById("prompt")
+        .value = text;
+
+    };
+
+
+  recognition.onerror =
+    error=>{
+
+      console.error(
+        "Voice error:",
+        error
+      );
+
+    };
+
+}
+
+
+function speakLast(){
+
+  if(!lastAIAnswer){
+
+    alert(
+      "There is no AI answer to read yet."
+    );
+
+    return;
+
+  }
+
+  if(!window.speechSynthesis){
+
+    alert(
+      "Text-to-speech is not supported."
+    );
+
+    return;
+
+  }
+
+  window.speechSynthesis.cancel();
+
+  const utterance =
+    new SpeechSynthesisUtterance(
+      lastAIAnswer
+    );
+
+  utterance.lang = "en-IN";
+
+  utterance.rate = 0.95;
+
+  window.speechSynthesis.speak(
+    utterance
+  );
+
+}
+
+
+/* =========================
+   IMAGE GENERATION
+========================= */
+
+function showImagePrompt(){
+
+  document
+    .getElementById("imageModal")
+    .classList.remove("hidden");
+
+}
+
+
+function closeImagePrompt(){
+
+  document
+    .getElementById("imageModal")
+    .classList.add("hidden");
+
+}
+
+
+async function generateImage(){
+
+  const prompt =
+    document
+      .getElementById("imagePrompt")
+      .value
+      .trim();
+
+  const message =
+    document
+      .getElementById("imageMessage");
+
+  if(!prompt){
+
+    message.textContent =
+      "Describe the image first.";
+
+    return;
+
+  }
+
+  message.textContent =
+    "Generating image...";
+
+
+  try{
+
+    const response =
+      await fetch(
+        API_URL + "/api/image",
+        {
+          method:"POST",
+
+          headers:{
+            "Content-Type":
+              "application/json"
+          },
+
+          body:JSON.stringify({
+
+            prompt,
+
+            user_id:
+              currentUser?.id || null
+
+          })
+
+        }
+      );
+
+
+    const data =
+      await response.json();
+
+
+    if(!response.ok){
+
+      throw new Error(
+        data.detail ||
+        data.error ||
+        "Image generation failed."
+      );
+
+    }
+
+
+    const imageUrl =
+      data.image_url ||
+      data.url;
+
+
+    if(!imageUrl){
+
+      throw new Error(
+        "No image was returned by the server."
+      );
+
+    }
+
+
+    closeImagePrompt();
+
+    const chat =
+      document.getElementById("chat");
+
+    const wrapper =
+      document.createElement("div");
+
+    wrapper.className =
+      "message ai";
+
+    wrapper.innerHTML = `
+      <div class="avatar">Z</div>
+      <div class="bubble">
+        <p>Generated image:</p>
+        <img
+          src="${imageUrl}"
+          alt="Generated by ZenX"
+          style="max-width:100%;border-radius:15px;margin-top:10px;"
+        >
+      </div>
+    `;
+
+    chat.appendChild(wrapper);
+
+    wrapper.scrollIntoView({
+      behavior:"smooth"
+    });
+
+
+  }catch(error){
+
+    message.textContent =
+      error.message ||
+      "Image generation failed.";
+
+    console.error(error);
+
+  }
+
+}
+
+
+/* =========================
+   ENTER KEY
+========================= */
+
+function handleEnter(event){
+
+  if(
+    event.key === "Enter" &&
+    !event.shiftKey
+  ){
+
+    event.preventDefault();
+
+    sendMessage();
+
+  }
+
+}
+
+
+function setupTextarea(){
+
+  const textarea =
+    document.getElementById("prompt");
+
+  textarea.addEventListener(
+    "input",
+    ()=>{
+      textarea.style.height =
+        "auto";
+
+      textarea.style.height =
+        Math.min(
+          textarea.scrollHeight,
+          150
+        ) + "px";
+    }
+  );
+
+}
+
+
+/* =========================
+   GLOBAL ERROR HANDLING
+========================= */
+
+window.addEventListener(
+  "unhandledrejection",
+  event=>{
+
+    console.error(
+      "Unhandled error:",
+      event.reason
+    );
+
+  }
+);
 
 </script>
 
