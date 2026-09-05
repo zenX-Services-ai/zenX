@@ -1652,22 +1652,6 @@ function getStorageKey(){
 }
 
 
-function saveMessages(){
-
-  try{
-
-    localStorage.setItem(
-      getStorageKey(),
-      JSON.stringify(messages)
-    );
-
-  }catch(error){
-
-    console.error(error);
-  }
-}
-
-
 function loadMessages(){
 
   try{
@@ -1687,10 +1671,32 @@ function loadMessages(){
     messages = [];
   }
 
+  // Fresh screen after inactivity
+  const lastVisit =
+    localStorage.getItem("zenx_last_visit");
+
+  const now = Date.now();
+
+  const ONE_HOUR =
+    60 * 60 * 1000;
+
+  if(
+    lastVisit &&
+    now - Number(lastVisit) > ONE_HOUR
+  ){
+
+    messages = [];
+
+  }
+
+  localStorage.setItem(
+    "zenx_last_visit",
+    now.toString()
+  );
+
   renderMessages();
   updateHistory();
 }
-
 
 /* =====================================================
    NEW CHAT
@@ -2464,10 +2470,7 @@ function updateHistory(){
   history.innerHTML = "";
 
   messages
-    .filter(
-      message =>
-        message.role === "user"
-    )
+    .filter(message => message.role === "user")
     .slice(-10)
     .reverse()
     .forEach(message => {
@@ -2475,12 +2478,38 @@ function updateHistory(){
       const item =
         document.createElement("div");
 
-      item.className =
-        "chat-item";
+      item.className = "chat-item";
 
-      item.textContent =
+      const title =
+        document.createElement("span");
+
+      title.textContent =
         message.text ||
         "Image conversation";
+
+      const del =
+        document.createElement("button");
+
+      del.textContent = "🗑️";
+
+      del.className = "delete-chat";
+
+      del.onclick = (event) => {
+
+        event.stopPropagation();
+
+        messages =
+          messages.filter(
+            m => m.id !== message.id
+          );
+
+        saveMessages();
+        renderMessages();
+        updateHistory();
+      };
+
+      item.appendChild(title);
+      item.appendChild(del);
 
       history.appendChild(item);
     });
