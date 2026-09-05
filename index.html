@@ -2,1363 +2,1853 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#070711">
-<meta name="description" content="ZenX AI — Your AI. Your Ideas. Your Future.">
-<title>ZenX AI</title>
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#080812">
+<title>ZenX AI — Student AI 2027</title>
 
-<!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<!-- Markdown -->
 <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
-<!-- KaTeX for Mathematics -->
-<link rel="stylesheet"
-href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
-
-<script defer
-src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js">
-</script>
-
-<script defer
-src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js">
-</script>
-
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
-
+*{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#070711;
-  --panel:rgba(18,18,34,.84);
-  --panel2:rgba(12,12,25,.92);
-  --border:rgba(255,255,255,.11);
-  --text:#fff;
-  --muted:#9999ad;
-  --purple:#8b5cf6;
-  --cyan:#06b6d4;
-  --pink:#ec4899;
-  --green:#22c55e;
+ --bg:#070711;
+ --panel:#10101d;
+ --panel2:#151526;
+ --border:rgba(255,255,255,.09);
+ --text:#f7f7ff;
+ --muted:#9c9cb4;
+ --purple:#8b5cf6;
+ --cyan:#22d3ee;
+ --pink:#ec4899;
+ --danger:#ef4444;
 }
-
-html,body{
-  width:100%;
-  height:100%;
-  overflow:hidden;
-  font-family:
-    Inter,
-    system-ui,
-    -apple-system,
-    BlinkMacSystemFont,
-    "Segoe UI",
-    sans-serif;
-  background:var(--bg);
-  color:#fff;
-}
-
 body{
-  background:
-    radial-gradient(
-      circle at 5% 10%,
-      rgba(139,92,246,.30),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 95% 10%,
-      rgba(6,182,212,.22),
-      transparent 30%
-    ),
-    radial-gradient(
-      circle at 50% 100%,
-      rgba(236,72,153,.18),
-      transparent 35%
-    ),
-    #070711;
+ font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+ background:
+ radial-gradient(circle at 20% 10%,rgba(139,92,246,.16),transparent 28%),
+ radial-gradient(circle at 90% 80%,rgba(34,211,238,.10),transparent 25%),
+ var(--bg);
+ color:var(--text);
+ min-height:100vh;
+ overflow:hidden;
 }
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+.hidden{display:none!important}
 
-body:before{
-  content:"";
-  position:fixed;
-  width:420px;
-  height:420px;
-  border-radius:50%;
-  background:
-    linear-gradient(
-      135deg,
-      #8b5cf6,
-      #06b6d4,
-      #ec4899
-    );
-  filter:blur(120px);
-  opacity:.13;
-  animation:float 14s ease-in-out infinite alternate;
-  pointer-events:none;
+/* AUTH */
+#authScreen{
+ min-height:100vh;
+ display:flex;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
 }
-
-@keyframes float{
-  from{
-    transform:translate(-100px,-100px);
-  }
-  to{
-    transform:
-      translate(
-        calc(100vw - 300px),
-        calc(100vh - 350px)
-      );
-  }
-}
-
-.hidden{
-  display:none!important;
-}
-
-button{
-  font-family:inherit;
-  cursor:pointer;
-}
-
-button:disabled{
-  cursor:not-allowed;
-}
-
-
-/* =====================================================
-   AUTH
-===================================================== */
-
-#auth{
-  width:100%;
-  height:100%;
-  min-height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  overflow:auto;
-}
-
-.auth-shell{
-  width:min(950px,100%);
-  display:grid;
-  grid-template-columns:1fr 430px;
-  gap:30px;
-  align-items:center;
-}
-
-.auth-intro{
-  padding:30px;
-}
-
-.auth-dev{
-  display:inline-flex;
-  align-items:center;
-  gap:9px;
-  padding:8px 13px;
-  border:1px solid var(--border);
-  border-radius:999px;
-  background:rgba(255,255,255,.045);
-  color:#cfcfe0;
-  font-size:12px;
-  margin-bottom:20px;
-}
-
-.dev-dot{
-  width:8px;
-  height:8px;
-  border-radius:50%;
-  background:#22c55e;
-  box-shadow:0 0 14px #22c55e;
-}
-
-.auth-intro h2{
-  font-size:clamp(38px,6vw,68px);
-  line-height:1.02;
-  letter-spacing:-2px;
-  margin-bottom:18px;
-}
-
-.gradient-text{
-  background:
-    linear-gradient(
-      90deg,
-      #fff,
-      #c4b5fd,
-      #67e8f9,
-      #f9a8d4
-    );
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
-}
-
-.auth-intro p{
-  max-width:510px;
-  color:#88889c;
-  font-size:16px;
-  line-height:1.7;
-}
-
-.feature-row{
-  display:flex;
-  flex-wrap:wrap;
-  gap:9px;
-  margin-top:25px;
-}
-
-.feature{
-  padding:9px 12px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.04);
-  border-radius:12px;
-  color:#c6c6d4;
-  font-size:12px;
-}
-
 .auth-card{
-  width:100%;
-  padding:32px;
-  border:1px solid var(--border);
-  border-radius:28px;
-  background:
-    linear-gradient(
-      145deg,
-      rgba(25,25,45,.88),
-      rgba(11,11,23,.88)
-    );
-  backdrop-filter:blur(28px);
-  box-shadow:
-    0 30px 100px rgba(0,0,0,.48),
-    inset 0 1px 0 rgba(255,255,255,.04);
+ width:min(430px,100%);
+ background:rgba(16,16,29,.88);
+ backdrop-filter:blur(25px);
+ border:1px solid var(--border);
+ border-radius:25px;
+ padding:30px;
+ box-shadow:0 25px 80px rgba(0,0,0,.45);
 }
-
-.brand{
-  display:flex;
-  align-items:center;
-  gap:12px;
-  margin-bottom:26px;
+.logo{
+ font-size:34px;
+ font-weight:900;
+ text-align:center;
+ letter-spacing:-2px;
+ background:linear-gradient(90deg,var(--purple),var(--cyan),var(--pink));
+ -webkit-background-clip:text;
+ color:transparent;
 }
-
-.brand-icon,
-.mini-logo{
-  display:grid;
-  place-items:center;
-  color:white;
-  background:
-    linear-gradient(
-      135deg,
-      #8b5cf6,
-      #06b6d4,
-      #ec4899
-    );
-  box-shadow:
-    0 0 35px rgba(139,92,246,.35);
+.tagline{
+ text-align:center;
+ color:var(--muted);
+ margin:8px 0 28px;
 }
-
-.brand-icon{
-  width:48px;
-  height:48px;
-  border-radius:16px;
-  font-size:21px;
+.auth-title{
+ font-size:23px;
+ margin-bottom:18px;
 }
-
-.brand-name{
-  font-size:25px;
-  font-weight:900;
-  letter-spacing:-.7px;
-}
-
-.brand-name span{
-  color:#9d8aff;
-}
-
-.auth-card h1{
-  font-size:30px;
-  letter-spacing:-.6px;
-  margin-bottom:7px;
-}
-
-.auth-sub{
-  color:var(--muted);
-  margin-bottom:23px;
-  line-height:1.5;
-}
-
-.field{
-  margin:13px 0;
-}
-
+.field{margin-bottom:14px}
 .field label{
-  display:block;
-  color:#bdbdcc;
-  font-size:13px;
-  margin-bottom:7px;
+ display:block;
+ font-size:13px;
+ color:var(--muted);
+ margin-bottom:7px;
 }
-
-.input-wrap{
-  position:relative;
-}
-
 .field input{
-  width:100%;
-  padding:14px 45px 14px 15px;
-  border-radius:13px;
-  border:1px solid var(--border);
-  outline:none;
-  background:rgba(255,255,255,.05);
-  color:#fff;
-  font-size:14px;
-  transition:.2s;
+ width:100%;
+ background:#0b0b16;
+ color:white;
+ border:1px solid var(--border);
+ padding:13px 14px;
+ border-radius:12px;
+ outline:none;
 }
-
-.field input:focus{
-  border-color:#8b5cf6;
-  box-shadow:
-    0 0 0 3px rgba(139,92,246,.10);
-}
-
-.password-toggle{
-  position:absolute;
-  right:9px;
-  top:50%;
-  transform:translateY(-50%);
-  border:0;
-  background:none;
-  color:#88889a;
-  font-size:16px;
-  padding:5px;
-}
-
+.field input:focus{border-color:var(--purple)}
 .primary{
-  width:100%;
-  padding:14px;
-  margin-top:8px;
-  border:0;
-  border-radius:14px;
-  color:#fff;
-  font-weight:850;
-  font-size:14px;
-  background:
-    linear-gradient(
-      135deg,
-      #8b5cf6,
-      #06b6d4
-    );
-  transition:.2s;
+ width:100%;
+ border:0;
+ border-radius:12px;
+ padding:13px;
+ color:white;
+ font-weight:700;
+ background:linear-gradient(90deg,var(--purple),#6d4aff,var(--cyan));
+ margin-top:4px;
+}
+.secondary{
+ width:100%;
+ background:transparent;
+ color:#c7c7dc;
+ border:1px solid var(--border);
+ padding:11px;
+ border-radius:11px;
+ margin-top:10px;
+}
+.auth-links{
+ display:flex;
+ justify-content:space-between;
+ margin-top:15px;
+ font-size:13px;
+}
+.auth-links button{
+ border:0;background:none;color:#a78bfa;
+}
+#authMsg{
+ margin-top:12px;
+ text-align:center;
+ font-size:13px;
+ min-height:18px;
+ color:#fca5a5;
 }
 
-.primary:hover{
-  transform:translateY(-1px);
-  box-shadow:
-    0 12px 32px rgba(139,92,246,.28);
+/* APP */
+#app{
+ display:flex;
+ height:100vh;
 }
-
-.forgot{
-  width:100%;
-  margin-top:12px;
-  border:0;
-  background:none;
-  color:#b9a5ff;
-  font-size:13px;
-}
-
-.switch{
-  text-align:center;
-  margin-top:19px;
-  color:#8f8fa3;
-  font-size:14px;
-}
-
-.switch button{
-  border:0;
-  background:none;
-  color:#c4b5fd;
-  font-weight:800;
-}
-
-.auth-msg{
-  margin-top:15px;
-  padding:13px;
-  border-radius:12px;
-  background:rgba(255,255,255,.05);
-  color:#d5d5e2;
-  font-size:13px;
-  line-height:1.55;
-  white-space:pre-line;
-}
-
-.auth-footer{
-  margin-top:20px;
-  text-align:center;
-  color:#555568;
-  font-size:10px;
-}
-
-
-/* =====================================================
-   APP
-===================================================== */
-
-.app{
-  width:100%;
-  height:100%;
-  display:flex;
-}
-
 .sidebar{
-  width:270px;
-  height:100%;
-  padding:18px;
-  display:flex;
-  flex-direction:column;
-  background:rgba(6,6,17,.70);
-  backdrop-filter:blur(25px);
-  border-right:1px solid var(--border);
-  z-index:50;
+ width:275px;
+ background:rgba(9,9,18,.94);
+ border-right:1px solid var(--border);
+ display:flex;
+ flex-direction:column;
+ padding:17px;
+ flex-shrink:0;
 }
-
-.logo-row{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:21px;
-  font-weight:900;
-  margin-bottom:22px;
+.brand{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ padding:5px 5px 18px;
 }
-
-.mini-logo{
-  width:38px;
-  height:38px;
-  border-radius:12px;
+.brand-icon{
+ width:38px;height:38px;
+ border-radius:12px;
+ display:grid;
+ place-items:center;
+ background:linear-gradient(135deg,var(--purple),var(--cyan));
+ font-weight:900;
 }
-
+.brand-name{font-weight:900;font-size:20px}
+.version{
+ margin-left:auto;
+ font-size:10px;
+ color:#9ca3af;
+ border:1px solid var(--border);
+ padding:3px 6px;
+ border-radius:6px;
+}
 .new-chat{
-  width:100%;
-  padding:12px;
-  border-radius:13px;
-  color:#fff;
-  border:1px solid var(--border);
-  background:
-    linear-gradient(
-      135deg,
-      rgba(139,92,246,.25),
-      rgba(6,182,212,.12)
-    );
-  font-weight:750;
+ width:100%;
+ border:1px solid rgba(139,92,246,.45);
+ background:rgba(139,92,246,.12);
+ color:white;
+ padding:12px;
+ border-radius:12px;
+ font-weight:700;
+ margin-bottom:18px;
 }
-
-.history-title{
-  margin:24px 0 9px;
-  color:#737387;
-  font-size:11px;
-  text-transform:uppercase;
-  letter-spacing:1px;
+.section-title{
+ font-size:11px;
+ text-transform:uppercase;
+ letter-spacing:1px;
+ color:#66667e;
+ margin:8px 5px;
 }
-
-.history{
-  flex:1;
-  overflow-y:auto;
+.recents{
+ overflow:auto;
+ flex:1;
 }
-
-.chat-item{
-  padding:11px;
-  margin-bottom:4px;
-  border-radius:10px;
-  color:#c7c7d5;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  cursor:pointer;
+.recent{
+ display:flex;
+ align-items:center;
+ gap:8px;
+ padding:10px;
+ border-radius:10px;
+ color:#c5c5d7;
+ margin-bottom:4px;
+ cursor:pointer;
+ font-size:13px;
 }
-
-.chat-item:hover{
-  background:rgba(255,255,255,.07);
+.recent:hover{background:rgba(255,255,255,.05)}
+.recent-text{
+ flex:1;
+ white-space:nowrap;
+ overflow:hidden;
+ text-overflow:ellipsis;
 }
-
+.delete-recent{
+ border:0;
+ background:none;
+ color:#68687c;
+ padding:3px;
+}
+.delete-recent:hover{color:#f87171}
+.sidebar-bottom{
+ border-top:1px solid var(--border);
+ padding-top:14px;
+}
 .user-box{
-  display:flex;
-  align-items:center;
-  gap:9px;
-  border-top:1px solid var(--border);
-  padding-top:14px;
+ display:flex;
+ align-items:center;
+ gap:9px;
+ padding:9px;
+ margin-bottom:8px;
 }
-
-.user-avatar{
-  width:36px;
-  height:36px;
-  border-radius:50%;
-  display:grid;
-  place-items:center;
-  background:
-    linear-gradient(
-      135deg,
-      #ec4899,
-      #8b5cf6
-    );
-  font-weight:800;
+.avatar{
+ width:34px;height:34px;
+ border-radius:50%;
+ display:grid;
+ place-items:center;
+ background:linear-gradient(135deg,#7c3aed,#06b6d4);
+ font-weight:800;
 }
-
-.user-info{
-  min-width:0;
-}
-
-.user-name{
-  font-size:14px;
-}
-
 .user-email{
-  color:#77778a;
-  font-size:11px;
-  max-width:150px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  white-space:nowrap;
+ font-size:12px;
+ overflow:hidden;
+ text-overflow:ellipsis;
+ white-space:nowrap;
+}
+.small-btn{
+ width:100%;
+ background:transparent;
+ color:#aaaabd;
+ border:1px solid var(--border);
+ border-radius:9px;
+ padding:9px;
 }
 
-.logout{
-  margin-left:auto;
-  background:none;
-  border:0;
-  color:#999;
-  font-size:18px;
-}
-
-
-/* =====================================================
-   MAIN
-===================================================== */
-
+/* MAIN */
 .main{
-  flex:1;
-  min-width:0;
-  height:100%;
-  display:flex;
-  flex-direction:column;
+ flex:1;
+ min-width:0;
+ display:flex;
+ flex-direction:column;
 }
-
 .topbar{
-  height:70px;
-  flex:0 0 70px;
-  padding:0 22px;
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  background:rgba(7,7,17,.48);
-  backdrop-filter:blur(22px);
-  border-bottom:1px solid var(--border);
+ height:64px;
+ border-bottom:1px solid var(--border);
+ display:flex;
+ align-items:center;
+ padding:0 18px;
+ gap:10px;
+ background:rgba(7,7,17,.72);
+ backdrop-filter:blur(15px);
 }
-
-.top-left{
-  display:flex;
-  align-items:center;
-  gap:11px;
+.menu-btn{
+ display:none;
+ border:0;
+ background:none;
+ color:white;
+ font-size:22px;
 }
-
-.menu{
-  display:none;
-  border:0;
-  background:none;
-  color:#fff;
-  font-size:23px;
-}
-
-.model{
-  font-weight:850;
-  font-size:17px;
-}
-
-.online{
-  color:#70dfa0;
-  font-size:11px;
-  display:flex;
-  align-items:center;
-  gap:5px;
-}
-
-.online-dot{
-  width:7px;
-  height:7px;
-  border-radius:50%;
-  background:#22c55e;
-  box-shadow:0 0 10px #22c55e;
-}
-
 .mode{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:8px 12px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:rgba(255,255,255,.045);
-  color:#ddd;
-  font-size:12px;
+ padding:8px 11px;
+ background:#11111e;
+ border:1px solid var(--border);
+ border-radius:10px;
+ color:#d6d6e5;
 }
-
-.mode input{
-  accent-color:#8b5cf6;
+.top-spacer{flex:1}
+.icon-btn{
+ border:1px solid var(--border);
+ background:#10101b;
+ color:#d5d5e5;
+ width:38px;height:38px;
+ border-radius:10px;
 }
-
-
-/* =====================================================
-   CHAT
-===================================================== */
+.icon-btn:hover{border-color:#7255d8}
 
 .chat{
-  flex:1;
-  overflow-y:auto;
-  padding:32px 18px 160px;
-  scroll-behavior:smooth;
+ flex:1;
+ overflow-y:auto;
+ padding:28px max(16px,5vw);
 }
-
-.messages{
-  max-width:900px;
-  margin:auto;
-}
-
 .welcome{
-  min-height:55vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
+ max-width:800px;
+ margin:7vh auto 0;
+ text-align:center;
 }
-
-.orb{
-  width:92px;
-  height:92px;
-  border-radius:30px;
-  display:grid;
-  place-items:center;
-  font-size:39px;
-  background:
-    linear-gradient(
-      135deg,
-      #8b5cf6,
-      #06b6d4,
-      #ec4899
-    );
-  box-shadow:
-    0 0 55px rgba(139,92,246,.30);
-  animation:pulse 3s ease-in-out infinite;
-}
-
-@keyframes pulse{
-  50%{
-    transform:translateY(-7px) rotate(2deg);
-  }
-}
-
 .welcome h1{
-  margin-top:25px;
-  font-size:clamp(32px,6vw,56px);
-  background:
-    linear-gradient(
-      90deg,
-      #fff,
-      #c4b5fd,
-      #67e8f9,
-      #f9a8d4
-    );
-  -webkit-background-clip:text;
-  background-clip:text;
-  color:transparent;
+ font-size:clamp(32px,6vw,58px);
+ letter-spacing:-3px;
+ line-height:1;
+ background:linear-gradient(90deg,#fff,#a78bfa,#67e8f9);
+ -webkit-background-clip:text;
+ color:transparent;
 }
-
 .welcome p{
-  max-width:560px;
-  margin-top:9px;
-  color:#858598;
-  line-height:1.6;
+ color:var(--muted);
+ margin:15px auto 28px;
+ max-width:620px;
 }
-
-.suggestions{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:8px;
-  margin-top:22px;
+.quick-grid{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:10px;
+ max-width:680px;
+ margin:auto;
 }
-
-.suggestion{
-  padding:9px 12px;
-  border:1px solid var(--border);
-  border-radius:12px;
-  background:rgba(255,255,255,.04);
-  color:#bdbdcc;
-  font-size:12px;
+.quick{
+ text-align:left;
+ padding:15px;
+ border-radius:15px;
+ border:1px solid var(--border);
+ background:rgba(255,255,255,.025);
+ color:#ddd;
 }
+.quick:hover{background:rgba(139,92,246,.10)}
+.quick b{display:block;margin-bottom:5px}
+.quick span{font-size:12px;color:#85859d}
 
 .message{
-  display:flex;
-  gap:12px;
-  margin:27px 0;
-  animation:appear .2s ease;
+ max-width:900px;
+ margin:0 auto 20px;
+ display:flex;
+ gap:12px;
 }
-
-@keyframes appear{
-  from{
-    opacity:0;
-    transform:translateY(7px);
-  }
-  to{
-    opacity:1;
-    transform:none;
-  }
-}
-
-.message.user{
-  justify-content:flex-end;
-}
-
-.message.user .bubble{
-  max-width:76%;
-  background:
-    linear-gradient(
-      135deg,
-      rgba(124,58,237,.92),
-      rgba(79,70,229,.82)
-    );
-}
-
-.message.ai .bubble{
-  max-width:88%;
-  background:rgba(255,255,255,.045);
-  border:1px solid var(--border);
-}
-
-.msg-avatar{
-  flex:0 0 35px;
-  height:35px;
-  border-radius:11px;
-  display:grid;
-  place-items:center;
-  background:
-    linear-gradient(
-      135deg,
-      #8b5cf6,
-      #06b6d4
-    );
-}
-
+.message.user{justify-content:flex-end}
 .bubble{
-  padding:15px 17px;
-  border-radius:18px;
-  line-height:1.65;
-  overflow-wrap:anywhere;
-  font-size:15px;
+ max-width:min(820px,90%);
+ padding:13px 16px;
+ border-radius:17px;
+ line-height:1.6;
+ font-size:14px;
+ overflow-wrap:anywhere;
 }
-
-/* Markdown */
-
-.bubble p{
-  margin:0 0 10px;
+.user .bubble{
+ background:linear-gradient(135deg,#6941d8,#5631b9);
+ border-bottom-right-radius:5px;
 }
-
-.bubble p:last-child{
-  margin-bottom:0;
+.assistant .bubble{
+ background:#11111f;
+ border:1px solid var(--border);
+ border-bottom-left-radius:5px;
 }
-
-.bubble ul,
-.bubble ol{
-  padding-left:22px;
-  margin:8px 0;
-}
-
-.bubble li{
-  margin:4px 0;
-}
-
-.bubble strong{
-  font-weight:800;
-}
-
-.bubble code{
-  padding:2px 5px;
-  border-radius:5px;
-  background:rgba(0,0,0,.25);
-}
-
 .bubble pre{
-  overflow-x:auto;
-  padding:12px;
-  border-radius:10px;
-  background:rgba(0,0,0,.35);
-  margin:10px 0;
+ overflow:auto;
+ background:#080812;
+ border:1px solid var(--border);
+ padding:13px;
+ border-radius:10px;
+ margin:10px 0;
 }
-
-/* Maths */
-
-.katex-display{
-  overflow-x:auto;
-  overflow-y:hidden;
-  padding:5px 0;
+.bubble code{
+ font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+ font-size:12px;
 }
-
-.katex{
-  font-size:1.08em;
+.bubble p{margin:5px 0}
+.bubble ul,.bubble ol{padding-left:22px}
+.msg-actions{
+ display:flex;
+ gap:5px;
+ margin-top:7px;
 }
-
-.message-image{
-  max-width:380px;
-  max-height:300px;
-  margin-top:9px;
-  border-radius:14px;
-  display:block;
-  object-fit:contain;
+.msg-actions button{
+ background:none;
+ border:0;
+ color:#77778e;
+ font-size:11px;
 }
+.msg-actions button:hover{color:#bbb}
 
-.actions{
-  display:flex;
-  gap:4px;
-  margin-top:6px;
-}
-
-.action{
-  padding:4px 6px;
-  border:0;
-  background:none;
-  color:#77778c;
-  font-size:12px;
-}
-
-.action:hover{
-  color:#fff;
-}
-
-.typing{
-  display:inline-flex;
-  gap:4px;
-  align-items:center;
-}
-
-.typing span{
-  width:6px;
-  height:6px;
-  border-radius:50%;
-  background:#aaa;
-  animation:typing 1s infinite;
-}
-
-.typing span:nth-child(2){
-  animation-delay:.15s;
-}
-
-.typing span:nth-child(3){
-  animation-delay:.3s;
-}
-
-@keyframes typing{
-  0%,60%,100%{
-    opacity:.25;
-    transform:translateY(0);
-  }
-  30%{
-    opacity:1;
-    transform:translateY(-3px);
-  }
-}
-
-
-/* =====================================================
-   COMPOSER
-===================================================== */
-
+/* INPUT */
 .composer-wrap{
-  position:fixed;
-  left:270px;
-  right:0;
-  bottom:0;
-  padding:13px 18px 18px;
-  background:
-    linear-gradient(
-      transparent,
-      rgba(7,7,17,.97) 35%
-    );
-  z-index:40;
+ padding:12px max(16px,5vw) 18px;
+ background:linear-gradient(transparent,var(--bg) 22%);
 }
-
 .composer{
-  max-width:900px;
-  margin:auto;
-  padding:9px;
-  border-radius:23px;
-  border:1px solid rgba(255,255,255,.13);
-  background:rgba(18,18,33,.90);
-  backdrop-filter:blur(25px);
-  box-shadow:
-    0 15px 55px rgba(0,0,0,.42);
+ max-width:900px;
+ margin:auto;
+ background:#11111e;
+ border:1px solid var(--border);
+ border-radius:19px;
+ padding:9px;
+ box-shadow:0 15px 50px rgba(0,0,0,.28);
 }
-
 .tools{
-  display:flex;
-  gap:7px;
-  padding:2px 3px 8px;
+ display:flex;
+ gap:6px;
+ margin-bottom:6px;
 }
-
 .tool{
-  padding:7px 10px;
-  border-radius:10px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.045);
-  color:#ccc;
-  font-size:12px;
+ border:1px solid transparent;
+ background:transparent;
+ color:#89899e;
+ padding:6px 9px;
+ border-radius:8px;
+ font-size:12px;
 }
-
-.tool.active{
-  color:#fff;
-  border-color:rgba(139,92,246,.65);
-  background:rgba(139,92,246,.22);
-}
-
+.tool:hover{background:#1c1c2b;color:#ddd}
 .input-row{
-  display:flex;
-  gap:8px;
-  align-items:flex-end;
+ display:flex;
+ align-items:flex-end;
+ gap:8px;
 }
-
-.icon-btn{
-  width:45px;
-  height:45px;
-  flex:0 0 45px;
-  border-radius:14px;
-  border:1px solid var(--border);
-  background:rgba(255,255,255,.05);
-  color:#fff;
-  font-size:18px;
+#prompt{
+ flex:1;
+ resize:none;
+ border:0;
+ outline:0;
+ background:transparent;
+ color:white;
+ min-height:45px;
+ max-height:160px;
+ padding:11px 8px;
 }
-
 .send{
-  border:0;
-  background:
-    linear-gradient(
-      135deg,
-      #8b5cf6,
-      #06b6d4
-    );
+ width:44px;height:44px;
+ border:0;
+ border-radius:13px;
+ color:white;
+ background:linear-gradient(135deg,var(--purple),var(--cyan));
+ font-size:18px;
+}
+.send:disabled{opacity:.45}
+.status{
+ max-width:900px;
+ margin:6px auto 0;
+ color:#66667c;
+ font-size:10px;
+ text-align:center;
 }
 
-textarea{
-  flex:1;
-  min-height:47px;
-  max-height:150px;
-  resize:none;
-  outline:none;
-  border:0;
-  background:transparent;
-  color:#fff;
-  padding:13px 8px;
-  font-size:16px;
-  line-height:1.4;
-}
-
-textarea::placeholder{
-  color:#6e6e82;
-}
-
-input[type=file]{
-  display:none;
-}
-
-.preview{
-  display:none;
-  padding:3px 3px 8px;
-  align-items:center;
-}
-
-.preview img{
-  width:90px;
-  height:70px;
-  object-fit:cover;
-  border-radius:10px;
-}
-
-.preview button{
-  border:0;
-  background:none;
-  color:#aaa;
-  margin-left:7px;
-}
-
-.tip{
-  text-align:center;
-  color:#505062;
-  font-size:10px;
-  margin-top:6px;
-}
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media(max-width:850px){
-
-  .auth-shell{
-    grid-template-columns:1fr;
-    max-width:450px;
-  }
-
-  .auth-intro{
-    display:none;
-  }
-
-  .sidebar{
-    position:fixed;
-    left:-285px;
-    top:0;
-    bottom:0;
-    transition:.25s;
-  }
-
-  .sidebar.open{
-    left:0;
-  }
-
-  .menu{
-    display:block;
-  }
-
-  .composer-wrap{
-    left:0;
-    padding:9px;
-  }
-
-  .chat{
-    padding-left:9px;
-    padding-right:9px;
-  }
-
-  .message.user .bubble,
-  .message.ai .bubble{
-    max-width:91%;
-  }
-
-  .tool span{
-    display:none;
-  }
-
-  .mode{
-    font-size:11px;
-    padding:7px 9px;
-  }
-
-  .welcome h1{
-    font-size:34px;
-  }
-}
-
-@media(max-width:480px){
-
-  #auth{
-    padding:12px;
-  }
-
-  .auth-card{
-    padding:24px 20px;
-    border-radius:22px;
-  }
-
-  .auth-card h1{
-    font-size:26px;
-  }
-
-  .brand{
-    margin-bottom:20px;
-  }
-
-  .topbar{
-    padding:0 12px;
-  }
-
-  .model{
-    font-size:15px;
-  }
-
-  .welcome{
-    min-height:48vh;
-  }
-
-  .orb{
-    width:76px;
-    height:76px;
-    border-radius:24px;
-  }
-
-  .tools{
-    overflow-x:auto;
-  }
-
-  .tool{
-    white-space:nowrap;
-  }
-
-  .input-row{
-    gap:5px;
-  }
-
-  .icon-btn{
-    width:42px;
-    height:42px;
-    flex-basis:42px;
-  }
-
-  textarea{
-    font-size:15px;
-  }
+/* MOBILE */
+@media(max-width:750px){
+ .sidebar{
+  position:fixed;
+  z-index:50;
+  left:-290px;
+  top:0;
+  bottom:0;
+  transition:.25s;
+ }
+ .sidebar.open{left:0}
+ .menu-btn{display:block}
+ .quick-grid{grid-template-columns:1fr}
+ .chat{padding:18px 12px}
+ .composer-wrap{padding:8px 10px 12px}
+ .topbar{padding:0 10px}
+ .welcome{margin-top:5vh}
+ .welcome h1{letter-spacing:-2px}
 }
 </style>
 </head>
 
 <body>
 
+<!-- AUTH SCREEN -->
+<section id="authScreen">
+ <div class="auth-card">
 
-<!-- =====================================================
-     AUTH SCREEN
-===================================================== -->
+  <div class="logo">ZenX</div>
+  <div class="tagline">Student AI • Built for the 2027 generation</div>
 
-<section id="auth">
+  <h2 class="auth-title" id="authTitle">Welcome back</h2>
 
-  <div class="auth-shell">
+  <form id="authForm">
 
-    <div class="auth-intro">
+   <div class="field hidden" id="nameField">
+    <label>Name</label>
+    <input id="nameInput" type="text" placeholder="Your name">
+   </div>
 
-      <div class="auth-dev">
-        <span class="dev-dot"></span>
-        Developed by ZenX
-      </div>
+   <div class="field">
+    <label>Email</label>
+    <input id="emailInput" type="email" autocomplete="email"
+           placeholder="you@example.com" required>
+   </div>
 
-      <h2>
-        <span class="gradient-text">Think.</span><br>
-        Create.<br>
-        <span class="gradient-text">ZenX.</span>
-      </h2>
+   <div class="field">
+    <label>Password</label>
+    <input id="passwordInput" type="password"
+           autocomplete="current-password"
+           placeholder="Password" required>
+   </div>
 
-      <p>
-        Your intelligent AI workspace for questions,
-        learning, ideas, mathematics, coding and more.
-      </p>
+   <button class="primary" id="authButton" type="submit">
+    Sign In
+   </button>
 
-      <div class="feature-row">
-        <div class="feature">🧠 Smart AI</div>
-        <div class="feature">📚 Study</div>
-        <div class="feature">➗ Mathematics</div>
-        <div class="feature">💡 Ideas</div>
-      </div>
+  </form>
 
-    </div>
+  <div class="auth-links">
+   <button type="button" onclick="toggleAuth()" id="toggleAuthBtn">
+    Create account
+   </button>
+   <button type="button" onclick="showForgotPassword()">
+    Forgot password?
+   </button>
+  </div>
 
+  <button class="secondary hidden" id="backLogin"
+          onclick="backToLogin()">
+   Back to login
+  </button>
 
-    <div class="auth-card">
-
-      <div class="brand">
-
-        <div class="brand-icon">✦</div>
-
-        <div class="brand-name">
-          Zen<span>X</span>
-        </div>
-
-      </div>
-
-
-      <h1 id="authTitle">
-        Welcome back
-      </h1>
-
-      <div class="auth-sub" id="authSub">
-        Sign in to continue to ZenX AI.
-      </div>
+  <div id="authMsg"></div>
+ </div>
+</section>
 
 
-      <div class="field hidden" id="nameField">
+<!-- APP -->
+<section id="app" class="hidden">
 
-        <label>Name</label>
+ <aside class="sidebar" id="sidebar">
 
-        <input
-          id="name"
-          type="text"
-          autocomplete="name"
-          placeholder="Your name"
-        >
+  <div class="brand">
+   <div class="brand-icon">Z</div>
+   <div class="brand-name">ZenX</div>
+   <span class="version">2027</span>
+  </div>
 
-      </div>
+  <button class="new-chat" onclick="newChat()">
+   ＋ New Chat
+  </button>
 
+  <div class="section-title">Recent Chats</div>
 
-      <div class="field">
+  <div class="recents" id="recents"></div>
 
-        <label>Email</label>
+  <div class="sidebar-bottom">
 
-        <input
-          id="email"
-          type="email"
-          autocomplete="email"
-          placeholder="you@example.com"
-        >
+   <div class="user-box">
+    <div class="avatar" id="avatar">Z</div>
+    <div class="user-email" id="userEmail">Loading...</div>
+   </div>
 
-      </div>
-
-
-      <div class="field" id="passwordField">
-
-        <label>Password</label>
-
-        <div class="input-wrap">
-
-          <input
-            id="password"
-            type="password"
-            autocomplete="current-password"
-            placeholder="••••••••"
-          >
-
-          <button
-            class="password-toggle"
-            type="button"
-            onclick="togglePassword()"
-            id="passwordToggle"
-          >
-            👁
-          </button>
-
-        </div>
-
-      </div>
-
-
-      <button
-        class="primary"
-        id="authBtn"
-        onclick="handleAuth()"
-      >
-        Sign In
-      </button>
-
-
-      <button
-        class="forgot"
-        id="forgotBtn"
-        onclick="showForgotPassword()"
-      >
-        Forgot password?
-      </button>
-
-
-      <div class="switch">
-
-        <span id="switchText">
-          Don't have an account?
-        </span>
-
-        <button
-          id="switchBtn"
-          onclick="toggleAuth()"
-        >
-          Sign Up
-        </button>
-
-      </div>
-
-
-      <div
-        class="auth-msg hidden"
-        id="authMsg"
-      ></div>
-
-
-      <div class="auth-footer">
-        Secure authentication powered by Supabase
-      </div>
-
-    </div>
+   <button class="small-btn" onclick="logout()">
+    Log out
+   </button>
 
   </div>
+
+ </aside>
+
+
+ <main class="main">
+
+  <header class="topbar">
+
+   <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+
+   <select class="mode" id="mode">
+    <option value="student">🎓 Student</option>
+    <option value="jee">⚡ JEE Mode</option>
+    <option value="school">📚 School</option>
+    <option value="coding">💻 Coding</option>
+    <option value="general">🤖 General</option>
+   </select>
+
+   <div class="top-spacer"></div>
+
+   <button class="icon-btn" title="New Chat"
+           onclick="newChat()">＋</button>
+
+   <button class="icon-btn" title="Refresh"
+           onclick="refreshChat()">↻</button>
+
+  </header>
+
+
+  <div class="chat" id="chat">
+
+   <div class="welcome" id="welcome">
+
+    <h1>What are you learning today?</h1>
+
+    <p>
+     ZenX is your AI study companion for concepts,
+     questions, coding, revision and exam preparation.
+    </p>
+
+    <div class="quick-grid">
+
+     <button class="quick"
+       onclick="quickPrompt('Explain this concept to me step by step like a Class 11 student.')">
+      <b>🧠 Explain a concept</b>
+      <span>Simple → advanced explanation</span>
+     </button>
+
+     <button class="quick"
+       onclick="quickPrompt('Give me a JEE level practice question and then check my answer.')">
+      <b>⚡ Practice JEE</b>
+      <span>Build concepts with questions</span>
+     </button>
+
+     <button class="quick"
+       onclick="quickPrompt('Create a short revision quiz from my current topic.')">
+      <b>📝 Make a quiz</b>
+      <span>Fast revision</span>
+     </button>
+
+     <button class="quick"
+       onclick="quickPrompt('Help me understand and debug this code.')">
+      <b>💻 Coding help</b>
+      <span>Debug and learn</span>
+     </button>
+
+    </div>
+
+   </div>
+
+   <div id="messages"></div>
+
+  </div>
+
+
+  <div class="composer-wrap">
+
+   <div class="composer">
+
+    <div class="tools">
+
+     <button class="tool" onclick="insertTool('Explain: ')">
+      🧠 Explain
+     </button>
+
+     <button class="tool" onclick="insertTool('Solve: ')">
+      🧮 Solve
+     </button>
+
+     <button class="tool" onclick="insertTool('Quiz me on: ')">
+      📝 Quiz
+     </button>
+
+     <button class="tool" onclick="generateImage()">
+      🖼️ Image
+     </button>
+
+     <button class="tool" onclick="startVoice()">
+      🎤 Voice
+     </button>
+
+    </div>
+
+    <div class="input-row">
+
+     <textarea id="prompt"
+       placeholder="Ask ZenX anything..."
+       rows="1"></textarea>
+
+     <button class="send" id="sendBtn"
+             onclick="sendMessage()">
+      ↑
+     </button>
+
+    </div>
+
+   </div>
+
+   <div class="status" id="status">
+    ZenX AI • Student-first AI • 2027
+   </div>
+
+  </div>
+
+ </main>
 
 </section>
 
 
-<!-- =====================================================
-     MAIN APP
-===================================================== -->
+<script>
+/* =========================================================
+   ZENX CONFIG
+   ========================================================= */
 
-<section id="app" class="app hidden">
+const SUPABASE_URL =
+"https://srlftvbiqoufejhhfsrh.supabase.co";
 
-  <aside class="sidebar" id="sidebar">
+/*
+ IMPORTANT:
+ Put ONLY your Supabase ANON/PUBLIC key here.
+ Never put service_role key here.
+*/
+const SUPABASE_ANON_KEY =
+"PASTE_YOUR_SUPABASE_ANON_KEY_HERE";
 
-    <div class="logo-row">
-
-      <div class="mini-logo">
-        ✦
-      </div>
-
-      ZenX
-
-    </div>
-
-
-    <button
-      class="new-chat"
-      onclick="newChat()"
-    >
-      ＋ New Chat
-    </button>
+const API_URL =
+"https://zenx-hnkl.onrender.com/api/ask";
 
 
-    <div class="history-title">
-      Recent Chats
-    </div>
+/* =========================================================
+   SUPABASE
+   ========================================================= */
+
+let supabaseClient = null;
+
+if(
+ SUPABASE_URL &&
+ SUPABASE_ANON_KEY &&
+ !SUPABASE_ANON_KEY.includes("PASTE_")
+){
+ supabaseClient =
+  window.supabase.createClient(
+   SUPABASE_URL,
+   SUPABASE_ANON_KEY
+  );
+}
 
 
-    <div
-      class="history"
-      id="history"
-    ></div>
+/* =========================================================
+   STATE
+   ========================================================= */
+
+let currentUser = null;
+let messages = [];
+let chatId = null;
+let isSignup = false;
+let forgotMode = false;
 
 
-    <div class="user-box">
+/* =========================================================
+   DOM
+   ========================================================= */
 
-      <div
-        class="user-avatar"
-        id="userAvatar"
-      >
-        Z
-      </div>
+const authScreen =
+ document.getElementById("authScreen");
+
+const app =
+ document.getElementById("app");
+
+const authForm =
+ document.getElementById("authForm");
+
+const authTitle =
+ document.getElementById("authTitle");
+
+const authButton =
+ document.getElementById("authButton");
+
+const toggleAuthBtn =
+ document.getElementById("toggleAuthBtn");
+
+const backLogin =
+ document.getElementById("backLogin");
+
+const nameField =
+ document.getElementById("nameField");
+
+const nameInput =
+ document.getElementById("nameInput");
+
+const emailInput =
+ document.getElementById("emailInput");
+
+const passwordInput =
+ document.getElementById("passwordInput");
+
+const authMsg =
+ document.getElementById("authMsg");
+
+const promptInput =
+ document.getElementById("prompt");
+
+const messagesBox =
+ document.getElementById("messages");
+
+const welcome =
+ document.getElementById("welcome");
+
+const sendBtn =
+ document.getElementById("sendBtn");
+
+const statusBox =
+ document.getElementById("status");
+
+const recents =
+ document.getElementById("recents");
 
 
-      <div class="user-info">
+/* =========================================================
+   INIT
+   ========================================================= */
 
-        <div
-          class="user-name"
-          id="userName"
-        >
-          ZenX User
-        </div>
+document.addEventListener("DOMContentLoaded", async()=>{
+ await checkAuth();
 
-        <div
-          class="user-email"
-          id="userEmail"
-        ></div>
+ promptInput.addEventListener("keydown",(e)=>{
+  if(e.key==="Enter" && !e.shiftKey){
+   e.preventDefault();
+   sendMessage();
+  }
+ });
 
-      </div>
-
-
-      <button
-        class="logout"
-        onclick="logout()"
-        title="Sign out"
-      >
-        ↪
-      </button>
-
-    </div>
-
-  </aside>
+ promptInput.addEventListener("input",()=>{
+  promptInput.style.height="auto";
+  promptInput.style.height =
+   Math.min(promptInput.scrollHeight,160)+"px";
+ });
+});
 
 
-  <main class="main">
+/* =========================================================
+   AUTH CHECK
+   ========================================================= */
 
-    <header class="topbar
+async function checkAuth(){
+
+ if(!supabaseClient){
+  showAuthError(
+   "Supabase anon key add karo. Phir page refresh karo."
+  );
+  return;
+ }
+
+ try{
+
+  const {data,error} =
+   await supabaseClient.auth.getSession();
+
+  if(error) throw error;
+
+  if(data.session){
+   currentUser=data.session.user;
+   showApp();
+  }else{
+   showAuth();
+  }
+
+  supabaseClient.auth.onAuthStateChange(
+   async(event,session)=>{
+    if(session){
+     currentUser=session.user;
+     showApp();
+    }else{
+     currentUser=null;
+     showAuth();
+    }
+   }
+  );
+
+ }catch(error){
+  console.error(error);
+  showAuthError(error.message);
+ }
+}
+
+
+/* =========================================================
+   AUTH UI
+   ========================================================= */
+
+function showAuth(){
+ authScreen.classList.remove("hidden");
+ app.classList.add("hidden");
+}
+
+function showApp(){
+
+ authScreen.classList.add("hidden");
+ app.classList.remove("hidden");
+
+ updateUserUI();
+ loadRecents();
+ loadCurrentChat();
+}
+
+function updateUserUI(){
+
+ if(!currentUser)return;
+
+ const email =
+  currentUser.email || "ZenX Student";
+
+ document.getElementById("userEmail")
+  .textContent=email;
+
+ document.getElementById("avatar")
+  .textContent=
+   email.charAt(0).toUpperCase();
+}
+
+function toggleAuth(){
+
+ forgotMode=false;
+ isSignup=!isSignup;
+
+ authMsg.textContent="";
+
+ if(isSignup){
+
+  authTitle.textContent="Create your ZenX account";
+  authButton.textContent="Sign Up";
+  toggleAuthBtn.textContent="Already have an account?";
+  nameField.classList.remove("hidden");
+  passwordInput.required=true;
+
+ }else{
+
+  authTitle.textContent="Welcome back";
+  authButton.textContent="Sign In";
+  toggleAuthBtn.textContent="Create account";
+  nameField.classList.add("hidden");
+  passwordInput.required=true;
+
+ }
+
+ backLogin.classList.add("hidden");
+}
+
+function backToLogin(){
+
+ forgotMode=false;
+ isSignup=false;
+
+ authTitle.textContent="Welcome back";
+ authButton.textContent="Sign In";
+ toggleAuthBtn.textContent="Create account";
+
+ nameField.classList.add("hidden");
+ backLogin.classList.add("hidden");
+
+ passwordInput.classList.remove("hidden");
+ passwordInput.required=true;
+}
+
+async function showForgotPassword(){
+
+ if(!supabaseClient){
+  showAuthError("Supabase configuration missing.");
+  return;
+ }
+
+ forgotMode=true;
+ isSignup=false;
+
+ authTitle.textContent="Reset password";
+ authButton.textContent="Send reset email";
+
+ nameField.classList.add("hidden");
+ passwordInput.required=false;
+ passwordInput.value="";
+ passwordInput.classList.add("hidden");
+
+ toggleAuthBtn.textContent="Back to login";
+ backLogin.classList.remove("hidden");
+
+ authMsg.textContent="";
+}
+
+authForm.addEventListener("submit",async(e)=>{
+
+ e.preventDefault();
+
+ if(!supabaseClient){
+  showAuthError("Supabase anon key add karo.");
+  return;
+ }
+
+ const email=emailInput.value.trim();
+ const password=passwordInput.value;
+
+ if(!email){
+  showAuthError("Email enter karo.");
+  return;
+ }
+
+ authButton.disabled=true;
+
+ try{
+
+  if(forgotMode){
+
+   const redirect =
+    window.location.origin +
+    window.location.pathname;
+
+   const {error} =
+    await supabaseClient.auth.resetPasswordForEmail(
+     email,
+     {redirectTo:redirect}
+    );
+
+   if(error)throw error;
+
+   showAuthSuccess(
+    "Password reset email sent. Inbox/spam check karo."
+   );
+
+   return;
+  }
+
+  if(isSignup){
+
+   if(password.length<6){
+    showAuthError(
+     "Password minimum 6 characters ka hona chahiye."
+    );
+    return;
+   }
+
+   const {data,error} =
+    await supabaseClient.auth.signUp({
+     email,
+     password,
+     options:{
+      data:{
+       full_name:nameInput.value.trim()
+      }
+     }
+    });
+
+   if(error)throw error;
+
+   if(data.session){
+    currentUser=data.user;
+    showApp();
+   }else{
+    showAuthSuccess(
+     "Account created. Agar email verification enabled hai to inbox check karo."
+    );
+   }
+
+  }else{
+
+   const {data,error} =
+    await supabaseClient.auth.signInWithPassword({
+     email,
+     password
+    });
+
+   if(error)throw error;
+
+   currentUser=data.user;
+   showApp();
+  }
+
+ }catch(error){
+
+  console.error(error);
+
+  showAuthError(
+   error.message || "Authentication failed."
+  );
+
+ }finally{
+  authButton.disabled=false;
+ }
+});
+
+
+function showAuthError(text){
+ authMsg.style.color="#fca5a5";
+ authMsg.textContent=text;
+}
+
+function showAuthSuccess(text){
+ authMsg.style.color="#86efac";
+ authMsg.textContent=text;
+}
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+async function logout(){
+
+ if(!supabaseClient)return;
+
+ await supabaseClient.auth.signOut();
+
+ currentUser=null;
+ messages=[];
+ chatId=null;
+
+ showAuth();
+}
+
+
+/* =========================================================
+   STORAGE
+   ========================================================= */
+
+function getStorageKey(){
+
+ if(!currentUser)return "zenx_guest";
+
+ return "zenx_chats_"+currentUser.id;
+}
+
+function saveMessages(){
+
+ try{
+
+  localStorage.setItem(
+   getStorageKey(),
+   JSON.stringify(messages)
+  );
+
+ }catch(error){
+  console.error(error);
+ }
+}
+
+function loadCurrentChat(){
+
+ try{
+
+  const saved =
+   localStorage.getItem(getStorageKey());
+
+  messages =
+   saved
+   ? JSON.parse(saved)
+   : [];
+
+ }catch(error){
+  messages=[];
+ }
+
+ renderMessages();
+ updateHistory();
+}
+
+function saveRecents(){
+
+ try{
+
+  localStorage.setItem(
+   getStorageKey()+"_recents",
+   JSON.stringify(
+    getRecentData()
+   )
+  );
+
+ }catch(error){
+  console.error(error);
+ }
+}
+
+function getRecentData(){
+
+ return messages
+  .filter(m=>m.role==="user")
+  .slice(0,30)
+  .map((m,i)=>({
+   id:i,
+   title:m.content.slice(0,60)
+  }));
+}
+
+function loadRecents(){
+
+ if(!currentUser){
+  recents.innerHTML="";
+  return;
+ }
+
+ let data=[];
+
+ try{
+
+  data=JSON.parse(
+   localStorage.getItem(
+    getStorageKey()+"_recents"
+   )
+  ) || [];
+
+ }catch(e){
+  data=[];
+ }
+
+ if(!data.length){
+  recents.innerHTML=
+   `<div style="color:#66667c;font-size:12px;padding:10px">
+    No recent chats
+   </div>`;
+  return;
+ }
+
+ recents.innerHTML="";
+
+ data.forEach((item,index)=>{
+
+  const row=document.createElement("div");
+  row.className="recent";
+
+  row.innerHTML=`
+   <span>💬</span>
+   <span class="recent-text"></span>
+   <button class="delete-recent"
+           title="Delete"
+           onclick="event.stopPropagation();deleteRecent(${index})">
+    ×
+   </button>
+  `;
+
+  row.querySelector(".recent-text")
+   .textContent=item.title;
+
+  row.onclick=()=>{
+   scrollToMessage(index);
+  };
+
+  recents.appendChild(row);
+ });
+}
+
+
+/* =========================================================
+   CHAT
+   ========================================================= */
+
+function newChat(){
+
+ messages=[];
+ chatId=null;
+
+ saveMessages();
+
+ messagesBox.innerHTML="";
+ welcome.classList.remove("hidden");
+
+ promptInput.value="";
+ promptInput.style.height="auto";
+
+ updateHistory();
+}
+
+function refreshChat(){
+
+ loadCurrentChat();
+
+ statusBox.textContent=
+  "Chat refreshed";
+}
+
+function scrollToMessage(index){
+
+ const all=
+  messagesBox.querySelectorAll(".message");
+
+ if(all[index]){
+  all[index].scrollIntoView({
+   behavior:"smooth",
+   block:"center"
+  });
+ }
+}
+
+function updateHistory(){
+
+ saveRecents();
+ loadRecents();
+}
+
+
+/* =========================================================
+   RENDER
+   ========================================================= */
+
+function renderMessages(){
+
+ messagesBox.innerHTML="";
+
+ if(messages.length){
+  welcome.classList.add("hidden");
+ }else{
+  welcome.classList.remove("hidden");
+ }
+
+ messages.forEach((m,index)=>{
+  addMessageToDOM(
+   m.role,
+   m.content,
+   index
+  );
+ });
+}
+
+function addMessageToDOM(
+ role,
+ content,
+ index
+){
+
+ const wrapper=
+  document.createElement("div");
+
+ wrapper.className=
+  "message "+role;
+
+ const bubble=
+  document.createElement("div");
+
+ bubble.className="bubble";
+
+ if(role==="assistant"){
+
+  try{
+   bubble.innerHTML=
+    marked.parse(content || "");
+  }catch(e){
+   bubble.textContent=content;
+  }
+
+ }else{
+
+  bubble.textContent=content;
+ }
+
+ wrapper.appendChild(bubble);
+
+ if(role==="assistant"){
+
+  const actions=
+   document.createElement("div");
+
+  actions.className="msg-actions";
+
+  actions.innerHTML=`
+   <button onclick="speakText(${index})">🔊 Read</button>
+   <button onclick="copyMessage(${index})">📋 Copy</button>
+  `;
+
+  bubble.appendChild(actions);
+ }
+
+ messagesBox.appendChild(wrapper);
+
+ return wrapper;
+}
+
+
+/* =========================================================
+   SEND MESSAGE
+   ========================================================= */
+
+async function sendMessage(){
+
+ const text=
+  promptInput.value.trim();
+
+ if(!text || sendBtn.disabled)return;
+
+ if(!currentUser){
+  statusBox.textContent=
+   "Please sign in first.";
+  return;
+ }
+
+ messages.push({
+  role:"user",
+  content:text
+ });
+
+ welcome.classList.add("hidden");
+
+ addMessageToDOM(
+  "user",
+  text,
+  messages.length-1
+ );
+
+ promptInput.value="";
+ promptInput.style.height="auto";
+
+ saveMessages();
+ updateHistory();
+
+ sendBtn.disabled=true;
+
+ const loading=
+  addMessageToDOM(
+   "assistant",
+   "Thinking…",
+   -1
+  );
+
+ statusBox.textContent=
+  "ZenX is thinking...";
+
+ try{
+
+  const mode=
+   document.getElementById("mode").value;
+
+  const response=
+   await fetch(API_URL,{
+    method:"POST",
+    headers:{
+     "Content-Type":"application/json",
+     "Accept":"application/json"
+    },
+    body:JSON.stringify({
+     question:text,
+     mode:mode,
+     history:messages.slice(-12),
+     user_id:currentUser.id
+    })
+  });
+
+  if(!response.ok){
+
+   let errText=
+    "API error "+response.status;
+
+   try{
+    const err=await response.json();
+    errText=
+     err.detail ||
+     err.message ||
+     errText;
+   }catch(e){}
+
+   throw new Error(errText);
+  }
+
+  const data=
+   await response.json();
+
+  const answer=
+   data.answer ||
+   data.response ||
+   data.message ||
+   data.result;
+
+  if(!answer){
+   throw new Error(
+    "Backend ne AI response nahi diya."
+   );
+  }
+
+  loading.remove();
+
+  messages.push({
+   role:"assistant",
+   content:String(answer)
+  });
+
+  addMessageToDOM(
+   "assistant",
+   String(answer),
+   messages.length-1
+  );
+
+  saveMessages();
+  updateHistory();
+
+  statusBox.textContent=
+   "ZenX AI • Ready";
+
+ }catch(error){
+
+  console.error(error);
+
+  loading.remove();
+
+  const errorMessage=
+   "⚠️ AI connection problem.\n\n"+
+   error.message+
+   "\n\nBackend/Render API check karo.";
+
+  messages.push({
+   role:"assistant",
+   content:errorMessage
+  });
+
+  addMessageToDOM(
+   "assistant",
+   errorMessage,
+   messages.length-1
+  );
+
+  saveMessages();
+
+  statusBox.textContent=
+   "Connection error";
+
+ }finally{
+
+  sendBtn.disabled=false;
+  promptInput.focus();
+ }
+}
+
+
+/* =========================================================
+   QUICK PROMPTS
+   ========================================================= */
+
+function quickPrompt(text){
+
+ promptInput.value=text;
+ promptInput.focus();
+ promptInput.dispatchEvent(
+  new Event("input")
+ );
+}
+
+
+/* =========================================================
+   TOOLS
+   ========================================================= */
+
+function insertTool(text){
+
+ promptInput.value=
+  text+promptInput.value;
+
+ promptInput.focus();
+
+ promptInput.dispatchEvent(
+  new Event("input")
+ );
+}
+
+
+/* =========================================================
+   COPY
+   ========================================================= */
+
+async function copyMessage(index){
+
+ if(!messages[index])return;
+
+ try{
+
+  await navigator.clipboard.writeText(
+   messages[index].content
+  );
+
+  statusBox.textContent=
+   "Copied";
+
+  setTimeout(()=>{
+   statusBox.textContent=
+    "ZenX AI • Student-first AI • 2027";
+  },1200);
+
+ }catch(e){
+  console.error(e);
+ }
+}
+
+
+/* =========================================================
+   TEXT TO SPEECH
+   ========================================================= */
+
+function speakText(index){
+
+ if(!messages[index])return;
+
+ if(!("speechSynthesis" in window)){
+  statusBox.textContent=
+   "Voice playback browser mein available nahi hai.";
+  return;
+ }
+
+ window.speechSynthesis.cancel();
+
+ const text=
+  messages[index].content
+   .replace(/[#*_`]/g," ");
+
+ const utterance=
+  new SpeechSynthesisUtterance(text);
+
+ utterance.rate=.95;
+ utterance.pitch=1;
+
+ window.speechSynthesis.speak(
+  utterance
+ );
+}
+
+
+/* =========================================================
+   VOICE INPUT
+   ========================================================= */
+
+function startVoice(){
+
+ const SpeechRecognition=
+  window.SpeechRecognition ||
+  window.webkitSpeechRecognition;
+
+ if(!SpeechRecognition){
+
+  statusBox.textContent=
+   "Voice input is not supported in this browser.";
+
+  return;
+ }
+
+ const recognition=
+  new SpeechRecognition();
+
+ recognition.lang="en-IN";
+ recognition.interimResults=false;
+ recognition.continuous=false;
+
+ statusBox.textContent=
+  "🎤 Listening...";
+
+ recognition.onresult=(event)=>{
+
+  const text=
+   event.results[0][0].transcript;
+
+  promptInput.value +=
+   (promptInput.value ? " " : "")+
+   text;
+
+  promptInput.dispatchEvent(
+   new Event("input")
+  );
+
+  statusBox.textContent=
+   "Voice captured";
+ };
+
+ recognition.onerror=(event)=>{
+
+  console.error(event);
+
+  statusBox.textContent=
+   "Voice input error";
+ };
+
+ recognition.onend=()=>{
+
+  setTimeout(()=>{
+   statusBox.textContent=
+    "ZenX AI • Ready";
+  },1000);
+ };
+
+ recognition.start();
+}
+
+
+/* =========================================================
+   IMAGE GENERATION
+   ========================================================= */
+
+async function generateImage(){
+
+ const prompt=
+  window.prompt(
+   "What image should ZenX generate?"
+  );
+
+ if(!prompt || !prompt.trim())return;
+
+ if(!currentUser){
+  alert("Please sign in first.");
+  return;
+ }
+
+ sendBtn.disabled=true;
+
+ statusBox.textContent=
+  "🖼️ Generating image...";
+
+ const loading=
+  addMessageToDOM(
+   "assistant",
+   "🖼️ Creating your image…",
+   -1
+  );
+
+ try{
+
+  /*
+   This endpoint will be implemented
+   in main.py next.
+  */
+
+  const response=
+   await fetch(
+    API_URL.replace(
+     "/api/ask",
+     "/api/image"
+    ),
+    {
+     method:"POST",
+     headers:{
+      "Content-Type":"application/json",
+      "Accept":"application/json"
+     },
+     body:JSON.stringify({
+      prompt:prompt.trim(),
+      user_id:currentUser.id
+     })
+    }
+   );
+
+  if(!response.ok){
+   throw new Error(
+    "Image API error "+response.status
+   );
+  }
+
+  const data=
+   await response.json();
+
+  loading.remove();
+
+  if(data.image_url){
+
+   const imageHTML=
+    `<p>🖼️ Generated image:</p>
+     <img src="${escapeHTML(data.image_url)}"
+          alt="Generated image"
+          style="max-width:100%;border-radius:14px;margin-top:8px">`;
+
+   const wrapper=
+    document.createElement("div");
+
+   wrapper.className=
+    "message assistant";
+
+   const bubble=
+    document.createElement("div");
+
+   bubble.className="bubble";
+   bubble.innerHTML=imageHTML;
+
+   wrapper.appendChild(bubble);
+   messagesBox.appendChild(wrapper);
+
+   messages.push({
+    role:"assistant",
+    content:
+     "Generated image for: "+prompt
+   });
+
+   saveMessages();
+
+  }else{
+
+   throw new Error(
+    "Image URL missing from backend."
+   );
+  }
+
+  statusBox.textContent=
+   "Image generated";
+
+ }catch(error){
+
+  loading.remove();
+
+  const errorText=
+   "⚠️ Image generation unavailable.\n\n"+
+   error.message;
+
+  messages.push({
+   role:"assistant",
+   content:errorText
+  });
+
+  addMessageToDOM(
+   "assistant",
+   errorText,
+   messages.length-1
+  );
+
+  saveMessages();
+
+  statusBox.textContent=
+   "Image generation error";
+
+ }finally{
+  sendBtn.disabled=false;
+ }
+}
+
+
+/* =========================================================
+   DELETE RECENT
+   ========================================================= */
+
+function deleteRecent(index){
+
+ let data=[];
+
+ try{
+  data=JSON.parse(
+   localStorage.getItem(
+    getStorageKey()+"_recents"
+   )
+  ) || [];
+ }catch(e){}
+
+ data.splice(index,1);
+
+ localStorage.setItem(
+  getStorageKey()+"_recents",
+  JSON.stringify(data)
+ );
+
+ loadRecents();
+}
+
+
+/* =========================================================
+   SIDEBAR
+   ========================================================= */
+
+function toggleSidebar(){
+
+ document
+  .getElementById("sidebar")
+  .classList.toggle("open");
+}
+
+
+/* =========================================================
+   ESCAPE
+   ========================================================= */
+
+function escapeHTML(text){
+
+ return String(text)
+  .replaceAll("&","&amp;")
+  .replaceAll("<","&lt;")
+  .replaceAll(">","&gt;")
+  .replaceAll('"',"&quot;")
+  .replaceAll("'","&#039;");
+}
+
+
+/* =========================================================
+   PWA / PAGE SAFETY
+   ========================================================= */
+
+window.addEventListener("beforeunload",()=>{
+ saveMessages();
+});
+
+</script>
+
+</body>
+</html>
