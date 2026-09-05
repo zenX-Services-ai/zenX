@@ -7,34 +7,720 @@
 
 <style>
 :root{
-  --bg:#07111f;
-  --card:#0d1b2e;
-  --text:#eef6ff;
-  --muted:#9bb0c8;
-  --accent:#7c5cff;
-  --accent2:#19d3ae
+  --bg:#050b14;
+  --card:#0c1829;
+  --card2:#101f34;
+  --text:#f4f8ff;
+  --muted:#9badc3;
+  --purple:#7c5cff;
+  --cyan:#19d3ae;
+  --border:#ffffff14;
 }
 
 *{box-sizing:border-box}
 
+html{scroll-behavior:smooth}
+
 body{
   margin:0;
-  font-family:Inter,system-ui,Arial;
-  background:radial-gradient(circle at 20% 10%,#1a2455 0,#07111f 40%,#050b14 100%);
-  color:var(--text)
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at 15% 10%,#24205e 0,transparent 32%),
+    radial-gradient(circle at 85% 30%,#063d42 0,transparent 28%),
+    var(--bg);
 }
 
 nav{
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:22px 7%;
   position:sticky;
   top:0;
-  background:#07111fe8;
-  backdrop-filter:blur(14px);
-  z-index:2
+  z-index:10;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:18px 7%;
+  background:#050b14dd;
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
 }
+
+.logo{
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:-1px;
+}
+
+.logo span{color:var(--cyan)}
+
+.nav-links{
+  display:flex;
+  align-items:center;
+  gap:25px;
+}
+
+.nav-links a{
+  color:var(--muted);
+  text-decoration:none;
+}
+
+.btn{
+  border:0;
+  border-radius:13px;
+  padding:13px 19px;
+  font-weight:800;
+  cursor:pointer;
+  color:white;
+  background:linear-gradient(135deg,var(--purple),#5c43e8);
+  box-shadow:0 10px 30px #7c5cff25;
+}
+
+.btn:hover{transform:translateY(-1px)}
+
+.hero{
+  max-width:1150px;
+  margin:95px auto 80px;
+  padding:0 25px;
+  text-align:center;
+}
+
+.badge{
+  display:inline-block;
+  padding:9px 14px;
+  border:1px solid #ffffff20;
+  border-radius:999px;
+  color:#c9d3ff;
+  background:#ffffff08;
+}
+
+.hero h1{
+  font-size:clamp(48px,8vw,86px);
+  line-height:.96;
+  letter-spacing:-4px;
+  margin:25px 0;
+}
+
+.hero h1 em{
+  color:#a596ff;
+  font-style:normal;
+}
+
+.hero p{
+  max-width:720px;
+  margin:0 auto 32px;
+  color:var(--muted);
+  font-size:20px;
+  line-height:1.65;
+}
+
+.actions{
+  display:flex;
+  justify-content:center;
+  gap:13px;
+  flex-wrap:wrap;
+}
+
+.ghost{
+  background:#ffffff09;
+  border:1px solid var(--border);
+  box-shadow:none;
+}
+
+.container{
+  max-width:1150px;
+  margin:auto;
+  padding:0 25px;
+}
+
+.section{
+  margin:90px auto;
+}
+
+.section-title{
+  text-align:center;
+  font-size:42px;
+  margin-bottom:14px;
+}
+
+.section-subtitle{
+  text-align:center;
+  color:var(--muted);
+  font-size:17px;
+  margin-bottom:35px;
+}
+
+.features{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+}
+
+.card{
+  padding:28px;
+  min-height:210px;
+  border-radius:23px;
+  background:linear-gradient(180deg,var(--card2),var(--card));
+  border:1px solid var(--border);
+  box-shadow:0 20px 50px #00000025;
+}
+
+.card .icon{font-size:34px}
+
+.card h3{
+  font-size:21px;
+  margin:18px 0 10px;
+}
+
+.card p{
+  color:var(--muted);
+  line-height:1.6;
+}
+
+.ai-box{
+  padding:30px;
+  border-radius:27px;
+  background:linear-gradient(180deg,#101e34,#091525);
+  border:1px solid var(--border);
+  box-shadow:0 25px 70px #00000035;
+}
+
+.input-row{
+  display:flex;
+  gap:12px;
+}
+
+#q{
+  flex:1;
+  min-width:0;
+  padding:17px;
+  border-radius:14px;
+  border:1px solid var(--border);
+  background:#050d18;
+  color:white;
+  font-size:16px;
+  outline:none;
+}
+
+#q:focus{
+  border-color:#7c5cff88;
+}
+
+.answer{
+  margin-top:22px;
+  min-height:180px;
+  padding:24px;
+  border-radius:18px;
+  background:#050d18;
+  border:1px solid var(--border);
+  color:#dbe7f5;
+  font-size:17px;
+  line-height:1.8;
+  white-space:pre-wrap;
+}
+
+.answer-actions{
+  display:flex;
+  gap:10px;
+  margin-top:14px;
+}
+
+.hidden{display:none}
+
+.about{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:25px;
+  align-items:stretch;
+}
+
+.about-card{
+  padding:35px;
+  border-radius:25px;
+  background:linear-gradient(180deg,var(--card2),var(--card));
+  border:1px solid var(--border);
+}
+
+.founder-name{
+  font-size:35px;
+  font-weight:900;
+  margin:10px 0;
+}
+
+.founder-role{
+  color:var(--cyan);
+  font-weight:800;
+}
+
+.upload{
+  border:2px dashed #ffffff20;
+  border-radius:18px;
+  padding:30px;
+  text-align:center;
+  cursor:pointer;
+  color:var(--muted);
+}
+
+.upload:hover{
+  border-color:#7c5cff88;
+}
+
+#preview{
+  max-width:100%;
+  max-height:300px;
+  margin-top:20px;
+  border-radius:15px;
+  display:none;
+}
+
+footer{
+  margin-top:100px;
+  padding:40px 20px;
+  text-align:center;
+  color:#71849d;
+  border-top:1px solid var(--border);
+}
+
+.modal{
+  position:fixed;
+  inset:0;
+  z-index:100;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:#000000aa;
+  backdrop-filter:blur(8px);
+}
+
+.modal-box{
+  width:min(440px,100%);
+  padding:30px;
+  border-radius:25px;
+  background:#0c1829;
+  border:1px solid var(--border);
+  box-shadow:0 30px 100px #000;
+}
+
+.modal-box h2{margin-top:0}
+
+.modal-box input{
+  width:100%;
+  padding:14px;
+  margin:8px 0;
+  border-radius:12px;
+  border:1px solid var(--border);
+  background:#050d18;
+  color:white;
+}
+
+.close{
+  float:right;
+  background:none;
+  border:0;
+  color:white;
+  font-size:25px;
+  cursor:pointer;
+}
+
+@media(max-width:850px){
+  .features{grid-template-columns:1fr 1fr}
+  .about{grid-template-columns:1fr}
+}
+
+@media(max-width:600px){
+  nav{padding:16px 20px}
+  .nav-links a{display:none}
+  .hero{margin-top:65px}
+  .hero h1{letter-spacing:-2px}
+  .features{grid-template-columns:1fr}
+  .input-row{flex-direction:column}
+  .answer-actions{flex-wrap:wrap}
+}
+</style>
+</head>
+
+<body>
+
+<nav>
+  <div class="logo">Zen<span>X</span></div>
+
+  <div class="nav-links">
+    <a href="#features">Features</a>
+    <a href="#ai">Try AI</a>
+    <a href="#founder">Founder</a>
+    <button class="btn" onclick="openSignup()">Sign Up</button>
+  </div>
+</nav>
+
+<main>
+
+<section class="hero">
+  <span class="badge">⚡ Student AI • Built for focused learning</span>
+
+  <h1>
+    Study smarter.<br>
+    <em>Go further.</em>
+  </h1>
+
+  <p>
+    ZenX brings AI doubt solving, smart notes, study planning
+    and practice into one focused student workspace.
+  </p>
+
+  <div class="actions">
+    <a class="btn" href="#ai">Try ZenX AI</a>
+    <button class="btn ghost" onclick="openSignup()">Create Account</button>
+  </div>
+</section>
+
+<section id="features" class="section container">
+
+  <h2 class="section-title">Everything for smarter learning</h2>
+
+  <p class="section-subtitle">
+    One workspace for understanding, planning and practice.
+  </p>
+
+  <div class="features">
+
+    <div class="card">
+      <div class="icon">🧠</div>
+      <h3>AI Doubt Solver</h3>
+      <p>Ask questions and get clear, step-by-step explanations.</p>
+    </div>
+
+    <div class="card">
+      <div class="icon">📚</div>
+      <h3>Smart Notes</h3>
+      <p>Organize important concepts for faster revision.</p>
+    </div>
+
+    <div class="card">
+      <div class="icon">🎯</div>
+      <h3>Study Planner</h3>
+      <p>Turn your syllabus into manageable study targets.</p>
+    </div>
+
+    <div class="card">
+      <div class="icon">📝</div>
+      <h3>Practice</h3>
+      <p>Practice topics and improve through mistakes.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<section id="ai" class="section container">
+
+  <h2 class="section-title">Ask ZenX AI</h2>
+
+  <p class="section-subtitle">
+    Ask a study question and get your answer in one place.
+  </p>
+
+  <div class="ai-box">
+
+    <div class="input-row">
+
+      <input
+        id="q"
+        type="text"
+        placeholder="e.g. Explain Newton's second law simply"
+        onkeydown="if(event.key==='Enter') ask()"
+      >
+
+      <button class="btn" onclick="ask()">Ask AI</button>
+
+    </div>
+
+    <div id="a" class="answer">
+      Your AI answer will appear here.
+    </div>
+
+    <div id="answerActions" class="answer-actions hidden">
+
+      <button class="btn ghost" onclick="downloadAnswer()">
+        ⬇ Download Answer
+      </button>
+
+      <button class="btn ghost" onclick="copyAnswer()">
+        📋 Copy
+      </button>
+
+    </div>
+
+  </div>
+
+</section>
+
+<section class="section container">
+
+  <h2 class="section-title">Images & Resources</h2>
+
+  <p class="section-subtitle">
+    Upload an image or study material for your workspace.
+  </p>
+
+  <div class="about-card">
+
+    <label class="upload">
+      📷 Click to upload an image
+      <input
+        id="imageInput"
+        type="file"
+        accept="image/*"
+        hidden
+        onchange="previewImage(event)"
+      >
+    </label>
+
+    <img id="preview" alt="Uploaded image preview">
+
+  </div>
+
+</section>
+
+<section id="founder" class="section container">
+
+  <h2 class="section-title">Meet the Founder</h2>
+
+  <div class="about">
+
+    <div class="about-card">
+      <div class="founder-role">Founder • ZenX</div>
+      <div class="founder-name">Abhay Srivastava</div>
+
+      <p style="color:var(--muted);line-height:1.8">
+        Building ZenX with the vision of creating a focused,
+        useful and accessible AI learning platform for students.
+      </p>
+    </div>
+
+    <div class="about-card">
+      <h3>Our Goal</h3>
+
+      <p style="color:var(--muted);line-height:1.8">
+        Less app-hopping. More learning.
+        ZenX brings understanding, planning and practice together
+        in one simple student workspace.
+      </p>
+    </div>
+
+  </div>
+
+</section>
+
+</main>
+
+<footer>
+  © 2026 ZenX • Student learning platform
+</footer>
+
+<!-- SIGN UP MODAL -->
+
+<div id="signupModal" class="modal">
+
+  <div class="modal-box">
+
+    <button class="close" onclick="closeSignup()">×</button>
+
+    <h2>Create your ZenX account</h2>
+
+    <p style="color:var(--muted)">
+      Sign-up interface is ready. Real account authentication
+      will be connected to the backend.
+    </p>
+
+    <input id="name" placeholder="Your name">
+
+    <input id="email" type="email" placeholder="Email address">
+
+    <button class="btn" style="width:100%;margin-top:12px" onclick="signup()">
+      Continue
+    </button>
+
+    <p id="signupMsg" style="color:#19d3ae"></p>
+
+  </div>
+
+</div>
+
+<script>
+
+const API_URL =
+  "https://zenx-hnkl.onrender.com/api/ask";
+
+let lastAnswer = "";
+
+
+async function ask(){
+
+  const input = document.getElementById("q");
+  const answer = document.getElementById("a");
+  const actions = document.getElementById("answerActions");
+
+  const question = input.value.trim();
+
+  if(!question){
+    answer.textContent = "Please enter a question.";
+    actions.classList.add("hidden");
+    return;
+  }
+
+  answer.textContent = "🤔 ZenX AI is thinking...";
+  actions.classList.add("hidden");
+
+  try{
+
+    const response = await fetch(API_URL,{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        question:question
+      })
+    });
+
+    if(!response.ok){
+      throw new Error("API request failed");
+    }
+
+    const data = await response.json();
+
+    lastAnswer =
+      data.answer ||
+      data.error ||
+      "ZenX could not generate an answer.";
+
+    answer.textContent = lastAnswer;
+
+    actions.classList.remove("hidden");
+
+  }catch(error){
+
+    answer.textContent =
+      "⚠️ ZenX AI could not connect to the backend. Please make sure the Render API is running.";
+
+  }
+
+}
+
+
+function downloadAnswer(){
+
+  if(!lastAnswer)return;
+
+  const blob = new Blob(
+    [lastAnswer],
+    {type:"text/plain"}
+  );
+
+  const url = URL.createObjectURL(blob);
+
+  const link = document.createElement("a");
+
+  link.href = url;
+  link.download = "ZenX-AI-Answer.txt";
+
+  link.click();
+
+  URL.revokeObjectURL(url);
+
+}
+
+
+async function copyAnswer(){
+
+  if(!lastAnswer)return;
+
+  try{
+
+    await navigator.clipboard.writeText(lastAnswer);
+
+    alert("Answer copied!");
+
+  }catch(e){
+
+    alert("Copy failed. Please select and copy the answer manually.");
+
+  }
+
+}
+
+
+function previewImage(event){
+
+  const file = event.target.files[0];
+
+  if(!file)return;
+
+  const preview =
+    document.getElementById("preview");
+
+  preview.src =
+    URL.createObjectURL(file);
+
+  preview.style.display = "block";
+
+}
+
+
+function openSignup(){
+
+  document.getElementById("signupModal").style.display = "flex";
+
+}
+
+
+function closeSignup(){
+
+  document.getElementById("signupModal").style.display = "none";
+
+}
+
+
+function signup(){
+
+  const name =
+    document.getElementById("name").value.trim();
+
+  const email =
+    document.getElementById("email").value.trim();
+
+  const msg =
+    document.getElementById("signupMsg");
+
+  if(!name || !email){
+
+    msg.textContent =
+      "Please enter your name and email.";
+
+    return;
+
+  }
+
+  msg.textContent =
+    "✓ Details received. Real authentication will be connected next.";
+
+}
+
+
+window.onclick = function(event){
+
+  const modal =
+    document.getElementById("signupModal");
+
+  if(event.target === modal){
+    closeSignup();
+  }
+
+};
+
+</script>
+
+</body>
+</html>}
 
 .logo{
   font-size:25px;
