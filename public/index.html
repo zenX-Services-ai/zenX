@@ -2210,17 +2210,114 @@ function clearImage(){
    IMAGE GENERATION UI
 ===================================================== */
 
-function imageGeneration(){
+async function imageGeneration(){
 
   const input =
     document.getElementById("prompt");
 
-  input.value =
-    "Create an image of ";
+  const prompt =
+    input.value.trim();
 
-  input.focus();
+  if(!prompt){
 
+    input.focus();
+
+    input.placeholder =
+      "Example: A futuristic city at night...";
+
+    return;
+  }
+
+  // Show user's image request
+  addMessage(
+    "user",
+    "🎨 Generate image: " + prompt
+  );
+
+  input.value = "";
   resizeInput(input);
+
+  // Loading message
+  const loadingId =
+    addMessage(
+      "ai",
+      "🎨 ZenX is creating your image…"
+    );
+
+  try{
+
+    const response =
+      await fetch(
+        IMAGE_API_URL,
+        {
+          method:"POST",
+
+          headers:{
+            "accept":"application/json",
+            "Content-Type":"application/json"
+          },
+
+          body:JSON.stringify({
+            prompt:prompt
+          })
+        }
+      );
+
+    if(!response.ok){
+
+      throw new Error(
+        "Image API returned " +
+        response.status
+      );
+    }
+
+    const data =
+      await response.json();
+
+    if(data.error){
+
+      throw new Error(data.error);
+    }
+
+    if(!data.image){
+
+      throw new Error(
+        "No image received from ZenX API."
+      );
+    }
+
+    // Replace loading message with generated image
+    const item =
+      messages.find(
+        message => message.id === loadingId
+      );
+
+    if(item){
+
+      item.text =
+        "✨ Image generated successfully!";
+
+      item.image =
+        data.image;
+    }
+
+    saveMessages();
+    renderMessages();
+    updateHistory();
+
+  }catch(error){
+
+    console.error(
+      "Image generation error:",
+      error
+    );
+
+    updateMessage(
+      loadingId,
+      "⚠️ Image generate nahi ho payi.\n\n" +
+      error.message
+    );
+  }
 }
 
 
