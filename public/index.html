@@ -3,39 +3,80 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080812">
+<meta name="theme-color" content="#070711">
+<meta name="description" content="ZenX AI — Your AI. Your Ideas. Your Future.">
 <title>ZenX AI</title>
 
+<!-- Supabase -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
+<!-- Markdown -->
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+
+<!-- KaTeX for Mathematics -->
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.css">
+
+<script defer
+src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/katex.min.js">
+</script>
+
+<script defer
+src="https://cdn.jsdelivr.net/npm/katex@0.16.22/dist/contrib/auto-render.min.js">
+</script>
+
 <style>
-*{box-sizing:border-box;margin:0;padding:0}
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
 
 :root{
   --bg:#070711;
-  --panel:rgba(18,18,34,.82);
+  --panel:rgba(18,18,34,.84);
+  --panel2:rgba(12,12,25,.92);
   --border:rgba(255,255,255,.11);
   --text:#fff;
   --muted:#9999ad;
   --purple:#8b5cf6;
   --cyan:#06b6d4;
   --pink:#ec4899;
+  --green:#22c55e;
 }
 
 html,body{
   width:100%;
   height:100%;
   overflow:hidden;
-  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  font-family:
+    Inter,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   background:var(--bg);
-  color:var(--text);
+  color:#fff;
 }
 
 body{
   background:
-    radial-gradient(circle at 5% 10%,rgba(139,92,246,.28),transparent 30%),
-    radial-gradient(circle at 95% 10%,rgba(6,182,212,.20),transparent 30%),
-    radial-gradient(circle at 50% 100%,rgba(236,72,153,.18),transparent 35%),
+    radial-gradient(
+      circle at 5% 10%,
+      rgba(139,92,246,.30),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 95% 10%,
+      rgba(6,182,212,.22),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 50% 100%,
+      rgba(236,72,153,.18),
+      transparent 35%
+    ),
     #070711;
 }
 
@@ -45,7 +86,13 @@ body:before{
   width:420px;
   height:420px;
   border-radius:50%;
-  background:linear-gradient(135deg,#8b5cf6,#06b6d4,#ec4899);
+  background:
+    linear-gradient(
+      135deg,
+      #8b5cf6,
+      #06b6d4,
+      #ec4899
+    );
   filter:blur(120px);
   opacity:.13;
   animation:float 14s ease-in-out infinite alternate;
@@ -53,64 +100,191 @@ body:before{
 }
 
 @keyframes float{
-  from{transform:translate(-100px,-100px)}
-  to{transform:translate(calc(100vw - 300px),calc(100vh - 350px))}
+  from{
+    transform:translate(-100px,-100px);
+  }
+  to{
+    transform:
+      translate(
+        calc(100vw - 300px),
+        calc(100vh - 350px)
+      );
+  }
 }
 
-.hidden{display:none!important}
-button{font-family:inherit;cursor:pointer}
+.hidden{
+  display:none!important;
+}
 
-/* ================= AUTH ================= */
+button{
+  font-family:inherit;
+  cursor:pointer;
+}
+
+button:disabled{
+  cursor:not-allowed;
+}
+
+
+/* =====================================================
+   AUTH
+===================================================== */
 
 #auth{
   width:100%;
   height:100%;
+  min-height:100%;
   display:flex;
   align-items:center;
   justify-content:center;
   padding:20px;
+  overflow:auto;
+}
+
+.auth-shell{
+  width:min(950px,100%);
+  display:grid;
+  grid-template-columns:1fr 430px;
+  gap:30px;
+  align-items:center;
+}
+
+.auth-intro{
+  padding:30px;
+}
+
+.auth-dev{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  padding:8px 13px;
+  border:1px solid var(--border);
+  border-radius:999px;
+  background:rgba(255,255,255,.045);
+  color:#cfcfe0;
+  font-size:12px;
+  margin-bottom:20px;
+}
+
+.dev-dot{
+  width:8px;
+  height:8px;
+  border-radius:50%;
+  background:#22c55e;
+  box-shadow:0 0 14px #22c55e;
+}
+
+.auth-intro h2{
+  font-size:clamp(38px,6vw,68px);
+  line-height:1.02;
+  letter-spacing:-2px;
+  margin-bottom:18px;
+}
+
+.gradient-text{
+  background:
+    linear-gradient(
+      90deg,
+      #fff,
+      #c4b5fd,
+      #67e8f9,
+      #f9a8d4
+    );
+  -webkit-background-clip:text;
+  background-clip:text;
+  color:transparent;
+}
+
+.auth-intro p{
+  max-width:510px;
+  color:#88889c;
+  font-size:16px;
+  line-height:1.7;
+}
+
+.feature-row{
+  display:flex;
+  flex-wrap:wrap;
+  gap:9px;
+  margin-top:25px;
+}
+
+.feature{
+  padding:9px 12px;
+  border:1px solid var(--border);
+  background:rgba(255,255,255,.04);
+  border-radius:12px;
+  color:#c6c6d4;
+  font-size:12px;
 }
 
 .auth-card{
-  width:min(430px,100%);
+  width:100%;
   padding:32px;
   border:1px solid var(--border);
   border-radius:28px;
-  background:rgba(17,17,30,.80);
-  backdrop-filter:blur(25px);
-  box-shadow:0 30px 100px rgba(0,0,0,.45);
+  background:
+    linear-gradient(
+      145deg,
+      rgba(25,25,45,.88),
+      rgba(11,11,23,.88)
+    );
+  backdrop-filter:blur(28px);
+  box-shadow:
+    0 30px 100px rgba(0,0,0,.48),
+    inset 0 1px 0 rgba(255,255,255,.04);
 }
 
 .brand{
   display:flex;
   align-items:center;
   gap:12px;
-  font-size:26px;
-  font-weight:850;
-  margin-bottom:28px;
+  margin-bottom:26px;
 }
 
-.brand-icon,.mini-logo{
+.brand-icon,
+.mini-logo{
   display:grid;
   place-items:center;
-  background:linear-gradient(135deg,#8b5cf6,#06b6d4,#ec4899);
-  box-shadow:0 0 35px rgba(139,92,246,.35);
+  color:white;
+  background:
+    linear-gradient(
+      135deg,
+      #8b5cf6,
+      #06b6d4,
+      #ec4899
+    );
+  box-shadow:
+    0 0 35px rgba(139,92,246,.35);
 }
 
 .brand-icon{
-  width:46px;
-  height:46px;
-  border-radius:15px;
+  width:48px;
+  height:48px;
+  border-radius:16px;
+  font-size:21px;
+}
+
+.brand-name{
+  font-size:25px;
+  font-weight:900;
+  letter-spacing:-.7px;
+}
+
+.brand-name span{
+  color:#9d8aff;
 }
 
 .auth-card h1{
   font-size:30px;
+  letter-spacing:-.6px;
   margin-bottom:7px;
 }
 
 .auth-sub{
   color:var(--muted);
   margin-bottom:23px;
+  line-height:1.5;
 }
 
 .field{
@@ -124,19 +298,38 @@ button{font-family:inherit;cursor:pointer}
   margin-bottom:7px;
 }
 
+.input-wrap{
+  position:relative;
+}
+
 .field input{
   width:100%;
-  padding:14px 15px;
+  padding:14px 45px 14px 15px;
   border-radius:13px;
   border:1px solid var(--border);
   outline:none;
   background:rgba(255,255,255,.05);
   color:#fff;
+  font-size:14px;
+  transition:.2s;
 }
 
 .field input:focus{
   border-color:#8b5cf6;
-  box-shadow:0 0 0 3px rgba(139,92,246,.10);
+  box-shadow:
+    0 0 0 3px rgba(139,92,246,.10);
+}
+
+.password-toggle{
+  position:absolute;
+  right:9px;
+  top:50%;
+  transform:translateY(-50%);
+  border:0;
+  background:none;
+  color:#88889a;
+  font-size:16px;
+  padding:5px;
 }
 
 .primary{
@@ -146,24 +339,26 @@ button{font-family:inherit;cursor:pointer}
   border:0;
   border-radius:14px;
   color:#fff;
-  font-weight:800;
-  background:linear-gradient(135deg,#8b5cf6,#06b6d4);
+  font-weight:850;
+  font-size:14px;
+  background:
+    linear-gradient(
+      135deg,
+      #8b5cf6,
+      #06b6d4
+    );
   transition:.2s;
 }
 
 .primary:hover{
   transform:translateY(-1px);
-  box-shadow:0 10px 30px rgba(139,92,246,.25);
-}
-
-.primary:disabled{
-  opacity:.55;
-  cursor:not-allowed;
+  box-shadow:
+    0 12px 32px rgba(139,92,246,.28);
 }
 
 .forgot{
   width:100%;
-  margin-top:11px;
+  margin-top:12px;
   border:0;
   background:none;
   color:#b9a5ff;
@@ -172,7 +367,7 @@ button{font-family:inherit;cursor:pointer}
 
 .switch{
   text-align:center;
-  margin-top:18px;
+  margin-top:19px;
   color:#8f8fa3;
   font-size:14px;
 }
@@ -181,20 +376,31 @@ button{font-family:inherit;cursor:pointer}
   border:0;
   background:none;
   color:#c4b5fd;
-  font-weight:750;
+  font-weight:800;
 }
 
 .auth-msg{
   margin-top:15px;
-  padding:12px;
+  padding:13px;
   border-radius:12px;
   background:rgba(255,255,255,.05);
   color:#d5d5e2;
   font-size:13px;
   line-height:1.55;
+  white-space:pre-line;
 }
 
-/* ================= APP ================= */
+.auth-footer{
+  margin-top:20px;
+  text-align:center;
+  color:#555568;
+  font-size:10px;
+}
+
+
+/* =====================================================
+   APP
+===================================================== */
 
 .app{
   width:100%;
@@ -208,7 +414,7 @@ button{font-family:inherit;cursor:pointer}
   padding:18px;
   display:flex;
   flex-direction:column;
-  background:rgba(6,6,17,.68);
+  background:rgba(6,6,17,.70);
   backdrop-filter:blur(25px);
   border-right:1px solid var(--border);
   z-index:50;
@@ -219,7 +425,7 @@ button{font-family:inherit;cursor:pointer}
   align-items:center;
   gap:10px;
   font-size:21px;
-  font-weight:850;
+  font-weight:900;
   margin-bottom:22px;
 }
 
@@ -235,7 +441,12 @@ button{font-family:inherit;cursor:pointer}
   border-radius:13px;
   color:#fff;
   border:1px solid var(--border);
-  background:linear-gradient(135deg,rgba(139,92,246,.25),rgba(6,182,212,.12));
+  background:
+    linear-gradient(
+      135deg,
+      rgba(139,92,246,.25),
+      rgba(6,182,212,.12)
+    );
   font-weight:750;
 }
 
@@ -260,6 +471,7 @@ button{font-family:inherit;cursor:pointer}
   white-space:nowrap;
   overflow:hidden;
   text-overflow:ellipsis;
+  cursor:pointer;
 }
 
 .chat-item:hover{
@@ -280,7 +492,12 @@ button{font-family:inherit;cursor:pointer}
   border-radius:50%;
   display:grid;
   place-items:center;
-  background:linear-gradient(135deg,#ec4899,#8b5cf6);
+  background:
+    linear-gradient(
+      135deg,
+      #ec4899,
+      #8b5cf6
+    );
   font-weight:800;
 }
 
@@ -309,7 +526,10 @@ button{font-family:inherit;cursor:pointer}
   font-size:18px;
 }
 
-/* ================= MAIN ================= */
+
+/* =====================================================
+   MAIN
+===================================================== */
 
 .main{
   flex:1;
@@ -346,7 +566,7 @@ button{font-family:inherit;cursor:pointer}
 }
 
 .model{
-  font-weight:800;
+  font-weight:850;
   font-size:17px;
 }
 
@@ -382,7 +602,10 @@ button{font-family:inherit;cursor:pointer}
   accent-color:#8b5cf6;
 }
 
-/* ================= CHAT ================= */
+
+/* =====================================================
+   CHAT
+===================================================== */
 
 .chat{
   flex:1;
@@ -412,20 +635,37 @@ button{font-family:inherit;cursor:pointer}
   display:grid;
   place-items:center;
   font-size:39px;
-  background:linear-gradient(135deg,#8b5cf6,#06b6d4,#ec4899);
-  box-shadow:0 0 55px rgba(139,92,246,.30);
+  background:
+    linear-gradient(
+      135deg,
+      #8b5cf6,
+      #06b6d4,
+      #ec4899
+    );
+  box-shadow:
+    0 0 55px rgba(139,92,246,.30);
   animation:pulse 3s ease-in-out infinite;
 }
 
 @keyframes pulse{
-  50%{transform:translateY(-7px) rotate(2deg)}
+  50%{
+    transform:translateY(-7px) rotate(2deg);
+  }
 }
 
 .welcome h1{
   margin-top:25px;
   font-size:clamp(32px,6vw,56px);
-  background:linear-gradient(90deg,#fff,#c4b5fd,#67e8f9,#f9a8d4);
+  background:
+    linear-gradient(
+      90deg,
+      #fff,
+      #c4b5fd,
+      #67e8f9,
+      #f9a8d4
+    );
   -webkit-background-clip:text;
+  background-clip:text;
   color:transparent;
 }
 
@@ -433,6 +673,24 @@ button{font-family:inherit;cursor:pointer}
   max-width:560px;
   margin-top:9px;
   color:#858598;
+  line-height:1.6;
+}
+
+.suggestions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:8px;
+  margin-top:22px;
+}
+
+.suggestion{
+  padding:9px 12px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:rgba(255,255,255,.04);
+  color:#bdbdcc;
+  font-size:12px;
 }
 
 .message{
@@ -443,8 +701,14 @@ button{font-family:inherit;cursor:pointer}
 }
 
 @keyframes appear{
-  from{opacity:0;transform:translateY(7px)}
-  to{opacity:1;transform:none}
+  from{
+    opacity:0;
+    transform:translateY(7px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
 }
 
 .message.user{
@@ -453,7 +717,12 @@ button{font-family:inherit;cursor:pointer}
 
 .message.user .bubble{
   max-width:76%;
-  background:linear-gradient(135deg,rgba(124,58,237,.92),rgba(79,70,229,.82));
+  background:
+    linear-gradient(
+      135deg,
+      rgba(124,58,237,.92),
+      rgba(79,70,229,.82)
+    );
 }
 
 .message.ai .bubble{
@@ -468,23 +737,79 @@ button{font-family:inherit;cursor:pointer}
   border-radius:11px;
   display:grid;
   place-items:center;
-  background:linear-gradient(135deg,#8b5cf6,#06b6d4);
+  background:
+    linear-gradient(
+      135deg,
+      #8b5cf6,
+      #06b6d4
+    );
 }
 
 .bubble{
   padding:15px 17px;
   border-radius:18px;
   line-height:1.65;
-  white-space:pre-wrap;
   overflow-wrap:anywhere;
+  font-size:15px;
+}
+
+/* Markdown */
+
+.bubble p{
+  margin:0 0 10px;
+}
+
+.bubble p:last-child{
+  margin-bottom:0;
+}
+
+.bubble ul,
+.bubble ol{
+  padding-left:22px;
+  margin:8px 0;
+}
+
+.bubble li{
+  margin:4px 0;
+}
+
+.bubble strong{
+  font-weight:800;
+}
+
+.bubble code{
+  padding:2px 5px;
+  border-radius:5px;
+  background:rgba(0,0,0,.25);
+}
+
+.bubble pre{
+  overflow-x:auto;
+  padding:12px;
+  border-radius:10px;
+  background:rgba(0,0,0,.35);
+  margin:10px 0;
+}
+
+/* Maths */
+
+.katex-display{
+  overflow-x:auto;
+  overflow-y:hidden;
+  padding:5px 0;
+}
+
+.katex{
+  font-size:1.08em;
 }
 
 .message-image{
-  max-width:280px;
-  max-height:220px;
+  max-width:380px;
+  max-height:300px;
   margin-top:9px;
   border-radius:14px;
   display:block;
+  object-fit:contain;
 }
 
 .actions{
@@ -505,7 +830,43 @@ button{font-family:inherit;cursor:pointer}
   color:#fff;
 }
 
-/* ================= COMPOSER ================= */
+.typing{
+  display:inline-flex;
+  gap:4px;
+  align-items:center;
+}
+
+.typing span{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#aaa;
+  animation:typing 1s infinite;
+}
+
+.typing span:nth-child(2){
+  animation-delay:.15s;
+}
+
+.typing span:nth-child(3){
+  animation-delay:.3s;
+}
+
+@keyframes typing{
+  0%,60%,100%{
+    opacity:.25;
+    transform:translateY(0);
+  }
+  30%{
+    opacity:1;
+    transform:translateY(-3px);
+  }
+}
+
+
+/* =====================================================
+   COMPOSER
+===================================================== */
 
 .composer-wrap{
   position:fixed;
@@ -513,7 +874,11 @@ button{font-family:inherit;cursor:pointer}
   right:0;
   bottom:0;
   padding:13px 18px 18px;
-  background:linear-gradient(transparent,rgba(7,7,17,.97) 35%);
+  background:
+    linear-gradient(
+      transparent,
+      rgba(7,7,17,.97) 35%
+    );
   z-index:40;
 }
 
@@ -525,7 +890,8 @@ button{font-family:inherit;cursor:pointer}
   border:1px solid rgba(255,255,255,.13);
   background:rgba(18,18,33,.90);
   backdrop-filter:blur(25px);
-  box-shadow:0 15px 55px rgba(0,0,0,.42);
+  box-shadow:
+    0 15px 55px rgba(0,0,0,.42);
 }
 
 .tools{
@@ -568,7 +934,12 @@ button{font-family:inherit;cursor:pointer}
 
 .send{
   border:0;
-  background:linear-gradient(135deg,#8b5cf6,#06b6d4);
+  background:
+    linear-gradient(
+      135deg,
+      #8b5cf6,
+      #06b6d4
+    );
 }
 
 textarea{
@@ -620,9 +991,21 @@ input[type=file]{
   margin-top:6px;
 }
 
-/* ================= MOBILE ================= */
 
-@media(max-width:800px){
+/* =====================================================
+   MOBILE
+===================================================== */
+
+@media(max-width:850px){
+
+  .auth-shell{
+    grid-template-columns:1fr;
+    max-width:450px;
+  }
+
+  .auth-intro{
+    display:none;
+  }
 
   .sidebar{
     position:fixed;
@@ -668,10 +1051,71 @@ input[type=file]{
     font-size:34px;
   }
 }
+
+@media(max-width:480px){
+
+  #auth{
+    padding:12px;
+  }
+
+  .auth-card{
+    padding:24px 20px;
+    border-radius:22px;
+  }
+
+  .auth-card h1{
+    font-size:26px;
+  }
+
+  .brand{
+    margin-bottom:20px;
+  }
+
+  .topbar{
+    padding:0 12px;
+  }
+
+  .model{
+    font-size:15px;
+  }
+
+  .welcome{
+    min-height:48vh;
+  }
+
+  .orb{
+    width:76px;
+    height:76px;
+    border-radius:24px;
+  }
+
+  .tools{
+    overflow-x:auto;
+  }
+
+  .tool{
+    white-space:nowrap;
+  }
+
+  .input-row{
+    gap:5px;
+  }
+
+  .icon-btn{
+    width:42px;
+    height:42px;
+    flex-basis:42px;
+  }
+
+  textarea{
+    font-size:15px;
+  }
+}
 </style>
 </head>
 
 <body>
+
 
 <!-- =====================================================
      AUTH SCREEN
@@ -679,48 +1123,158 @@ input[type=file]{
 
 <section id="auth">
 
-  <div class="auth-card">
+  <div class="auth-shell">
 
-    <div class="brand">
-      <div class="brand-icon">✦</div>
-      ZenX
+    <div class="auth-intro">
+
+      <div class="auth-dev">
+        <span class="dev-dot"></span>
+        Developed by ZenX
+      </div>
+
+      <h2>
+        <span class="gradient-text">Think.</span><br>
+        Create.<br>
+        <span class="gradient-text">ZenX.</span>
+      </h2>
+
+      <p>
+        Your intelligent AI workspace for questions,
+        learning, ideas, mathematics, coding and more.
+      </p>
+
+      <div class="feature-row">
+        <div class="feature">🧠 Smart AI</div>
+        <div class="feature">📚 Study</div>
+        <div class="feature">➗ Mathematics</div>
+        <div class="feature">💡 Ideas</div>
+      </div>
+
     </div>
 
-    <h1 id="authTitle">Welcome back</h1>
 
-    <div class="auth-sub" id="authSub">
-      Sign in to continue to ZenX AI.
+    <div class="auth-card">
+
+      <div class="brand">
+
+        <div class="brand-icon">✦</div>
+
+        <div class="brand-name">
+          Zen<span>X</span>
+        </div>
+
+      </div>
+
+
+      <h1 id="authTitle">
+        Welcome back
+      </h1>
+
+      <div class="auth-sub" id="authSub">
+        Sign in to continue to ZenX AI.
+      </div>
+
+
+      <div class="field hidden" id="nameField">
+
+        <label>Name</label>
+
+        <input
+          id="name"
+          type="text"
+          autocomplete="name"
+          placeholder="Your name"
+        >
+
+      </div>
+
+
+      <div class="field">
+
+        <label>Email</label>
+
+        <input
+          id="email"
+          type="email"
+          autocomplete="email"
+          placeholder="you@example.com"
+        >
+
+      </div>
+
+
+      <div class="field" id="passwordField">
+
+        <label>Password</label>
+
+        <div class="input-wrap">
+
+          <input
+            id="password"
+            type="password"
+            autocomplete="current-password"
+            placeholder="••••••••"
+          >
+
+          <button
+            class="password-toggle"
+            type="button"
+            onclick="togglePassword()"
+            id="passwordToggle"
+          >
+            👁
+          </button>
+
+        </div>
+
+      </div>
+
+
+      <button
+        class="primary"
+        id="authBtn"
+        onclick="handleAuth()"
+      >
+        Sign In
+      </button>
+
+
+      <button
+        class="forgot"
+        id="forgotBtn"
+        onclick="showForgotPassword()"
+      >
+        Forgot password?
+      </button>
+
+
+      <div class="switch">
+
+        <span id="switchText">
+          Don't have an account?
+        </span>
+
+        <button
+          id="switchBtn"
+          onclick="toggleAuth()"
+        >
+          Sign Up
+        </button>
+
+      </div>
+
+
+      <div
+        class="auth-msg hidden"
+        id="authMsg"
+      ></div>
+
+
+      <div class="auth-footer">
+        Secure authentication powered by Supabase
+      </div>
+
     </div>
-
-    <div class="field hidden" id="nameField">
-      <label>Name</label>
-      <input id="name" type="text" placeholder="Your name">
-    </div>
-
-    <div class="field">
-      <label>Email</label>
-      <input id="email" type="email" placeholder="you@example.com">
-    </div>
-
-    <div class="field" id="passwordField">
-      <label>Password</label>
-      <input id="password" type="password" placeholder="••••••••">
-    </div>
-
-    <button class="primary" id="authBtn" onclick="handleAuth()">
-      Sign In
-    </button>
-
-    <button class="forgot" id="forgotBtn" onclick="showForgotPassword()">
-      Forgot password?
-    </button>
-
-    <div class="switch">
-      <span id="switchText">Don't have an account?</span>
-      <button id="switchBtn" onclick="toggleAuth()">Sign Up</button>
-    </div>
-
-    <div class="auth-msg hidden" id="authMsg"></div>
 
   </div>
 
@@ -736,35 +1290,67 @@ input[type=file]{
   <aside class="sidebar" id="sidebar">
 
     <div class="logo-row">
-      <div class="mini-logo">✦</div>
+
+      <div class="mini-logo">
+        ✦
+      </div>
+
       ZenX
+
     </div>
 
-    <button class="new-chat" onclick="newChat()">
+
+    <button
+      class="new-chat"
+      onclick="newChat()"
+    >
       ＋ New Chat
     </button>
+
 
     <div class="history-title">
       Recent Chats
     </div>
 
-    <div class="history" id="history"></div>
+
+    <div
+      class="history"
+      id="history"
+    ></div>
+
 
     <div class="user-box">
 
-      <div class="user-avatar" id="userAvatar">
+      <div
+        class="user-avatar"
+        id="userAvatar"
+      >
         Z
       </div>
 
+
       <div class="user-info">
-        <div class="user-name" id="userName">
+
+        <div
+          class="user-name"
+          id="userName"
+        >
           ZenX User
         </div>
 
-        <div class="user-email" id="userEmail"></div>
+        <div
+          class="user-email"
+          id="userEmail"
+        ></div>
+
       </div>
 
-      <button class="logout" onclick="logout()">
+
+      <button
+        class="logout"
+        onclick="logout()"
+        title="Sign out"
+      >
         ↪
       </button>
 
@@ -775,1836 +1361,4 @@ input[type=file]{
 
   <main class="main">
 
-    <header class="topbar">
-
-      <div class="top-left">
-
-        <button class="menu" onclick="toggleSidebar()">
-          ☰
-        </button>
-
-        <div>
-
-          <div class="model">
-            ZenX AI
-          </div>
-
-          <div class="online">
-            <span class="online-dot"></span>
-            Online
-          </div>
-
-        </div>
-
-      </div>
-
-      <label class="mode">
-        🧠 Working Mode
-        <input type="checkbox" id="workingMode">
-      </label>
-
-    </header>
-
-
-    <section class="chat" id="chat">
-
-      <div class="messages" id="messages"></div>
-
-    </section>
-
-  </main>
-
-</section>
-
-
-<!-- =====================================================
-     COMPOSER
-===================================================== -->
-
-<div class="composer-wrap hidden" id="composerWrap">
-
-  <div class="composer">
-
-    <div class="preview" id="preview">
-
-      <img id="previewImg">
-
-      <button onclick="clearImage()">
-        ✕
-      </button>
-
-    </div>
-
-
-    <div class="tools">
-
-      <button class="tool" id="workTool" onclick="toggleWorking()">
-        🧠 <span>Working Mode</span>
-      </button>
-
-      <label class="tool">
-        🖼️ <span>Image</span>
-        <input
-          type="file"
-          id="imageInput"
-          accept="image/*"
-        >
-      </label>
-
-      <button class="tool" onclick="imageGeneration()">
-        🎨 <span>Generate</span>
-      </button>
-
-    </div>
-
-
-    <div class="input-row">
-
-      <button
-        class="icon-btn"
-        onclick="document.getElementById('imageInput').click()"
-      >
-        ＋
-      </button>
-
-      <textarea
-        id="prompt"
-        rows="1"
-        placeholder="Message ZenX..."
-        oninput="resizeInput(this)"
-        onkeydown="handleKey(event)"
-      ></textarea>
-
-      <button
-        class="icon-btn"
-        id="micBtn"
-        onclick="voiceInput()"
-      >
-        🎙️
-      </button>
-
-      <button
-        class="icon-btn send"
-        onclick="sendMessage()"
-      >
-        ➤
-      </button>
-
-    </div>
-
-  </div>
-
-  <div class="tip">
-    ZenX may make mistakes. Check important information.
-  </div>
-
-</div>
-
-
-<script>
-
-/* =====================================================
-   ZENX CONFIG
-===================================================== */
-
-const SUPABASE_URL =
-"https://srlftvbiqoufejhhfsrh.supabase.co";
-
-const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNybGZ0dmJpcW91ZmVqaGhmc3JoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1OTI0NzAsImV4cCI6MjEwNDE2ODQ3MH0.vJ1CQ-Zz_kaRhDDT5J7y1nssgqccd2zPxQ4_FrJI4fs";
-
-const API_URL =
-"https://zenx-hnkl.onrender.com/api/ask";
-
-const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
-
-
-/* =====================================================
-   VARIABLES
-===================================================== */
-
-let signupMode = false;
-let forgotMode = false;
-let workingMode = false;
-let selectedImage = null;
-let messages = [];
-
-
-/* =====================================================
-   START
-===================================================== */
-
-document.addEventListener("DOMContentLoaded", async () => {
-
-  document
-    .getElementById("imageInput")
-    .addEventListener("change", handleImage);
-
-  supabaseClient.auth.onAuthStateChange(
-    async (event, session) => {
-
-      if(event === "PASSWORD_RECOVERY"){
-        showResetPassword();
-        return;
-      }
-
-      if(session && session.user){
-        await openApp(session.user);
-      }
-    }
-  );
-
-  const {
-    data:{session}
-  } =
-  await supabaseClient.auth.getSession();
-
-  if(session && session.user){
-    await openApp(session.user);
-  }else{
-    showAuth();
-  }
-
-});
-
-
-/* =====================================================
-   AUTH MODE
-===================================================== */
-
-function toggleAuth(){
-
-  signupMode = !signupMode;
-  forgotMode = false;
-
-  document
-    .getElementById("nameField")
-    .classList.toggle(
-      "hidden",
-      !signupMode
-    );
-
-  document
-    .getElementById("passwordField")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("password")
-    .classList.remove("hidden");
-
-  document.getElementById("authTitle")
-    .textContent =
-      signupMode
-      ? "Create your account"
-      : "Welcome back";
-
-  document.getElementById("authSub")
-    .textContent =
-      signupMode
-      ? "Create your ZenX AI account."
-      : "Sign in to continue to ZenX AI.";
-
-  document.getElementById("authBtn")
-    .textContent =
-      signupMode
-      ? "Create Account"
-      : "Sign In";
-
-  document.getElementById("authBtn")
-    .onclick = handleAuth;
-
-  document.getElementById("switchText")
-    .textContent =
-      signupMode
-      ? "Already have an account?"
-      : "Don't have an account?";
-
-  document.getElementById("switchBtn")
-    .textContent =
-      signupMode
-      ? "Sign In"
-      : "Sign Up";
-
-  document.getElementById("switchBtn")
-    .onclick = toggleAuth;
-
-  document.getElementById("forgotBtn")
-    .style.display =
-      signupMode ? "none" : "block";
-
-  clearAuthMessage();
-}
-
-
-/* =====================================================
-   LOGIN / SIGNUP
-===================================================== */
-
-async function handleAuth(){
-
-  const email =
-    document.getElementById("email")
-      .value.trim();
-
-  const password =
-    document.getElementById("password")
-      .value;
-
-  const name =
-    document.getElementById("name")
-      .value.trim();
-
-  if(!email){
-    showAuthMessage(
-      "Please enter your email."
-    );
-    return;
-  }
-
-  if(!password){
-    showAuthMessage(
-      "Please enter your password."
-    );
-    return;
-  }
-
-  if(password.length < 6){
-    showAuthMessage(
-      "Password must be at least 6 characters."
-    );
-    return;
-  }
-
-  const btn =
-    document.getElementById("authBtn");
-
-  btn.disabled = true;
-  btn.textContent = "Please wait...";
-
-  try{
-
-    if(signupMode){
-
-      const {
-        data,
-        error
-      } =
-      await supabaseClient.auth.signUp({
-
-        email:email,
-
-        password:password,
-
-        options:{
-          data:{
-            name:name || "ZenX User"
-          },
-
-          emailRedirectTo:
-            window.location.origin
-        }
-
-      });
-
-      if(error) throw error;
-
-      if(data.session){
-
-        await openApp(data.user);
-
-      }else{
-
-        showAuthMessage(
-          "Account created successfully! 📩\n\n" +
-          "Verification email check karo. " +
-          "Email verify karne ke baad Sign In karo."
-        );
-      }
-
-    }else{
-
-      const {
-        data,
-        error
-      } =
-      await supabaseClient.auth
-        .signInWithPassword({
-
-          email:email,
-          password:password
-
-        });
-
-      if(error) throw error;
-
-      await openApp(data.user);
-    }
-
-  }catch(error){
-
-    console.error(error);
-
-    showAuthMessage(
-      friendlyError(error.message)
-    );
-
-  }finally{
-
-    btn.disabled = false;
-
-    btn.textContent =
-      signupMode
-      ? "Create Account"
-      : "Sign In";
-  }
-}
-
-
-/* =====================================================
-   FORGOT PASSWORD
-===================================================== */
-
-function showForgotPassword(){
-
-  forgotMode = true;
-
-  document
-    .getElementById("nameField")
-    .classList.add("hidden");
-
-  document
-    .getElementById("passwordField")
-    .classList.add("hidden");
-
-  document
-    .getElementById("authTitle")
-    .textContent =
-      "Reset password";
-
-  document
-    .getElementById("authSub")
-    .textContent =
-      "Enter your email and we'll send you a reset link.";
-
-  const btn =
-    document.getElementById("authBtn");
-
-  btn.textContent =
-    "Send Reset Link";
-
-  btn.onclick =
-    sendResetEmail;
-
-  document
-    .getElementById("forgotBtn")
-    .style.display = "none";
-
-  document
-    .getElementById("switchText")
-    .textContent =
-      "Remember your password?";
-
-  document
-    .getElementById("switchBtn")
-    .textContent =
-      "Sign In";
-
-  document
-    .getElementById("switchBtn")
-    .onclick =
-      restoreLogin;
-
-  clearAuthMessage();
-}
-
-
-async function sendResetEmail(){
-
-  const email =
-    document.getElementById("email")
-      .value.trim();
-
-  if(!email){
-
-    showAuthMessage(
-      "Enter your email first."
-    );
-
-    return;
-  }
-
-  const btn =
-    document.getElementById("authBtn");
-
-  btn.disabled = true;
-  btn.textContent = "Sending...";
-
-  try{
-
-    const {
-      error
-    } =
-    await supabaseClient.auth
-      .resetPasswordForEmail(
-        email,
-        {
-          redirectTo:
-            window.location.origin
-        }
-      );
-
-    if(error) throw error;
-
-    showAuthMessage(
-      "📩 Password reset email sent!\n\n" +
-      "Inbox aur Spam/Junk folder check karo."
-    );
-
-  }catch(error){
-
-    showAuthMessage(
-      friendlyError(error.message)
-    );
-
-  }finally{
-
-    btn.disabled = false;
-    btn.textContent = "Send Reset Link";
-  }
-}
-
-
-/* =====================================================
-   RESET PASSWORD
-===================================================== */
-
-function showResetPassword(){
-
-  document
-    .getElementById("auth")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("app")
-    .classList.add("hidden");
-
-  document
-    .getElementById("composerWrap")
-    .classList.add("hidden");
-
-  document
-    .getElementById("authTitle")
-    .textContent =
-      "Create new password";
-
-  document
-    .getElementById("authSub")
-    .textContent =
-      "Choose a new password for your ZenX account.";
-
-  document
-    .getElementById("nameField")
-    .classList.add("hidden");
-
-  document
-    .getElementById("passwordField")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("password")
-    .value = "";
-
-  document
-    .getElementById("authBtn")
-    .textContent =
-      "Update Password";
-
-  document
-    .getElementById("authBtn")
-    .onclick =
-      updatePassword;
-
-  document
-    .getElementById("forgotBtn")
-    .style.display =
-      "none";
-
-  document
-    .getElementById("switchText")
-    .textContent = "";
-
-  document
-    .getElementById("switchBtn")
-    .textContent = "";
-}
-
-
-async function updatePassword(){
-
-  const password =
-    document.getElementById("password")
-      .value;
-
-  if(!password || password.length < 6){
-
-    showAuthMessage(
-      "New password must be at least 6 characters."
-    );
-
-    return;
-  }
-
-  const btn =
-    document.getElementById("authBtn");
-
-  btn.disabled = true;
-  btn.textContent = "Updating...";
-
-  try{
-
-    const {
-      error
-    } =
-    await supabaseClient.auth
-      .updateUser({
-        password:password
-      });
-
-    if(error) throw error;
-
-    showAuthMessage(
-      "✅ Password updated successfully!"
-    );
-
-    setTimeout(() => {
-
-      restoreLogin();
-
-    },1500);
-
-  }catch(error){
-
-    showAuthMessage(
-      friendlyError(error.message)
-    );
-
-  }finally{
-
-    btn.disabled = false;
-  }
-}
-
-
-/* =====================================================
-   RESTORE LOGIN
-===================================================== */
-
-function restoreLogin(){
-
-  signupMode = false;
-  forgotMode = false;
-
-  document
-    .getElementById("passwordField")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("authTitle")
-    .textContent =
-      "Welcome back";
-
-  document
-    .getElementById("authSub")
-    .textContent =
-      "Sign in to continue to ZenX AI.";
-
-  document
-    .getElementById("authBtn")
-    .textContent =
-      "Sign In";
-
-  document
-    .getElementById("authBtn")
-    .onclick =
-      handleAuth;
-
-  document
-    .getElementById("forgotBtn")
-    .style.display =
-      "block";
-
-  document
-    .getElementById("switchText")
-    .textContent =
-      "Don't have an account?";
-
-  document
-    .getElementById("switchBtn")
-    .textContent =
-      "Sign Up";
-
-  document
-    .getElementById("switchBtn")
-    .onclick =
-      toggleAuth;
-
-  clearAuthMessage();
-}
-
-
-/* =====================================================
-   RESEND VERIFICATION
-===================================================== */
-
-async function resendVerification(){
-
-  const email =
-    document.getElementById("email")
-      .value.trim();
-
-  if(!email){
-
-    showAuthMessage(
-      "Enter your email first."
-    );
-
-    return;
-  }
-
-  try{
-
-    const {
-      error
-    } =
-    await supabaseClient.auth.resend({
-
-      type:"signup",
-
-      email:email,
-
-      options:{
-        emailRedirectTo:
-          window.location.origin
-      }
-    });
-
-    if(error) throw error;
-
-    showAuthMessage(
-      "📩 Verification email sent again!"
-    );
-
-  }catch(error){
-
-    showAuthMessage(
-      friendlyError(error.message)
-    );
-  }
-}
-
-
-/* =====================================================
-   AUTH UI
-===================================================== */
-
-function showAuthMessage(text){
-
-  const box =
-    document.getElementById("authMsg");
-
-  box.innerHTML =
-    escapeHtml(text)
-      .replace(/\n/g,"<br>");
-
-  if(
-    !forgotMode &&
-    !signupMode &&
-    !text.includes("successfully")
-  ){
-
-    const button =
-      document.createElement("button");
-
-    button.textContent =
-      "Resend Verification";
-
-    button.style.cssText = `
-      margin-top:12px;
-      padding:8px 12px;
-      border-radius:9px;
-      border:1px solid rgba(139,92,246,.45);
-      background:rgba(139,92,246,.2);
-      color:white;
-      cursor:pointer;
-    `;
-
-    button.onclick =
-      resendVerification;
-
-    box.appendChild(
-      document.createElement("br")
-    );
-
-    box.appendChild(button);
-  }
-
-  box.classList.remove("hidden");
-}
-
-
-function clearAuthMessage(){
-
-  document
-    .getElementById("authMsg")
-    .classList.add("hidden");
-}
-
-
-/* =====================================================
-   OPEN APP
-===================================================== */
-
-async function openApp(user){
-
-  if(!user) return;
-
-  document
-    .getElementById("auth")
-    .classList.add("hidden");
-
-  document
-    .getElementById("app")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("composerWrap")
-    .classList.remove("hidden");
-
-  const metadata =
-    user.user_metadata || {};
-
-  const name =
-    metadata.name ||
-    user.email?.split("@")[0] ||
-    "ZenX User";
-
-  document
-    .getElementById("userName")
-    .textContent = name;
-
-  document
-    .getElementById("userEmail")
-    .textContent =
-      user.email || "";
-
-  document
-    .getElementById("userAvatar")
-    .textContent =
-      name.charAt(0).toUpperCase();
-
-  loadMessages();
-}
-
-
-function showAuth(){
-
-  document
-    .getElementById("auth")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("app")
-    .classList.add("hidden");
-
-  document
-    .getElementById("composerWrap")
-    .classList.add("hidden");
-}
-
-
-/* =====================================================
-   LOGOUT
-===================================================== */
-
-async function logout(){
-
-  await supabaseClient.auth.signOut();
-
-  location.reload();
-}
-
-
-/* =====================================================
-   CHAT STORAGE
-===================================================== */
-
-function getStorageKey(){
-
-  const user =
-    supabaseClient.auth
-      .getSession;
-
-  return "zenx_chat_history";
-}
-
-
-function loadMessages(){
-
-  try{
-
-    const saved =
-      localStorage.getItem(
-        getStorageKey()
-      );
-
-    messages =
-      saved
-      ? JSON.parse(saved)
-      : [];
-
-  }catch(error){
-
-    messages = [];
-  }
-
-  // Fresh screen after inactivity
-  const lastVisit =
-    localStorage.getItem("zenx_last_visit");
-
-  const now = Date.now();
-
-  const ONE_HOUR =
-    60 * 60 * 1000;
-
-  if(
-    lastVisit &&
-    now - Number(lastVisit) > ONE_HOUR
-  ){
-
-    messages = [];
-
-  }
-
-  localStorage.setItem(
-    "zenx_last_visit",
-    now.toString()
-  );
-
-  renderMessages();
-  updateHistory();
-}
-
-/* =====================================================
-   NEW CHAT
-===================================================== */
-
-function newChat(){
-
-  messages = [];
-
-  saveMessages();
-
-  renderMessages();
-
-  updateHistory();
-
-  document
-    .getElementById("prompt")
-    .focus();
-}
-
-
-/* =====================================================
-   ADD MESSAGE
-===================================================== */
-
-function addMessage(
-  role,
-  text,
-  image=null
-){
-
-  const id =
-    Date.now() + "_" +
-    Math.random();
-
-  messages.push({
-    id:id,
-    role:role,
-    text:text,
-    image:image
-  });
-
-  saveMessages();
-  renderMessages();
-  updateHistory();
-
-  return id;
-}
-
-
-/* =====================================================
-   UPDATE MESSAGE
-===================================================== */
-
-function updateMessage(id,text){
-
-  const item =
-    messages.find(
-      message => message.id === id
-    );
-
-  if(item){
-    item.text = text;
-  }
-
-  saveMessages();
-  renderMessages();
-}
-
-
-/* =====================================================
-   RENDER CHAT
-===================================================== */
-
-function renderMessages(){
-
-  const container =
-    document.getElementById("messages");
-
-  if(!messages.length){
-
-    container.innerHTML = `
-      <div class="welcome">
-        <div class="orb">✦</div>
-
-        <h1>
-          What can I help you with?
-        </h1>
-
-        <p>
-          Ask anything, solve problems,
-          analyze images and work with ZenX AI.
-        </p>
-      </div>
-    `;
-
-    return;
-  }
-
-  container.innerHTML = "";
-
-  messages.forEach(message => {
-
-    const row =
-      document.createElement("div");
-
-    row.className =
-      "message " +
-      (
-        message.role === "user"
-        ? "user"
-        : "ai"
-      );
-
-    const avatar =
-      document.createElement("div");
-
-    avatar.className =
-      "msg-avatar";
-
-    avatar.textContent =
-      message.role === "user"
-      ? "👤"
-      : "✦";
-
-    const content =
-      document.createElement("div");
-
-    const bubble =
-      document.createElement("div");
-
-    bubble.className =
-      "bubble";
-
-    bubble.textContent =
-      message.text || "";
-
-    content.appendChild(bubble);
-
-    if(message.image){
-
-      const img =
-        document.createElement("img");
-
-      img.src = message.image;
-
-      img.className =
-        "message-image";
-
-      content.appendChild(img);
-    }
-
-    if(message.role === "ai"){
-
-      const actions =
-        document.createElement("div");
-
-      actions.className =
-        "actions";
-
-      actions.innerHTML = `
-        <button class="action"
-          onclick="copyAnswer(this)">
-          Copy
-        </button>
-
-        <button class="action"
-          onclick="readAnswer(this)">
-          🔊
-        </button>
-
-        <button class="action"
-          onclick="regenerateAnswer(this)">
-          ↻ Regenerate
-        </button>
-      `;
-
-      content.appendChild(actions);
-    }
-
-    row.appendChild(avatar);
-    row.appendChild(content);
-
-    container.appendChild(row);
-  });
-
-  setTimeout(() => {
-
-    const chat =
-      document.getElementById("chat");
-
-    chat.scrollTop =
-      chat.scrollHeight;
-
-  },30);
-}
-
-
-/* =====================================================
-   SEND MESSAGE
-===================================================== */
-
-async function sendMessage(){
-
-  const input =
-    document.getElementById("prompt");
-
-  const question =
-    input.value.trim();
-
-  if(!question && !selectedImage){
-    return;
-  }
-
-  const image =
-    selectedImage;
-
-  const userText =
-    question ||
-    "Please analyze this image.";
-
-  addMessage(
-    "user",
-    userText,
-    image
-  );
-
-  input.value = "";
-
-  resizeInput(input);
-
-  clearImage();
-
-  const loadingId =
-    addMessage(
-      "ai",
-      "ZenX is thinking…"
-    );
-
-  try{
-
-    let finalQuestion =
-      question;
-
-    if(workingMode){
-
-      finalQuestion =
-        "WORKING MODE: Solve this carefully step-by-step. " +
-        "Give a clear and useful answer.\n\n" +
-        question;
-    }
-
-    const response =
-      await fetch(
-        API_URL,
-        {
-          method:"POST",
-
-          headers:{
-            "accept":"application/json",
-            "Content-Type":
-              "application/json"
-          },
-
-          body:JSON.stringify({
-            question:finalQuestion
-          })
-        }
-      );
-
-    if(!response.ok){
-
-      throw new Error(
-        "Backend returned " +
-        response.status
-      );
-    }
-
-    const data =
-      await response.json();
-
-    const answer =
-      data.answer ??
-      data.response ??
-      data.result ??
-      data.message ??
-      JSON.stringify(
-        data,
-        null,
-        2
-      );
-
-    updateMessage(
-      loadingId,
-      String(answer)
-    );
-
-  }catch(error){
-
-    console.error(error);
-
-    updateMessage(
-      loadingId,
-      "⚠️ ZenX backend se response nahi aa raha.\n\n" +
-      "Render API check karo aur dobara try karo."
-    );
-  }
-}
-
-
-/* =====================================================
-   WORKING MODE
-===================================================== */
-
-function toggleWorking(){
-
-  workingMode =
-    !workingMode;
-
-  document
-    .getElementById("workingMode")
-    .checked =
-      workingMode;
-
-  document
-    .getElementById("workTool")
-    .classList.toggle(
-      "active",
-      workingMode
-    );
-}
-
-
-document
-  .getElementById("workingMode")
-  .addEventListener(
-    "change",
-    function(){
-
-      workingMode =
-        this.checked;
-
-      document
-        .getElementById("workTool")
-        .classList.toggle(
-          "active",
-          workingMode
-        );
-    }
-  );
-
-
-/* =====================================================
-   VOICE INPUT
-===================================================== */
-
-function voiceInput(){
-
-  const Recognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
-
-  if(!Recognition){
-
-    alert(
-      "Voice recognition is not supported in this browser."
-    );
-
-    return;
-  }
-
-  const recognition =
-    new Recognition();
-
-  recognition.lang =
-    "en-IN";
-
-  recognition.continuous =
-    false;
-
-  recognition.interimResults =
-    false;
-
-  const mic =
-    document.getElementById("micBtn");
-
-  mic.textContent =
-    "🔴";
-
-  recognition.start();
-
-  recognition.onresult =
-    event => {
-
-      const text =
-        event.results[0][0]
-          .transcript;
-
-      const input =
-        document.getElementById("prompt");
-
-      input.value =
-        text;
-
-      resizeInput(input);
-    };
-
-  recognition.onerror =
-    () => {
-
-      mic.textContent =
-        "🎙️";
-    };
-
-  recognition.onend =
-    () => {
-
-      mic.textContent =
-        "🎙️";
-    };
-}
-
-
-/* =====================================================
-   VOICE OUTPUT
-===================================================== */
-
-function readAnswer(button){
-
-  const bubble =
-    button
-      .parentElement
-      .parentElement
-      .querySelector(".bubble");
-
-  if(!bubble) return;
-
-  speechSynthesis.cancel();
-
-  const speech =
-    new SpeechSynthesisUtterance(
-      bubble.innerText
-    );
-
-  speech.lang =
-    "en-IN";
-
-  speechSynthesis.speak(speech);
-}
-
-
-/* =====================================================
-   IMAGE UPLOAD
-===================================================== */
-
-function handleImage(event){
-
-  const file =
-    event.target.files[0];
-
-  if(!file) return;
-
-  if(!file.type.startsWith("image/")){
-
-    alert(
-      "Please select an image."
-    );
-
-    return;
-  }
-
-  const reader =
-    new FileReader();
-
-  reader.onload =
-    event => {
-
-      selectedImage =
-        event.target.result;
-
-      document
-        .getElementById("previewImg")
-        .src =
-          selectedImage;
-
-      document
-        .getElementById("preview")
-        .style.display =
-          "flex";
-    };
-
-  reader.readAsDataURL(file);
-}
-
-
-function clearImage(){
-
-  selectedImage =
-    null;
-
-  document
-    .getElementById("preview")
-    .style.display =
-      "none";
-
-  document
-    .getElementById("previewImg")
-    .src = "";
-
-  document
-    .getElementById("imageInput")
-    .value = "";
-}
-
-
-/* =====================================================
-   IMAGE GENERATION UI
-===================================================== */
-
-async function imageGeneration(){
-
-  const input =
-    document.getElementById("prompt");
-
-  const prompt =
-    input.value.trim();
-
-  if(!prompt){
-
-    input.focus();
-
-    input.placeholder =
-      "Example: A futuristic city at night...";
-
-    return;
-  }
-
-  // Show user's image request
-  addMessage(
-    "user",
-    "🎨 Generate image: " + prompt
-  );
-
-  input.value = "";
-  resizeInput(input);
-
-  // Loading message
-  const loadingId =
-    addMessage(
-      "ai",
-      "🎨 ZenX is creating your image…"
-    );
-
-  try{
-
-    const response =
-      await fetch(
-        IMAGE_API_URL,
-        {
-          method:"POST",
-
-          headers:{
-            "accept":"application/json",
-            "Content-Type":"application/json"
-          },
-
-          body:JSON.stringify({
-            prompt:prompt
-          })
-        }
-      );
-
-    if(!response.ok){
-
-      throw new Error(
-        "Image API returned " +
-        response.status
-      );
-    }
-
-    const data =
-      await response.json();
-
-    if(data.error){
-
-      throw new Error(data.error);
-    }
-
-    if(!data.image){
-
-      throw new Error(
-        "No image received from ZenX API."
-      );
-    }
-
-    // Replace loading message with generated image
-    const item =
-      messages.find(
-        message => message.id === loadingId
-      );
-
-    if(item){
-
-      item.text =
-        "✨ Image generated successfully!";
-
-      item.image =
-        data.image;
-    }
-
-    saveMessages();
-    renderMessages();
-    updateHistory();
-
-  }catch(error){
-
-    console.error(
-      "Image generation error:",
-      error
-    );
-
-    updateMessage(
-      loadingId,
-      "⚠️ Image generate nahi ho payi.\n\n" +
-      error.message
-    );
-  }
-}
-
-
-/* =====================================================
-   COPY
-===================================================== */
-
-function copyAnswer(button){
-
-  const bubble =
-    button
-      .parentElement
-      .parentElement
-      .querySelector(".bubble");
-
-  if(!bubble) return;
-
-  navigator.clipboard
-    .writeText(
-      bubble.innerText
-    )
-    .then(() => {
-
-      const old =
-        button.innerText;
-
-      button.innerText =
-        "Copied ✓";
-
-      setTimeout(() => {
-
-        button.innerText =
-          old;
-
-      },1200);
-    });
-}
-
-
-/* =====================================================
-   REGENERATE
-===================================================== */
-
-function regenerateAnswer(button){
-
-  const aiRow =
-    button
-      .parentElement
-      .parentElement;
-
-  const allAi =
-    [...document.querySelectorAll(
-      ".message.ai"
-    )];
-
-  const aiIndex =
-    allAi.indexOf(aiRow);
-
-  if(aiIndex < 0) return;
-
-  let aiCount = -1;
-  let userMessage = null;
-
-  for(let i=0;i<messages.length;i++){
-
-    if(messages[i].role === "ai"){
-
-      aiCount++;
-
-      if(aiCount === aiIndex){
-
-        for(
-          let j=i-1;
-          j>=0;
-          j--
-        ){
-
-          if(messages[j].role === "user"){
-
-            userMessage =
-              messages[j];
-
-            break;
-          }
-        }
-
-        break;
-      }
-    }
-  }
-
-  if(userMessage){
-
-    document
-      .getElementById("prompt")
-      .value =
-        userMessage.text;
-
-    sendMessage();
-  }
-}
-
-
-/* =====================================================
-   KEYBOARD
-===================================================== */
-
-function handleKey(event){
-
-  if(
-    event.key === "Enter" &&
-    !event.shiftKey
-  ){
-
-    event.preventDefault();
-
-    sendMessage();
-  }
-}
-
-
-function resizeInput(element){
-
-  element.style.height =
-    "auto";
-
-  element.style.height =
-    Math.min(
-      element.scrollHeight,
-      150
-    ) + "px";
-}
-
-
-/* =====================================================
-   HISTORY
-===================================================== */
-
-function updateHistory(){
-
-  const history =
-    document.getElementById("history");
-
-  history.innerHTML = "";
-
-  messages
-    .filter(message => message.role === "user")
-    .slice(-10)
-    .reverse()
-    .forEach(message => {
-
-      const item =
-        document.createElement("div");
-
-      item.className = "chat-item";
-
-      const title =
-        document.createElement("span");
-
-      title.textContent =
-        message.text ||
-        "Image conversation";
-
-      const del =
-        document.createElement("button");
-
-      del.textContent = "🗑️";
-
-      del.className = "delete-chat";
-
-      del.onclick = (event) => {
-
-        event.stopPropagation();
-
-        messages =
-          messages.filter(
-            m => m.id !== message.id
-          );
-
-        saveMessages();
-        renderMessages();
-        updateHistory();
-      };
-
-      item.appendChild(title);
-      item.appendChild(del);
-
-      history.appendChild(item);
-    });
-}
-
-
-/* =====================================================
-   SIDEBAR
-===================================================== */
-
-function toggleSidebar(){
-
-  document
-    .getElementById("sidebar")
-    .classList.toggle("open");
-}
-
-
-/* =====================================================
-   FRIENDLY ERRORS
-===================================================== */
-
-function friendlyError(message){
-
-  const text =
-    String(message || "");
-
-  const lower =
-    text.toLowerCase();
-
-  if(
-    lower.includes(
-      "invalid login credentials"
-    )
-  ){
-
-    return "❌ Email ya password incorrect hai.";
-  }
-
-  if(
-    lower.includes(
-      "email not confirmed"
-    )
-  ){
-
-    return (
-      "📩 Pehle email verify karo. " +
-      "Verification email resend kar sakte ho."
-    );
-  }
-
-  if(
-    lower.includes(
-      "user already registered"
-    )
-  ){
-
-    return (
-      "⚠️ Is email se account already bana hua hai. " +
-      "Sign In karo."
-    );
-  }
-
-  if(
-    lower.includes(
-      "rate limit"
-    )
-  ){
-
-    return (
-      "⏳ Too many attempts. " +
-      "Thodi der baad try karo."
-    );
-  }
-
-  return text ||
-    "Something went wrong. Please try again.";
-}
-
-
-/* =====================================================
-   ESCAPE
-===================================================== */
-
-function escapeHtml(value){
-
-  return String(value)
-    .replaceAll("&","&amp;")
-    .replaceAll("<","&lt;")
-    .replaceAll(">","&gt;")
-    .replaceAll('"',"&quot;")
-    .replaceAll("'","&#039;");
-}
-
-</script>
-
-</body>
-</html>
+    <header class="topbar
