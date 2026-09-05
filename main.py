@@ -14,7 +14,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Gemini client
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
 
@@ -35,6 +34,19 @@ def health():
 @app.post("/api/ask")
 def ask(body: AskRequest):
     q = body.question.strip()
+
+    if not q:
+        return {"error": "Question is required."}
+
+    try:
+        response = client.models.generate_content(
+            model="gemini-2.5-flash",
+            contents=q,
+        )
+        return {"answer": response.text}
+
+    except Exception as e:
+        return {"error": str(e)}    q = body.question.strip()
 
     if not q:
         return {"error": "Question is required."}
