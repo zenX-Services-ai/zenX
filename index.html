@@ -72,6 +72,10 @@ body{
   outline:none;
 }
 
+.input:focus{
+  border-color:var(--accent);
+}
+
 .primary{
   width:100%;
   padding:15px;
@@ -81,6 +85,23 @@ body{
   background:white;
   color:#08080d;
   font-weight:800;
+  cursor:pointer;
+}
+
+.primary:hover{
+  opacity:.9;
+}
+
+.link-row{
+  display:flex;
+  justify-content:space-between;
+  margin-top:15px;
+}
+
+.link-btn{
+  background:none;
+  border:0;
+  color:#9d91ff;
   cursor:pointer;
 }
 
@@ -224,6 +245,7 @@ body{
   color:white;
   cursor:pointer;
   text-align:left;
+  transition:.2s;
 }
 
 .tool:hover{
@@ -303,6 +325,10 @@ textarea{
   outline:none;
 }
 
+textarea:focus{
+  border-color:var(--accent);
+}
+
 .send{
   min-width:100px;
   border:0;
@@ -311,6 +337,11 @@ textarea{
   color:#08080d;
   font-weight:800;
   cursor:pointer;
+}
+
+.send:disabled{
+  opacity:.5;
+  cursor:not-allowed;
 }
 
 .status{
@@ -367,6 +398,14 @@ textarea{
 
 @media(max-width:500px){
 
+  .login-card{
+    padding:25px;
+  }
+
+  .brand{
+    font-size:38px;
+  }
+
   .hero h1{
     font-size:30px;
   }
@@ -390,40 +429,165 @@ textarea{
   .ai{
     margin-right:5%;
   }
+
+  .link-row{
+    gap:10px;
+  }
+
+  .link-btn{
+    font-size:12px;
+  }
 }
 </style>
 </head>
 
 <body>
 
-<!-- LOGIN -->
+<!-- =========================
+     LOGIN PAGE
+========================= -->
 
 <section id="loginPage">
 
   <div class="login-card">
 
-    <div class="brand">ZenX</div>
+    <!-- LOGIN -->
 
-    <div class="tagline">
-      AI that understands you.
+    <div id="loginForm">
+
+      <div class="brand">ZenX</div>
+
+      <div class="tagline">
+        Welcome back
+      </div>
+
+      <input
+        id="loginEmail"
+        class="input"
+        type="email"
+        placeholder="Email"
+        autocomplete="email"
+      >
+
+      <input
+        id="loginPassword"
+        class="input"
+        type="password"
+        placeholder="Password"
+        autocomplete="current-password"
+      >
+
+      <button class="primary" onclick="login()">
+        Login
+      </button>
+
+      <div class="link-row">
+
+        <button
+          class="link-btn"
+          onclick="showSignup()">
+          Sign up
+        </button>
+
+        <button
+          class="link-btn"
+          onclick="showForgot()">
+          Forgot password?
+        </button>
+
+      </div>
+
     </div>
 
-    <input
-      id="loginName"
-      class="input"
-      placeholder="Your name"
-    >
 
-    <input
-      id="loginEmail"
-      class="input"
-      type="email"
-      placeholder="Email"
-    >
+    <!-- SIGNUP -->
 
-    <button class="primary" onclick="login()">
-      Continue to ZenX
-    </button>
+    <div id="signupForm" style="display:none">
+
+      <div class="brand">ZenX</div>
+
+      <div class="tagline">
+        Create your ZenX account
+      </div>
+
+      <input
+        id="signupName"
+        class="input"
+        placeholder="Full name"
+        autocomplete="name"
+      >
+
+      <input
+        id="signupEmail"
+        class="input"
+        type="email"
+        placeholder="Email"
+        autocomplete="email"
+      >
+
+      <input
+        id="signupPassword"
+        class="input"
+        type="password"
+        placeholder="Create password"
+        autocomplete="new-password"
+      >
+
+      <button class="primary" onclick="signup()">
+        Create Account
+      </button>
+
+      <button
+        onclick="showLogin()"
+        style="
+          margin-top:15px;
+          background:none;
+          border:0;
+          color:#9d91ff;
+          cursor:pointer;
+        ">
+        ← Back to Login
+      </button>
+
+    </div>
+
+
+    <!-- FORGOT PASSWORD -->
+
+    <div id="forgotForm" style="display:none">
+
+      <div class="brand">ZenX</div>
+
+      <div class="tagline">
+        Reset your password
+      </div>
+
+      <input
+        id="forgotEmail"
+        class="input"
+        type="email"
+        placeholder="Enter your email"
+        autocomplete="email"
+      >
+
+      <button class="primary" onclick="forgotPassword()">
+        Send Reset Link
+      </button>
+
+      <button
+        onclick="showLogin()"
+        style="
+          margin-top:15px;
+          background:none;
+          border:0;
+          color:#9d91ff;
+          cursor:pointer;
+        ">
+        ← Back to Login
+      </button>
+
+    </div>
+
 
     <div class="small">
       Student AI • Coding • Study • Creativity
@@ -434,7 +598,9 @@ textarea{
 </section>
 
 
-<!-- APP -->
+<!-- =========================
+     APP
+========================= -->
 
 <section id="app">
 
@@ -442,7 +608,9 @@ textarea{
 
     <div style="display:flex;gap:10px;align-items:center">
 
-      <button class="menu-btn" onclick="toggleSidebar()">
+      <button
+        class="menu-btn"
+        onclick="toggleSidebar()">
         ☰
       </button>
 
@@ -452,7 +620,9 @@ textarea{
 
     </div>
 
-    <button class="menu-btn" onclick="logout()">
+    <button
+      class="menu-btn"
+      onclick="logout()">
       Logout
     </button>
 
@@ -461,46 +631,63 @@ textarea{
 
   <div class="layout">
 
-
     <!-- SIDEBAR -->
 
     <aside id="sidebar" class="sidebar">
 
-      <button class="side-btn" onclick="showHome()">
+      <button
+        class="side-btn"
+        onclick="showHome()">
         🏠 Home
       </button>
 
-      <button class="side-btn" onclick="showPanel('recent')">
+      <button
+        class="side-btn"
+        onclick="showPanel('recent')">
         🕘 Recent
       </button>
 
-      <button class="side-btn" onclick="showPanel('files')">
+      <button
+        class="side-btn"
+        onclick="showPanel('files')">
         📁 Recent Files
       </button>
 
       <h3>AI Tools</h3>
 
-      <button class="side-btn" onclick="setPrompt('Solve this question step by step: ')">
+      <button
+        class="side-btn"
+        onclick="setPrompt('Solve this question step by step: ')">
         🧮 Mathematics
       </button>
 
-      <button class="side-btn" onclick="setPrompt('Explain this Physics concept clearly: ')">
+      <button
+        class="side-btn"
+        onclick="setPrompt('Explain this Physics concept clearly: ')">
         ⚛️ Physics
       </button>
 
-      <button class="side-btn" onclick="setPrompt('Explain this Chemistry question: ')">
+      <button
+        class="side-btn"
+        onclick="setPrompt('Explain this Chemistry question: ')">
         🧪 Chemistry
       </button>
 
-      <button class="side-btn" onclick="setPrompt('Help me understand and fix this code: ')">
+      <button
+        class="side-btn"
+        onclick="setPrompt('Help me understand and fix this code: ')">
         💻 Coding
       </button>
 
-      <button class="side-btn" onclick="setPrompt('Create a study plan for: ')">
+      <button
+        class="side-btn"
+        onclick="setPrompt('Create a study plan for: ')">
         📚 Study Planner
       </button>
 
-      <button class="side-btn" onclick="setPrompt('Summarize this text: ')">
+      <button
+        class="side-btn"
+        onclick="setPrompt('Summarize this text: ')">
         📝 Summarizer
       </button>
 
@@ -514,7 +701,9 @@ textarea{
           Abhay Srivastava
         </div>
 
-        <div class="small" style="margin-top:7px">
+        <div
+          class="small"
+          style="margin-top:7px">
           ZenX Private Limited
         </div>
 
@@ -529,9 +718,7 @@ textarea{
 
       <div class="content">
 
-
         <div id="home">
-
 
           <section class="hero">
 
@@ -550,89 +737,113 @@ textarea{
 
           <section class="tools">
 
-            <button class="tool"
+            <button
+              class="tool"
               onclick="setPrompt('Help me solve this JEE Mathematics problem: ')">
 
               <div class="tool-icon">🧮</div>
               <div class="tool-title">JEE Maths</div>
-              <div class="tool-sub">Solve step by step</div>
+              <div class="tool-sub">
+                Solve step by step
+              </div>
 
             </button>
 
 
-            <button class="tool"
+            <button
+              class="tool"
               onclick="setPrompt('Explain this JEE Physics problem: ')">
 
               <div class="tool-icon">⚛️</div>
               <div class="tool-title">JEE Physics</div>
-              <div class="tool-sub">Concept + solution</div>
+              <div class="tool-sub">
+                Concept + solution
+              </div>
 
             </button>
 
 
-            <button class="tool"
+            <button
+              class="tool"
               onclick="setPrompt('Explain this Chemistry question: ')">
 
               <div class="tool-icon">🧪</div>
               <div class="tool-title">Chemistry</div>
-              <div class="tool-sub">NCERT + JEE</div>
+              <div class="tool-sub">
+                NCERT + JEE
+              </div>
 
             </button>
 
 
-            <button class="tool"
+            <button
+              class="tool"
               onclick="setPrompt('Help me write or debug this code: ')">
 
               <div class="tool-icon">💻</div>
               <div class="tool-title">Coding</div>
-              <div class="tool-sub">Debug & explain</div>
+              <div class="tool-sub">
+                Debug & explain
+              </div>
 
             </button>
 
 
-            <button class="tool"
+            <button
+              class="tool"
               onclick="setPrompt('Make a practical study plan for: ')">
 
               <div class="tool-icon">📚</div>
               <div class="tool-title">Study Plan</div>
-              <div class="tool-sub">Smart planning</div>
+              <div class="tool-sub">
+                Smart planning
+              </div>
 
             </button>
 
 
-            <button class="tool"
+            <button
+              class="tool"
               onclick="setPrompt('Summarize the following text: ')">
 
               <div class="tool-icon">📝</div>
               <div class="tool-title">Summarize</div>
-              <div class="tool-sub">Short & clear</div>
+              <div class="tool-sub">
+                Short & clear
+              </div>
 
             </button>
 
 
-            <button class="tool"
+            <button
+              class="tool"
               onclick="document.getElementById('imageInput').click()">
 
               <div class="tool-icon">🖼️</div>
               <div class="tool-title">Image AI</div>
-              <div class="tool-sub">Upload an image</div>
+              <div class="tool-sub">
+                Upload an image
+              </div>
 
             </button>
 
 
-            <button class="tool"
+            <button
+              class="tool"
               onclick="document.getElementById('fileInput').click()">
 
               <div class="tool-icon">📄</div>
               <div class="tool-title">Files</div>
-              <div class="tool-sub">Select documents</div>
+              <div class="tool-sub">
+                Select documents
+              </div>
 
             </button>
 
           </section>
 
 
-          <!-- HIDDEN INPUTS -->
+          <!-- FILE INPUTS -->
 
           <input
             id="imageInput"
@@ -653,20 +864,25 @@ textarea{
 
           <!-- CHAT -->
 
-          <section id="chatBox" class="chat">
+          <section
+            id="chatBox"
+            class="chat">
 
             <div class="welcome">
 
               <h2>ZenX AI</h2>
 
               <p style="margin-top:10px">
-                Your AI assistant for study, coding and creativity.
+                Your AI assistant for study,
+                coding and creativity.
               </p>
 
             </div>
 
           </section>
 
+
+          <!-- MESSAGE INPUT -->
 
           <section class="input-area">
 
@@ -679,24 +895,26 @@ textarea{
             <button
               id="sendButton"
               class="send"
-              onclick="sendMessage()"
-            >
+              onclick="sendMessage()">
               Send
             </button>
 
           </section>
 
-          <div id="status" class="status">
+          <div
+            id="status"
+            class="status">
             ZenX AI is ready
           </div>
-
 
         </div>
 
 
         <!-- RECENT -->
 
-        <section id="recentPanel" class="panel">
+        <section
+          id="recentPanel"
+          class="panel">
 
           <h2>🕘 Recent Chats</h2>
 
@@ -709,7 +927,9 @@ textarea{
 
         <!-- FILES -->
 
-        <section id="filesPanel" class="panel">
+        <section
+          id="filesPanel"
+          class="panel">
 
           <h2>📁 Recent Files</h2>
 
@@ -731,42 +951,257 @@ textarea{
 <script>
 
 /* =========================
-   LOGIN
+   LOGIN / SIGNUP / FORGOT
 ========================= */
+
+function hideForms(){
+
+  document.getElementById("loginForm").style.display="none";
+
+  document.getElementById("signupForm").style.display="none";
+
+  document.getElementById("forgotForm").style.display="none";
+
+}
+
+
+function showLogin(){
+
+  hideForms();
+
+  document.getElementById("loginForm").style.display="block";
+
+}
+
+
+function showSignup(){
+
+  hideForms();
+
+  document.getElementById("signupForm").style.display="block";
+
+}
+
+
+function showForgot(){
+
+  hideForms();
+
+  document.getElementById("forgotForm").style.display="block";
+
+}
+
+
+/* SIGNUP */
+
+function signup(){
+
+  const name =
+    document.getElementById("signupName")
+    .value
+    .trim();
+
+  const email =
+    document.getElementById("signupEmail")
+    .value
+    .trim()
+    .toLowerCase();
+
+  const password =
+    document.getElementById("signupPassword")
+    .value;
+
+
+  if(!name || !email || !password){
+
+    alert("Please fill all fields.");
+
+    return;
+
+  }
+
+
+  if(password.length < 6){
+
+    alert("Password must be at least 6 characters.");
+
+    return;
+
+  }
+
+
+  const existingAccount =
+    JSON.parse(
+      localStorage.getItem("zenx_account") || "null"
+    );
+
+
+  if(existingAccount &&
+     existingAccount.email === email){
+
+    alert("An account with this email already exists.");
+
+    showLogin();
+
+    return;
+
+  }
+
+
+  localStorage.setItem(
+    "zenx_account",
+    JSON.stringify({
+      name:name,
+      email:email,
+      password:password
+    })
+  );
+
+
+  document.getElementById("signupName").value="";
+  document.getElementById("signupEmail").value="";
+  document.getElementById("signupPassword").value="";
+
+
+  alert("Account created successfully!");
+
+  showLogin();
+
+}
+
+
+/* LOGIN */
 
 function login(){
 
-  const name =
-    document.getElementById("loginName").value.trim();
-
   const email =
-    document.getElementById("loginEmail").value.trim();
+    document.getElementById("loginEmail")
+    .value
+    .trim()
+    .toLowerCase();
 
-  if(!name || !email){
+  const password =
+    document.getElementById("loginPassword")
+    .value;
 
-    alert("Please enter your name and email.");
+
+  if(!email || !password){
+
+    alert("Please enter email and password.");
 
     return;
+
   }
+
+
+  const account =
+    JSON.parse(
+      localStorage.getItem("zenx_account") || "null"
+    );
+
+
+  if(!account){
+
+    alert("Account not found. Please sign up first.");
+
+    showSignup();
+
+    return;
+
+  }
+
+
+  if(
+    email !== account.email ||
+    password !== account.password
+  ){
+
+    alert("Invalid email or password.");
+
+    return;
+
+  }
+
 
   localStorage.setItem(
     "zenx_user",
     JSON.stringify({
-      name:name,
-      email:email
+      name:account.name,
+      email:account.email
     })
   );
 
+
+  document.getElementById("loginPassword").value="";
+
   openApp();
+
 }
 
+
+/* FORGOT PASSWORD */
+
+function forgotPassword(){
+
+  const email =
+    document.getElementById("forgotEmail")
+    .value
+    .trim()
+    .toLowerCase();
+
+
+  if(!email){
+
+    alert("Please enter your email.");
+
+    return;
+
+  }
+
+
+  const account =
+    JSON.parse(
+      localStorage.getItem("zenx_account") || "null"
+    );
+
+
+  if(!account || account.email !== email){
+
+    alert("No account found with this email.");
+
+    return;
+
+  }
+
+
+  alert(
+    "Real password reset email is not connected yet. " +
+    "For production, connect Supabase Auth."
+  );
+
+}
+
+
+/* OPEN APP */
 
 function openApp(){
 
   const user =
-    JSON.parse(localStorage.getItem("zenx_user"));
+    JSON.parse(
+      localStorage.getItem("zenx_user") || "null"
+    );
 
-  if(!user) return;
+
+  if(!user){
+
+    document.getElementById("loginPage").style.display="flex";
+
+    document.getElementById("app").style.display="none";
+
+    return;
+
+  }
+
 
   document.getElementById("loginPage").style.display="none";
 
@@ -774,16 +1209,22 @@ function openApp(){
 
   document.getElementById("userName").textContent =
     user.name;
+
 }
 
+
+/* LOGOUT */
 
 function logout(){
 
   localStorage.removeItem("zenx_user");
 
   location.reload();
+
 }
 
+
+/* CHECK LOGIN */
 
 window.addEventListener("load",()=>{
 
@@ -805,6 +1246,7 @@ function toggleSidebar(){
   document
     .getElementById("sidebar")
     .classList.toggle("open");
+
 }
 
 
@@ -827,6 +1269,7 @@ function showPanel(panel){
 
   document.getElementById("filesPanel").style.display="none";
 
+
   if(panel==="recent"){
 
     document.getElementById("recentPanel").style.display="block";
@@ -834,6 +1277,7 @@ function showPanel(panel){
     loadRecent();
 
   }
+
 
   if(panel==="files"){
 
@@ -868,27 +1312,35 @@ function addMessage(text,type){
   const welcome =
     document.querySelector(".welcome");
 
+
   if(welcome){
 
     welcome.remove();
 
   }
 
+
   const div =
     document.createElement("div");
+
 
   div.className =
     "message " + type;
 
+
   div.textContent =
     text;
 
+
   chatBox.appendChild(div);
+
 
   chatBox.scrollTop =
     chatBox.scrollHeight;
 
+
   return div;
+
 }
 
 
@@ -924,9 +1376,12 @@ async function sendMessage(){
   const message =
     messageInput.value.trim();
 
+
   if(!message) return;
 
+
   addMessage(message,"user");
+
 
   messageInput.value="";
 
@@ -935,27 +1390,34 @@ async function sendMessage(){
   statusText.textContent=
     "ZenX AI is thinking...";
 
+
   const loading =
-    addMessage("Thinking...","ai");
+    addMessage(
+      "Thinking...",
+      "ai"
+    );
+
 
   saveRecent(message);
+
 
   try{
 
     const response =
-      await fetch("/api/chat",{
+      await fetch(
+        "/api/chat",
+        {
+          method:"POST",
 
-        method:"POST",
+          headers:{
+            "Content-Type":"application/json"
+          },
 
-        headers:{
-          "Content-Type":"application/json"
-        },
-
-        body:JSON.stringify({
-          message:message
-        })
-
-      });
+          body:JSON.stringify({
+            message:message
+          })
+        }
+      );
 
 
     const data =
@@ -975,6 +1437,7 @@ async function sendMessage(){
     loading.textContent =
       data.response ||
       "No response received.";
+
 
     statusText.textContent =
       "ZenX AI is ready";
@@ -1010,6 +1473,7 @@ function saveRecent(message){
       localStorage.getItem("zenx_recent") || "[]"
     );
 
+
   recent.unshift({
 
     message:message,
@@ -1018,8 +1482,10 @@ function saveRecent(message){
 
   });
 
+
   recent =
     recent.slice(0,20);
+
 
   localStorage.setItem(
     "zenx_recent",
@@ -1034,10 +1500,12 @@ function loadRecent(){
   const list =
     document.getElementById("recentList");
 
+
   const recent =
     JSON.parse(
       localStorage.getItem("zenx_recent") || "[]"
     );
+
 
   if(!recent.length){
 
@@ -1048,19 +1516,24 @@ function loadRecent(){
 
   }
 
+
   list.innerHTML="";
+
 
   recent.forEach(item=>{
 
     const div =
       document.createElement("div");
 
+
     div.className="item";
+
 
     div.textContent =
       item.message +
       " • " +
       item.time;
+
 
     list.appendChild(div);
 
@@ -1078,15 +1551,22 @@ function imageSelected(event){
   const file =
     event.target.files[0];
 
+
   if(!file) return;
 
+
   saveFile(file.name);
+
 
   setPrompt(
     "I selected this image: " +
     file.name +
     "\nPlease tell me what I should analyze about it."
   );
+
+
+  statusText.textContent =
+    "Image selected: " + file.name;
 
 }
 
@@ -1096,15 +1576,22 @@ function fileSelected(event){
   const file =
     event.target.files[0];
 
+
   if(!file) return;
 
+
   saveFile(file.name);
+
 
   setPrompt(
     "I selected this file: " +
     file.name +
     "\nPlease help me analyze it."
   );
+
+
+  statusText.textContent =
+    "File selected: " + file.name;
 
 }
 
@@ -1116,6 +1603,7 @@ function saveFile(name){
       localStorage.getItem("zenx_files") || "[]"
     );
 
+
   files.unshift({
 
     name:name,
@@ -1124,8 +1612,10 @@ function saveFile(name){
 
   });
 
+
   files =
     files.slice(0,20);
+
 
   localStorage.setItem(
     "zenx_files",
@@ -1140,10 +1630,12 @@ function loadFiles(){
   const list =
     document.getElementById("filesList");
 
+
   const files =
     JSON.parse(
       localStorage.getItem("zenx_files") || "[]"
     );
+
 
   if(!files.length){
 
@@ -1154,20 +1646,25 @@ function loadFiles(){
 
   }
 
+
   list.innerHTML="";
+
 
   files.forEach(file=>{
 
     const div =
       document.createElement("div");
 
+
     div.className="item";
+
 
     div.textContent =
       "📄 " +
       file.name +
       " • " +
       file.time;
+
 
     list.appendChild(div);
 
