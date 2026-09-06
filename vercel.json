@@ -12,11 +12,15 @@
   ],
   "routes": [
     {
+      "src": "/sitemap.xml",
+      "dest": "/sitemap.xml"
+    },
+    {
       "src": "/api/(.*)",
       "dest": "api/main.py"
     },
     {
-      "src": "/",
+      "src": "/(.*)",
       "dest": "index.html"
     }
   ]
