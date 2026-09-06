@@ -3,11 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#080812">
-<title>ZenX AI — Student AI 2027</title>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<meta name="theme-color" content="#070711">
+<meta name="description" content="ZenX.AI - AI for a better tomorrow">
+<title>ZenX.AI</title>
 
 <style>
 *{
@@ -16,14 +14,30 @@
   padding:0;
 }
 
-body{
-  font-family:Inter,Arial,sans-serif;
-  background:#080812;
-  color:#fff;
-  min-height:100vh;
+:root{
+  --bg:#070711;
+  --panel:#0d0d19;
+  --panel2:#11111f;
+  --border:#25253a;
+  --text:#f7f7ff;
+  --muted:#9698ad;
+  --purple:#7c5cff;
+  --blue:#3f8cff;
 }
 
-button,input,textarea,select{
+body{
+  width:100%;
+  height:100vh;
+  overflow:hidden;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,Arial,Helvetica,sans-serif;
+}
+
+button,
+input,
+textarea,
+select{
   font:inherit;
 }
 
@@ -31,440 +45,484 @@ button{
   cursor:pointer;
 }
 
-.hidden{
-  display:none!important;
-}
-
-/* AUTH */
-
-#authScreen{
-  min-height:100vh;
+.app{
+  width:100%;
+  height:100vh;
   display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
   background:
-    radial-gradient(circle at 20% 20%,#642cff33,transparent 35%),
-    radial-gradient(circle at 80% 80%,#00e5ff22,transparent 35%),
-    #080812;
+    radial-gradient(circle at 75% 0%,#17143b 0%,#070711 38%);
 }
 
-.authBox{
-  width:100%;
-  max-width:430px;
-  padding:32px;
-  border:1px solid #ffffff18;
-  border-radius:25px;
-  background:#11111dcc;
-  backdrop-filter:blur(20px);
-  box-shadow:0 25px 80px #0008;
-}
-
-.logo{
-  text-align:center;
-  font-size:42px;
-  font-weight:900;
-  background:linear-gradient(90deg,#8b5cff,#00e5ff,#ff4fd8);
-  -webkit-background-clip:text;
-  color:transparent;
-}
-
-.subtitle{
-  text-align:center;
-  color:#aaa;
-  margin:8px 0 25px;
-}
-
-.authBox h2{
-  margin-bottom:18px;
-}
-
-.authBox input{
-  width:100%;
-  padding:14px 15px;
-  margin:7px 0;
-  border:1px solid #ffffff18;
-  border-radius:13px;
-  background:#080812;
-  color:white;
-  outline:none;
-}
-
-.authBox input:focus{
-  border-color:#8b5cff;
-}
-
-.primary{
-  width:100%;
-  padding:14px;
-  border:0;
-  border-radius:13px;
-  margin-top:12px;
-  color:white;
-  font-weight:800;
-  background:linear-gradient(90deg,#7546ff,#00bde8);
-}
-
-.secondary{
-  width:100%;
-  padding:13px;
-  border:1px solid #ffffff18;
-  border-radius:13px;
-  margin-top:10px;
-  color:#ddd;
-  background:#ffffff08;
-}
-
-.linkBtn{
-  background:none;
-  border:0;
-  color:#64dfff;
-  margin-top:14px;
-}
-
-.authMessage{
-  min-height:22px;
-  margin-top:12px;
-  text-align:center;
-  color:#ffcf70;
-  font-size:14px;
-}
-
-/* APP */
-
-#appScreen{
-  min-height:100vh;
-  display:flex;
-}
+/* SIDEBAR */
 
 .sidebar{
-  width:270px;
-  min-height:100vh;
-  background:#0d0d18;
-  border-right:1px solid #ffffff10;
-  padding:18px;
-  position:fixed;
-  left:0;
-  top:0;
-  bottom:0;
-  overflow-y:auto;
+  width:290px;
+  height:100%;
+  background:rgba(10,10,20,.97);
+  border-right:1px solid var(--border);
+  padding:16px;
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  z-index:100;
 }
 
-.sideLogo{
-  font-size:27px;
-  font-weight:900;
-  margin-bottom:25px;
-  background:linear-gradient(90deg,#8b5cff,#00e5ff);
-  -webkit-background-clip:text;
-  color:transparent;
+.brand{
+  display:flex;
+  align-items:center;
+  gap:11px;
 }
 
-.sideButton{
+.brand img{
+  width:45px;
+  height:45px;
+  object-fit:cover;
+  border-radius:13px;
+  background:#000;
+}
+
+.brand-title{
+  font-size:19px;
+  font-weight:800;
+}
+
+.brand-sub{
+  color:var(--muted);
+  font-size:9px;
+  margin-top:3px;
+  letter-spacing:.5px;
+}
+
+.new-chat{
   width:100%;
-  border:1px solid #ffffff12;
-  background:#ffffff06;
-  color:#ddd;
-  padding:12px;
-  border-radius:12px;
-  margin-bottom:9px;
+  padding:13px;
+  border:none;
+  border-radius:13px;
+  color:white;
+  font-weight:800;
+  background:linear-gradient(135deg,#7c5cff,#427fff);
+  box-shadow:0 12px 35px rgba(100,80,255,.18);
+}
+
+.menu{
+  display:flex;
+  flex-direction:column;
+  gap:4px;
+}
+
+.menu-btn,
+.mode-btn{
+  width:100%;
+  border:none;
+  background:transparent;
+  color:#cfd0df;
   text-align:left;
+  padding:11px 12px;
+  border-radius:11px;
 }
 
-.sideButton:hover{
-  background:#ffffff10;
+.menu-btn:hover,
+.mode-btn:hover,
+.mode-btn.active{
+  background:#17172a;
+  color:white;
 }
 
-.sectionTitle{
-  color:#777;
-  font-size:12px;
+.section-title{
+  color:#71738a;
+  font-size:10px;
+  letter-spacing:1px;
   text-transform:uppercase;
-  margin:22px 5px 10px;
+  margin-top:3px;
 }
 
-.recent{
+.search-box{
   display:flex;
   align-items:center;
   gap:7px;
-  margin-bottom:7px;
+  background:#121222;
+  border:1px solid var(--border);
+  border-radius:12px;
+  padding:9px 10px;
 }
 
-.recent button:first-child{
+.search-box input{
+  width:100%;
+  background:transparent;
+  border:none;
+  outline:none;
+  color:white;
+}
+
+.recents{
   flex:1;
-  overflow:hidden;
-  white-space:nowrap;
-  text-overflow:ellipsis;
-  border:0;
-  background:#ffffff06;
-  color:#bbb;
+  min-height:60px;
+  overflow-y:auto;
+}
+
+.chat-item{
+  width:100%;
+  border:none;
+  background:transparent;
+  color:#bfc0d0;
+  text-align:left;
   padding:10px;
   border-radius:10px;
-  text-align:left;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
 }
 
-.deleteRecent{
-  width:34px;
-  height:34px;
-  border:0;
-  border-radius:9px;
-  background:#ff335511;
-  color:#ff6680;
+.chat-item:hover{
+  background:#151527;
+  color:white;
 }
+
+.empty{
+  color:#66687d;
+  font-size:12px;
+  text-align:center;
+  padding:20px 5px;
+}
+
+.student-modes{
+  max-height:170px;
+  overflow-y:auto;
+}
+
+.founder{
+  border-top:1px solid var(--border);
+  padding-top:12px;
+  color:#77798e;
+  font-size:11px;
+  line-height:1.6;
+}
+
+.founder b{
+  color:#ddd;
+}
+
+/* MAIN */
 
 .main{
-  width:100%;
-  margin-left:270px;
-  min-height:100vh;
+  flex:1;
+  min-width:0;
+  height:100%;
   display:flex;
   flex-direction:column;
 }
 
 .topbar{
-  height:65px;
-  border-bottom:1px solid #ffffff10;
+  height:70px;
+  flex-shrink:0;
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:0 22px;
-  background:#080812dd;
+  border-bottom:1px solid var(--border);
+  background:rgba(8,8,18,.88);
   backdrop-filter:blur(15px);
-  position:sticky;
-  top:0;
-  z-index:10;
 }
 
-.topTitle{
+.top-left{
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+
+.mobile-menu{
+  display:none;
+  border:1px solid var(--border);
+  background:#141424;
+  color:white;
+  padding:9px 11px;
+  border-radius:10px;
+}
+
+.student-badge{
+  border:1px solid #725cff55;
+  background:#725cff18;
+  color:#d0c9ff;
+  border-radius:999px;
+  padding:8px 13px;
+  font-size:12px;
   font-weight:800;
 }
 
-.userEmail{
-  color:#888;
-  font-size:12px;
+.mode-select{
+  background:#121222;
+  border:1px solid var(--border);
+  color:white;
+  border-radius:10px;
+  padding:8px 11px;
+  outline:none;
 }
 
-.chat{
+/* CHAT */
+
+.chat-area{
   flex:1;
-  width:100%;
-  max-width:950px;
-  margin:auto;
-  padding:30px 20px 160px;
+  overflow-y:auto;
+  padding:30px max(18px,calc((100% - 900px)/2));
+  scroll-behavior:smooth;
 }
 
 .welcome{
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
   text-align:center;
-  padding:70px 10px 35px;
+  padding-bottom:70px;
+}
+
+.big-logo{
+  width:90px;
+  height:90px;
+  border-radius:24px;
+  object-fit:cover;
+  margin-bottom:18px;
+  box-shadow:0 20px 70px rgba(100,80,255,.2);
 }
 
 .welcome h1{
-  font-size:48px;
-  margin-bottom:12px;
-  background:linear-gradient(90deg,#fff,#9e7cff,#51e7ff);
+  font-size:clamp(32px,6vw,52px);
+  margin-bottom:9px;
+}
+
+.gradient{
+  background:linear-gradient(90deg,#fff,#a78cff,#55cfff);
   -webkit-background-clip:text;
+  background-clip:text;
   color:transparent;
 }
 
 .welcome p{
-  color:#999;
+  max-width:650px;
+  color:var(--muted);
+  line-height:1.65;
 }
+
+.quick-actions{
+  display:flex;
+  flex-wrap:wrap;
+  justify-content:center;
+  gap:9px;
+  margin-top:22px;
+}
+
+.quick-actions button{
+  border:1px solid var(--border);
+  background:#121222;
+  color:#c8c9d8;
+  padding:10px 14px;
+  border-radius:999px;
+}
+
+.quick-actions button:hover{
+  background:#19192b;
+  color:white;
+}
+
+/* MESSAGES */
 
 .message{
   display:flex;
   gap:12px;
-  margin:18px 0;
+  margin:19px 0;
+  align-items:flex-start;
 }
 
 .avatar{
-  min-width:38px;
-  height:38px;
-  border-radius:12px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:#ffffff0c;
+  width:35px;
+  height:35px;
+  flex-shrink:0;
+  border-radius:10px;
+  display:grid;
+  place-items:center;
+  background:#17172b;
+  border:1px solid var(--border);
+  font-size:14px;
+  font-weight:800;
 }
 
 .bubble{
-  max-width:850px;
-  padding:15px 17px;
-  border-radius:17px;
-  line-height:1.6;
+  max-width:min(780px,100%);
+  line-height:1.65;
   overflow-wrap:anywhere;
 }
 
 .user .bubble{
-  background:linear-gradient(135deg,#7048ff,#4430a8);
+  background:#15152a;
+  border:1px solid var(--border);
+  padding:12px 15px;
+  border-radius:16px;
+  white-space:pre-wrap;
 }
 
 .ai .bubble{
-  background:#12121e;
-  border:1px solid #ffffff0c;
+  padding-top:5px;
+  white-space:pre-wrap;
 }
 
-.bubble pre{
+.code{
+  display:block;
   overflow:auto;
-  background:#050509;
-  padding:14px;
-  border-radius:10px;
-  margin:10px 0;
-}
-
-.bubble code{
+  background:#090914;
+  border:1px solid var(--border);
+  padding:13px;
+  border-radius:12px;
+  margin:8px 0;
   font-family:monospace;
+  white-space:pre;
 }
 
-.bubble p{
-  margin-bottom:8px;
+.message-actions{
+  display:flex;
+  gap:5px;
+  margin-top:7px;
 }
 
-.bubble ul,
-.bubble ol{
-  padding-left:22px;
+.message-actions button{
+  border:none;
+  background:transparent;
+  color:#77798f;
+  padding:5px 7px;
+  border-radius:7px;
+  font-size:11px;
 }
 
-/* INPUT */
+.message-actions button:hover{
+  background:#151527;
+  color:white;
+}
 
-.composerWrap{
-  position:fixed;
-  bottom:0;
-  left:270px;
-  right:0;
-  padding:15px 20px 20px;
-  background:linear-gradient(transparent,#080812 25%);
+.generated-image{
+  width:min(700px,100%);
+  display:block;
+  margin-top:10px;
+  border-radius:16px;
+  border:1px solid var(--border);
+}
+
+/* COMPOSER */
+
+.composer-area{
+  flex-shrink:0;
+  padding:12px max(16px,calc((100% - 900px)/2)) 18px;
+  background:linear-gradient(transparent,#070711 25%);
 }
 
 .composer{
-  max-width:950px;
-  margin:auto;
   display:flex;
-  align-items:end;
+  align-items:flex-end;
   gap:8px;
-  padding:9px;
-  border:1px solid #ffffff18;
+  background:#10101e;
+  border:1px solid #2b2b45;
   border-radius:18px;
-  background:#11111eeF;
-  backdrop-filter:blur(20px);
+  padding:9px;
+  box-shadow:0 20px 60px rgba(0,0,0,.35);
 }
 
-#prompt{
+.composer textarea{
   flex:1;
-  min-height:45px;
+  min-height:44px;
   max-height:150px;
   resize:none;
-  border:0;
-  outline:0;
+  outline:none;
+  border:none;
   background:transparent;
   color:white;
-  padding:12px;
+  padding:11px 9px;
+  line-height:1.45;
 }
 
-.toolBtn{
-  width:43px;
-  height:43px;
-  border:0;
+.icon-btn{
+  width:42px;
+  height:42px;
+  flex-shrink:0;
+  border:none;
   border-radius:12px;
-  color:#ddd;
-  background:#ffffff08;
+  background:#17172a;
+  color:#c7c8d8;
 }
 
-.sendBtn{
-  width:48px;
-  height:43px;
-  border:0;
-  border-radius:12px;
+.image-btn.active{
+  background:#261c50;
+  color:#d7d0ff;
+  border:1px solid #735aff66;
+}
+
+.send-btn{
+  background:linear-gradient(135deg,#7c5cff,#427fff);
   color:white;
-  font-weight:bold;
-  background:linear-gradient(90deg,#7546ff,#00bde8);
+  font-weight:900;
 }
 
-.mode{
-  position:absolute;
-  bottom:92px;
-  left:calc(50% - 475px);
-  padding:8px 12px;
-  border:1px solid #ffffff12;
-  border-radius:10px;
-  background:#11111e;
-  color:#aaa;
+.send-btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
 }
 
-/* MODAL */
-
-.modal{
-  position:fixed;
-  inset:0;
-  background:#0009;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:20px;
-  z-index:100;
+.status{
+  text-align:center;
+  color:#66687e;
+  font-size:10px;
+  margin-top:7px;
 }
 
-.modalBox{
-  width:100%;
-  max-width:500px;
-  padding:25px;
-  border-radius:20px;
-  background:#11111e;
-  border:1px solid #ffffff15;
-}
+/* MOBILE */
 
-.modalBox h2{
-  margin-bottom:15px;
+.overlay{
+  display:none;
 }
-
-.modalBox input{
-  width:100%;
-  padding:13px;
-  border:1px solid #ffffff15;
-  background:#080812;
-  color:white;
-  border-radius:10px;
-}
-
-.closeBtn{
-  float:right;
-  background:none;
-  color:#aaa;
-  border:0;
-  font-size:22px;
-}
-
-/* RESPONSIVE */
 
 @media(max-width:800px){
 
   .sidebar{
-    display:none;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:-310px;
+    transition:.22s;
+    box-shadow:30px 0 80px rgba(0,0,0,.7);
   }
 
-  .main{
-    margin-left:0;
-  }
-
-  .composerWrap{
+  .sidebar.open{
     left:0;
   }
 
-  .welcome h1{
-    font-size:35px;
+  .overlay.show{
+    display:block;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.65);
+    z-index:90;
   }
 
-  .chat{
-    padding-left:12px;
-    padding-right:12px;
-  }
-
-  .mode{
-    left:15px;
-    bottom:92px;
+  .mobile-menu{
+    display:block;
   }
 
   .topbar{
-    padding:0 13px;
+    padding:0 12px;
   }
 
-  .bubble{
-    max-width:calc(100vw - 75px);
+  .chat-area{
+    padding:20px 13px;
+  }
+
+  .composer-area{
+    padding:9px 9px 14px;
+  }
+
+  .mode-select{
+    max-width:125px;
+  }
+
+  .welcome{
+    padding-bottom:40px;
   }
 }
 </style>
@@ -472,569 +530,220 @@ button{
 
 <body>
 
-<!-- AUTH -->
+<div class="app">
 
-<section id="authScreen">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
 
-  <div class="authBox">
-
-    <div class="logo">ZenX</div>
-    <div class="subtitle">Student AI • 2027</div>
-
-    <div id="loginForm">
-
-      <h2 id="authTitle">Welcome back</h2>
-
-      <input
-        id="email"
-        type="email"
-        placeholder="Email address"
-        autocomplete="email"
-      >
-
-      <input
-        id="password"
-        type="password"
-        placeholder="Password"
-        autocomplete="current-password"
-      >
-
-      <button class="primary" onclick="handleAuth()">
-        <span id="authButtonText">Sign In</span>
-      </button>
-
-      <button class="linkBtn" onclick="showForgotPassword()">
-        Forgot password?
-      </button>
-
-      <button class="secondary" onclick="toggleAuth()">
-        Create new account
-      </button>
-
-      <div id="authMessage" class="authMessage"></div>
-
+    <div class="brand">
+      <img src="/zenx-logo.png" alt="ZenX.AI">
+      <div>
+        <div class="brand-title">ZenX.AI</div>
+        <div class="brand-sub">AI FOR A BETTER TOMORROW</div>
+      </div>
     </div>
 
-    <div id="forgotForm" class="hidden">
-
-      <h2>Reset password</h2>
-
-      <input
-        id="forgotEmail"
-        type="email"
-        placeholder="Enter your email"
-      >
-
-      <button class="primary" onclick="sendResetEmail()">
-        Send Reset Email
-      </button>
-
-      <button class="secondary" onclick="hideForgotPassword()">
-        Back to Sign In
-      </button>
-
-      <div id="forgotMessage" class="authMessage"></div>
-
-    </div>
-
-  </div>
-
-</section>
-
-
-<!-- APP -->
-
-<section id="appScreen" class="hidden">
-
-  <aside class="sidebar">
-
-    <div class="sideLogo">ZenX AI</div>
-
-    <button class="sideButton" onclick="newChat()">
+    <button class="new-chat" id="newChat">
       ＋ New Chat
     </button>
 
-    <button class="sideButton" onclick="refreshChat()">
-      ↻ Refresh
-    </button>
+    <div class="menu">
 
-    <button class="sideButton" onclick="clearRecents()">
-      🗑 Clear Recents
-    </button>
+      <button class="menu-btn" id="recentBtn">
+        🕘 Recent Search
+      </button>
 
-    <div class="sectionTitle">
-      Recent Chats
+      <button class="menu-btn" id="folderBtn">
+        📁 Folders
+      </button>
+
+      <button class="menu-btn" id="clearBtn">
+        🧹 Clear Recents
+      </button>
+
     </div>
 
-    <div id="recentList"></div>
-
-    <div class="sectionTitle">
-      Student Tools
+    <div class="section-title">
+      Search Recents
     </div>
 
-    <button class="sideButton" onclick="quickPrompt('Explain this topic like a Class 11 student')">
-      📚 Explain Topic
-    </button>
+    <div class="search-box">
+      🔎
+      <input
+        id="searchInput"
+        type="text"
+        placeholder="Search chats..."
+      >
+    </div>
 
-    <button class="sideButton" onclick="quickPrompt('Create a JEE practice quiz for me')">
-      📝 JEE Quiz
-    </button>
+    <div class="recents" id="recents"></div>
 
-    <button class="sideButton" onclick="quickPrompt('Give me a step-by-step solution')">
-      🧮 Solve Problem
-    </button>
+    <div class="section-title">
+      Student Modes
+    </div>
 
-    <button class="sideButton" onclick="quickPrompt('Make short revision notes')">
-      📖 Revision Notes
-    </button>
+    <div class="student-modes">
 
-    <button class="sideButton" onclick="logout()">
-      🚪 Logout
-    </button>
+      <button class="mode-btn active" data-mode="Student">
+        🎓 Student
+      </button>
+
+      <button class="mode-btn" data-mode="JEE">
+        ⚡ JEE
+      </button>
+
+      <button class="mode-btn" data-mode="NEET">
+        🧬 NEET
+      </button>
+
+      <button class="mode-btn" data-mode="Coding">
+        💻 Coding
+      </button>
+
+      <button class="mode-btn" data-mode="Study Planner">
+        📚 Study Planner
+      </button>
+
+    </div>
+
+    <div class="founder">
+      Founder:
+      <b>Abhay Srivastava</b>
+      <br>
+      ZenX.AI © 2026
+    </div>
 
   </aside>
 
 
+  <!-- MAIN -->
   <main class="main">
 
     <header class="topbar">
 
-      <div class="topTitle">
-        ZenX AI
+      <div class="top-left">
+
+        <button class="mobile-menu" id="mobileMenu">
+          ☰
+        </button>
+
+        <span class="student-badge">
+          🎓 Student Mode
+        </span>
+
       </div>
 
-      <div>
-        <div id="modeLabel">Student Mode</div>
-        <div id="userEmail" class="userEmail"></div>
-      </div>
+      <select class="mode-select" id="topMode">
+        <option>Student</option>
+        <option>JEE</option>
+        <option>NEET</option>
+        <option>Coding</option>
+        <option>Study Planner</option>
+      </select>
 
     </header>
 
 
-    <div id="chat" class="chat">
-
-      <div id="welcome" class="welcome">
-
-        <h1>What can I help you learn?</h1>
-
-        <p>
-          Your AI study companion for school, JEE, coding and everyday learning.
-        </p>
-
-      </div>
-
-    </div>
+    <!-- CHAT -->
+    <section class="chat-area" id="chatArea"></section>
 
 
-    <div class="composerWrap">
-
-      <select id="mode" class="mode" onchange="changeMode()">
-        <option value="student">Student</option>
-        <option value="jee">JEE</option>
-        <option value="school">School</option>
-        <option value="coding">Coding</option>
-        <option value="general">General</option>
-      </select>
+    <!-- COMPOSER -->
+    <div class="composer-area">
 
       <div class="composer">
 
-        <button class="toolBtn" onclick="startVoice()" title="Voice">
-          🎙️
-        </button>
-
-        <button class="toolBtn" onclick="showImagePrompt()" title="Generate image">
+        <button
+          class="icon-btn image-btn"
+          id="imageToggle"
+          title="AI Image Generation"
+        >
           🖼️
         </button>
 
         <textarea
-          id="prompt"
-          placeholder="Ask ZenX anything..."
-          onkeydown="handleEnter(event)"
+          id="input"
+          rows="1"
+          placeholder="Message ZenX.AI..."
+          autocomplete="off"
         ></textarea>
 
-        <button class="toolBtn" onclick="speakLast()" title="Read last answer">
-          🔊
-        </button>
-
-        <button class="sendBtn" onclick="sendMessage()">
+        <button
+          class="icon-btn send-btn"
+          id="send"
+          title="Send"
+        >
           ➤
         </button>
 
+      </div>
+
+      <div class="status" id="status">
+        ZenX.AI • Student Mode • Founder: Abhay Srivastava
       </div>
 
     </div>
 
   </main>
 
-</section>
-
-
-<!-- IMAGE MODAL -->
-
-<div id="imageModal" class="modal hidden">
-
-  <div class="modalBox">
-
-    <button class="closeBtn" onclick="closeImagePrompt()">×</button>
-
-    <h2>Generate Image</h2>
-
-    <input
-      id="imagePrompt"
-      placeholder="Describe the image..."
-    >
-
-    <button class="primary" onclick="generateImage()">
-      Generate
-    </button>
-
-    <div id="imageMessage" class="authMessage"></div>
-
-  </div>
-
 </div>
+
+
+<div class="overlay" id="overlay"></div>
 
 
 <script>
 
-/* =========================
-   CONFIG
-========================= */
+/* =========================================
+   ZENX.AI CORE
+========================================= */
 
-const SUPABASE_URL =
-"https://srlftvbiqoufejhhfsrh.supabase.co";
+const $ = selector => document.querySelector(selector);
 
-const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNybGZ0dmJpcW91ZmVqaGhmc3JoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg1OTI0NzAsImV4cCI6MjEwNDE2ODQ3MH0.vJ1CQ-Zz_kaRhDDT5J7y1nssgqccd2zPxQ4_FrJI4fs";
+const chatArea = $("#chatArea");
+const input = $("#input");
+const sendButton = $("#send");
+const status = $("#status");
 
-const API_URL =
-"https://zenx-hnkl.onrender.com";
+const sidebar = $("#sidebar");
+const overlay = $("#overlay");
 
-const supabaseClient =
-window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
-
-
-/* =========================
-   STATE
-========================= */
-
-let currentUser = null;
 let messages = [];
-let lastAIAnswer = "";
-let currentChatId = null;
-let isSignup = false;
+let currentMode = "Student";
+let imageMode = false;
+let currentTitle = "New Chat";
+
+const STORAGE_KEY = "zenx_recent_chats_v1";
 
 
-/* =========================
-   START
-========================= */
+/* =========================================
+   LOCAL STORAGE
+========================================= */
 
-document.addEventListener("DOMContentLoaded", async () => {
-
-  setupTextarea();
-
-  const {
-    data:{
-      session
-    }
-  } = await supabaseClient.auth.getSession();
-
-  if(session){
-
-    currentUser = session.user;
-
-    openApp();
-
-  }else{
-
-    showAuth();
-
-  }
-
-});
-
-
-supabaseClient.auth.onAuthStateChange(
-  async(event,session)=>{
-
-    if(session){
-
-      currentUser = session.user;
-
-      openApp();
-
-    }
-
-  }
-);
-
-
-/* =========================
-   AUTH
-========================= */
-
-function showAuth(){
-
-  document
-    .getElementById("authScreen")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("appScreen")
-    .classList.add("hidden");
-
-}
-
-
-function toggleAuth(){
-
-  isSignup = !isSignup;
-
-  document
-    .getElementById("authTitle")
-    .textContent =
-    isSignup
-    ? "Create your account"
-    : "Welcome back";
-
-  document
-    .getElementById("authButtonText")
-    .textContent =
-    isSignup
-    ? "Sign Up"
-    : "Sign In";
-
-  document
-    .querySelector(".secondary")
-    .textContent =
-    isSignup
-    ? "Already have an account?"
-    : "Create new account";
-
-  document
-    .getElementById("authMessage")
-    .textContent = "";
-
-}
-
-
-async function handleAuth(){
-
-  const email =
-    document.getElementById("email").value.trim();
-
-  const password =
-    document.getElementById("password").value;
-
-  const message =
-    document.getElementById("authMessage");
-
-  if(!email || !password){
-
-    message.textContent =
-      "Please enter email and password.";
-
-    return;
-
-  }
-
-  message.textContent =
-    isSignup
-    ? "Creating account..."
-    : "Signing in...";
-
+function getRecents(){
 
   try{
 
-    if(isSignup){
-
-      const {
-        data,
-        error
-      } =
-      await supabaseClient.auth.signUp({
-        email,
-        password
-      });
-
-      if(error) throw error;
-
-      if(data.session){
-
-        currentUser = data.user;
-
-        openApp();
-
-      }else{
-
-        message.textContent =
-          "Account created. Check your email for verification.";
-
-      }
-
-    }else{
-
-      const {
-        data,
-        error
-      } =
-      await supabaseClient.auth.signInWithPassword({
-        email,
-        password
-      });
-
-      if(error) throw error;
-
-      currentUser = data.user;
-
-      openApp();
-
-    }
-
-  }catch(error){
-
-    message.textContent =
-      error.message || "Authentication failed.";
-
-  }
-
-}
-
-
-function showForgotPassword(){
-
-  document
-    .getElementById("loginForm")
-    .classList.add("hidden");
-
-  document
-    .getElementById("forgotForm")
-    .classList.remove("hidden");
-
-}
-
-
-function hideForgotPassword(){
-
-  document
-    .getElementById("forgotForm")
-    .classList.add("hidden");
-
-  document
-    .getElementById("loginForm")
-    .classList.remove("hidden");
-
-}
-
-
-async function sendResetEmail(){
-
-  const email =
-    document
-      .getElementById("forgotEmail")
-      .value
-      .trim();
-
-  const message =
-    document.getElementById("forgotMessage");
-
-  if(!email){
-
-    message.textContent =
-      "Enter your email.";
-
-    return;
-
-  }
-
-  try{
-
-    const {
-      error
-    } =
-    await supabaseClient.auth.resetPasswordForEmail(
-      email,
-      {
-        redirectTo:
-          window.location.origin +
-          window.location.pathname
-      }
+    return JSON.parse(
+      localStorage.getItem(STORAGE_KEY) || "[]"
     );
 
-    if(error) throw error;
-
-    message.textContent =
-      "Password reset email sent.";
-
   }catch(error){
 
-    message.textContent =
-      error.message;
+    return [];
 
   }
 
 }
 
 
-/* =========================
-   APP
-========================= */
-
-function openApp(){
-
-  document
-    .getElementById("authScreen")
-    .classList.add("hidden");
-
-  document
-    .getElementById("appScreen")
-    .classList.remove("hidden");
-
-  document
-    .getElementById("userEmail")
-    .textContent =
-    currentUser?.email || "";
-
-  loadMessages();
-
-}
-
-
-async function logout(){
-
-  await supabaseClient.auth.signOut();
-
-  currentUser = null;
-  messages = [];
-
-  showAuth();
-
-}
-
-
-/* =========================
-   CHAT
-========================= */
-
-function getStorageKey(){
-
-  return currentUser
-    ? "zenx_messages_" + currentUser.id
-    : "zenx_messages_guest";
-
-}
-
-
-function saveMessages(){
+function saveRecents(list){
 
   try{
 
     localStorage.setItem(
-      getStorageKey(),
-      JSON.stringify(messages)
+      STORAGE_KEY,
+      JSON.stringify(list.slice(0,50))
     );
 
   }catch(error){
@@ -1046,327 +755,432 @@ function saveMessages(){
 }
 
 
-function loadMessages(){
+/* =========================================
+   SAFE TEXT
+========================================= */
 
-  try{
+function escapeHTML(text){
 
-    const saved =
-      localStorage.getItem(
-        getStorageKey()
-      );
-
-    messages =
-      saved
-      ? JSON.parse(saved)
-      : [];
-
-  }catch(error){
-
-    messages = [];
-
-  }
-
-  renderMessages();
-  updateHistory();
+  return String(text).replace(
+    /[&<>"']/g,
+    character => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    }[character])
+  );
 
 }
 
 
-function renderMessages(){
+/* =========================================
+   SIMPLE MARKDOWN
+========================================= */
 
-  const chat =
-    document.getElementById("chat");
+function formatAIText(text){
 
-  chat.innerHTML = "";
+  let safe = escapeHTML(text);
 
-  if(messages.length === 0){
+  safe = safe.replace(
+    /```([\s\S]*?)```/g,
+    '<pre class="code">$1</pre>'
+  );
 
-    chat.innerHTML = `
-      <div id="welcome" class="welcome">
-        <h1>What can I help you learn?</h1>
-        <p>Your AI study companion for school, JEE, coding and everyday learning.</p>
+  safe = safe.replace(
+    /\*\*(.*?)\*\*/g,
+    "<strong>$1</strong>"
+  );
+
+  safe = safe.replace(
+    /`([^`]+)`/g,
+    "<code>$1</code>"
+  );
+
+  return safe;
+
+}
+
+
+/* =========================================
+   WELCOME SCREEN
+========================================= */
+
+function showWelcome(){
+
+  chatArea.innerHTML = `
+
+    <div class="welcome">
+
+      <img
+        class="big-logo"
+        src="/zenx-logo.png"
+        alt="ZenX.AI"
+      >
+
+      <h1>
+        Meet
+        <span class="gradient">
+          ZenX.AI
+        </span>
+      </h1>
+
+      <p>
+        Your fast AI assistant for learning, coding,
+        ideas and creative work.
+        Student Mode is ready for JEE, NEET,
+        school and study planning.
+      </p>
+
+      <div class="quick-actions">
+
+        <button data-query="Explain this topic in simple language">
+          📖 Explain a Topic
+        </button>
+
+        <button data-query="Make me a focused study plan for today">
+          📚 Study Plan
+        </button>
+
+        <button data-query="Help me debug my code">
+          💻 Debug Code
+        </button>
+
+        <button data-query="Create an image of a futuristic study room">
+          🖼️ Generate Image
+        </button>
+
       </div>
-    `;
 
-    return;
+    </div>
 
-  }
+  `;
 
-  messages.forEach(message=>{
 
-    addMessageToUI(
-      message.role,
-      message.content,
-      false
-    );
+  document
+    .querySelectorAll("[data-query]")
+    .forEach(button => {
 
-  });
+      button.onclick = () => {
+
+        const query = button.dataset.query;
+
+        input.value = query;
+
+        if(
+          query.toLowerCase().includes("image")
+        ){
+
+          imageMode = true;
+          updateImageButton();
+
+        }
+
+        sendMessage();
+
+      };
+
+    });
 
 }
 
 
-function addMessageToUI(
-  role,
-  content,
-  scroll=true
-){
+/* =========================================
+   RENDER MESSAGE
+========================================= */
 
-  const chat =
-    document.getElementById("chat");
+function renderMessage(message,index){
 
-  const wrapper =
-    document.createElement("div");
+  const row = document.createElement("div");
 
-  wrapper.className =
+  row.className =
     "message " +
-    (role === "user" ? "user" : "ai");
+    (message.role === "user" ? "user" : "ai");
 
-  const avatar =
-    document.createElement("div");
+
+  const avatar = document.createElement("div");
 
   avatar.className = "avatar";
 
   avatar.textContent =
-    role === "user"
-    ? "👤"
-    : "Z";
+    message.role === "user"
+      ? "U"
+      : "Z";
 
-  const bubble =
-    document.createElement("div");
+
+  const bubble = document.createElement("div");
 
   bubble.className = "bubble";
 
-  if(role === "assistant"){
 
-    bubble.innerHTML =
-      marked.parse(content || "");
+  if(message.image){
+
+    bubble.innerHTML = `
+
+      ${
+        message.text
+          ? `<div>${formatAIText(message.text)}</div>`
+          : ""
+      }
+
+      <img
+        class="generated-image"
+        src="${message.image}"
+        alt="Generated by ZenX.AI"
+      >
+
+      <div class="message-actions">
+
+        <button data-copy="${index}">
+          Copy
+        </button>
+
+        <button data-download="${index}">
+          Download
+        </button>
+
+      </div>
+
+    `;
 
   }else{
 
-    bubble.textContent =
-      content;
-
-  }
-
-  wrapper.appendChild(avatar);
-  wrapper.appendChild(bubble);
-
-  chat.appendChild(wrapper);
-
-  if(scroll){
-
-    wrapper.scrollIntoView({
-      behavior:"smooth",
-      block:"end"
-    });
-
-  }
-
-}
-
-
-async function sendMessage(){
-
-  const input =
-    document.getElementById("prompt");
-
-  const question =
-    input.value.trim();
-
-  if(!question) return;
-
-  input.value = "";
-
-  const welcome =
-    document.getElementById("welcome");
-
-  if(welcome) welcome.remove();
-
-  messages.push({
-    role:"user",
-    content:question
-  });
-
-  addMessageToUI(
-    "user",
-    question
-  );
-
-  saveMessages();
-
-  const loading =
-    document.createElement("div");
-
-  loading.className =
-    "message ai";
-
-  loading.id = "loadingMessage";
-
-  loading.innerHTML = `
-    <div class="avatar">Z</div>
-    <div class="bubble">ZenX is thinking...</div>
-  `;
-
-  document
-    .getElementById("chat")
-    .appendChild(loading);
-
-  loading.scrollIntoView({
-    behavior:"smooth"
-  });
-
-
-  try{
-
-    const response =
-      await fetch(
-        API_URL + "/api/ask",
-        {
-          method:"POST",
-
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
-
-          body:JSON.stringify({
-
-            question,
-
-            mode:
-              document.getElementById("mode").value,
-
-            history:
-              messages.slice(-20),
-
-            user_id:
-              currentUser?.id || null
-
-          })
-
-        }
+    bubble.innerHTML =
+      formatAIText(
+        message.content || ""
       );
 
 
-    const data =
-      await response.json();
+    if(message.role === "model"){
 
+      bubble.innerHTML += `
 
-    if(!response.ok){
+        <div class="message-actions">
 
-      throw new Error(
-        data.detail ||
-        data.error ||
-        "AI request failed."
-      );
+          <button data-copy="${index}">
+            Copy
+          </button>
+
+        </div>
+
+      `;
 
     }
 
-
-    const answer =
-      data.answer ||
-      data.response ||
-      data.message ||
-      "No answer received.";
-
-    lastAIAnswer = answer;
+  }
 
 
-    messages.push({
-      role:"assistant",
-      content:answer
-    });
+  row.appendChild(avatar);
+  row.appendChild(bubble);
 
-    saveMessages();
+  chatArea.appendChild(row);
 
-    loading.remove();
+}
 
-    addMessageToUI(
-      "assistant",
-      answer
-    );
 
-    updateHistory();
+/* =========================================
+   RENDER ALL MESSAGES
+========================================= */
 
-  }catch(error){
+function renderMessages(){
 
-    loading.remove();
+  chatArea.innerHTML = "";
 
-    const errorText =
-      "Sorry, ZenX could not connect to the AI server. Please try again.";
+  if(!messages.length){
 
-    messages.push({
-      role:"assistant",
-      content:errorText
-    });
+    showWelcome();
+    return;
 
-    saveMessages();
+  }
 
-    addMessageToUI(
-      "assistant",
-      errorText
-    );
+  messages.forEach(
+    renderMessage
+  );
 
-    console.error(error);
+  requestAnimationFrame(() => {
+
+    chatArea.scrollTop =
+      chatArea.scrollHeight;
+
+  });
+
+}
+
+
+/* =========================================
+   ADD MESSAGE
+========================================= */
+
+function addMessage(message){
+
+  messages.push(message);
+
+  renderMessages();
+
+}
+
+
+/* =========================================
+   IMAGE BUTTON
+========================================= */
+
+function updateImageButton(){
+
+  const button = $("#imageToggle");
+
+  if(imageMode){
+
+    button.textContent = "✨";
+
+    button.classList.add("active");
+
+    input.placeholder =
+      "Describe the image you want...";
+
+  }else{
+
+    button.textContent = "🖼️";
+
+    button.classList.remove("active");
+
+    input.placeholder =
+      "Message ZenX.AI...";
 
   }
 
 }
 
 
-/* =========================
-   CHAT CONTROLS
-========================= */
+/* =========================================
+   MODE
+========================================= */
+
+function setMode(mode){
+
+  currentMode = mode;
+
+  $("#topMode").value = mode;
+
+  document
+    .querySelectorAll(".mode-btn")
+    .forEach(button => {
+
+      button.classList.toggle(
+        "active",
+        button.dataset.mode === mode
+      );
+
+    });
+
+
+  status.textContent =
+    `ZenX.AI • ${mode} Mode • Founder: Abhay Srivastava`;
+
+}
+
+
+/* =========================================
+   NEW CHAT
+========================================= */
 
 function newChat(){
 
   messages = [];
 
-  currentChatId =
-    Date.now();
+  currentTitle = "New Chat";
 
-  saveMessages();
+  imageMode = false;
 
-  renderMessages();
+  input.value = "";
 
-}
+  updateImageButton();
 
+  showWelcome();
 
-function refreshChat(){
+  closeSidebar();
 
-  renderMessages();
-
-}
-
-
-function clearRecents(){
-
-  if(!confirm(
-    "Delete all recent chats?"
-  )) return;
-
-  messages = [];
-
-  saveMessages();
-
-  renderMessages();
-
-  updateHistory();
+  input.focus();
 
 }
 
 
-function updateHistory(){
+/* =========================================
+   SAVE CURRENT CHAT
+========================================= */
+
+function saveCurrentChat(){
+
+  if(!messages.length) return;
+
+
+  const firstUserMessage =
+    messages.find(
+      message =>
+        message.role === "user"
+    );
+
+
+  if(!firstUserMessage) return;
+
+
+  const title =
+    currentTitle === "New Chat"
+      ? String(
+          firstUserMessage.content || ""
+        ).slice(0,70)
+      : currentTitle;
+
+
+  const recents = getRecents();
+
+
+  recents.unshift({
+
+    id:Date.now(),
+
+    title,
+
+    mode:currentMode,
+
+    messages,
+
+    date:new Date().toISOString()
+
+  });
+
+
+  saveRecents(recents);
+
+  renderRecents();
+
+}
+
+
+/* =========================================
+   RECENTS
+========================================= */
+
+function renderRecents(filter=""){
+
+  const container = $("#recents");
+
+  container.innerHTML = "";
 
   const list =
-    document.getElementById("recentList");
+    getRecents().filter(item =>
+      String(item.title || "")
+        .toLowerCase()
+        .includes(
+          filter.toLowerCase()
+        )
+    );
 
-  list.innerHTML = "";
 
-  if(!messages.length){
+  if(!list.length){
 
-    list.innerHTML =
-      `<div style="color:#666;font-size:13px;padding:8px">
+    container.innerHTML =
+      `<div class="empty">
         No recent chats
       </div>`;
 
@@ -1375,420 +1189,519 @@ function updateHistory(){
   }
 
 
-  const userMessages =
-    messages
-      .filter(m=>m.role==="user")
-      .slice(-10)
-      .reverse();
+  list.forEach(item => {
+
+    const button =
+      document.createElement("button");
+
+    button.className =
+      "chat-item";
+
+    button.textContent =
+      item.title;
+
+    button.title =
+      item.title;
 
 
-  userMessages.forEach(
-    (message,index)=>{
+    button.onclick = () => {
 
-      const row =
-        document.createElement("div");
+      messages =
+        item.messages || [];
 
-      row.className =
-        "recent";
+      currentTitle =
+        item.title || "New Chat";
 
-      const button =
-        document.createElement("button");
-
-      button.textContent =
-        message.content;
-
-      button.onclick = ()=>{
-
-        document
-          .getElementById("prompt")
-          .value =
-          message.content;
-
-      };
-
-
-      const del =
-        document.createElement("button");
-
-      del.className =
-        "deleteRecent";
-
-      del.textContent = "×";
-
-      del.onclick = (event)=>{
-
-        event.stopPropagation();
-
-        const actualIndex =
-          messages.lastIndexOf(message);
-
-        if(actualIndex >= 0){
-
-          messages.splice(
-            actualIndex,
-            1
-          );
-
-          saveMessages();
-
-          renderMessages();
-
-          updateHistory();
-
-        }
-
-      };
-
-
-      row.appendChild(button);
-      row.appendChild(del);
-
-      list.appendChild(row);
-
-    }
-  );
-
-}
-
-
-function quickPrompt(text){
-
-  document
-    .getElementById("prompt")
-    .value = text;
-
-  document
-    .getElementById("prompt")
-    .focus();
-
-}
-
-
-/* =========================
-   MODE
-========================= */
-
-function changeMode(){
-
-  const mode =
-    document.getElementById("mode").value;
-
-  const labels = {
-    student:"Student Mode",
-    jee:"JEE Mode",
-    school:"School Mode",
-    coding:"Coding Mode",
-    general:"General Mode"
-  };
-
-  document
-    .getElementById("modeLabel")
-    .textContent =
-    labels[mode] || "Student Mode";
-
-}
-
-
-/* =========================
-   VOICE
-========================= */
-
-function startVoice(){
-
-  const SpeechRecognition =
-    window.SpeechRecognition ||
-    window.webkitSpeechRecognition;
-
-  if(!SpeechRecognition){
-
-    alert(
-      "Voice recognition is not supported in this browser."
-    );
-
-    return;
-
-  }
-
-  const recognition =
-    new SpeechRecognition();
-
-  recognition.lang = "en-IN";
-
-  recognition.interimResults = false;
-
-  recognition.maxAlternatives = 1;
-
-  recognition.start();
-
-
-  recognition.onresult =
-    event=>{
-
-      const text =
-        event.results[0][0].transcript;
-
-      document
-        .getElementById("prompt")
-        .value = text;
-
-    };
-
-
-  recognition.onerror =
-    error=>{
-
-      console.error(
-        "Voice error:",
-        error
+      setMode(
+        item.mode || "Student"
       );
 
+      renderMessages();
+
+      closeSidebar();
+
     };
 
+
+    container.appendChild(button);
+
+  });
+
 }
 
 
-function speakLast(){
+/* =========================================
+   SIDEBAR
+========================================= */
 
-  if(!lastAIAnswer){
+function closeSidebar(){
 
-    alert(
-      "There is no AI answer to read yet."
-    );
+  sidebar.classList.remove("open");
+
+  overlay.classList.remove("show");
+
+}
+
+
+/* =========================================
+   AUTO TEXTAREA
+========================================= */
+
+function autoResize(){
+
+  input.style.height = "auto";
+
+  input.style.height =
+    Math.min(
+      input.scrollHeight,
+      150
+    ) + "px";
+
+}
+
+
+/* =========================================
+   SEND MESSAGE
+========================================= */
+
+async function sendMessage(){
+
+  const text =
+    input.value.trim();
+
+
+  if(!text || sendButton.disabled){
 
     return;
 
   }
 
-  if(!window.speechSynthesis){
 
-    alert(
-      "Text-to-speech is not supported."
-    );
+  if(currentTitle === "New Chat"){
 
-    return;
+    currentTitle =
+      text.slice(0,70);
 
   }
 
-  window.speechSynthesis.cancel();
 
-  const utterance =
-    new SpeechSynthesisUtterance(
-      lastAIAnswer
-    );
+  input.value = "";
 
-  utterance.lang = "en-IN";
-
-  utterance.rate = 0.95;
-
-  window.speechSynthesis.speak(
-    utterance
-  );
-
-}
+  autoResize();
 
 
-/* =========================
-   IMAGE GENERATION
-========================= */
+  addMessage({
 
-function showImagePrompt(){
+    role:"user",
 
-  document
-    .getElementById("imageModal")
-    .classList.remove("hidden");
+    content:text
 
-}
+  });
 
 
-function closeImagePrompt(){
-
-  document
-    .getElementById("imageModal")
-    .classList.add("hidden");
-
-}
+  sendButton.disabled = true;
 
 
-async function generateImage(){
-
-  const prompt =
-    document
-      .getElementById("imagePrompt")
-      .value
-      .trim();
-
-  const message =
-    document
-      .getElementById("imageMessage");
-
-  if(!prompt){
-
-    message.textContent =
-      "Describe the image first.";
-
-    return;
-
-  }
-
-  message.textContent =
-    "Generating image...";
+  status.textContent =
+    imageMode
+      ? "ZenX.AI is generating your image..."
+      : "ZenX.AI is thinking...";
 
 
   try{
 
-    const response =
-      await fetch(
-        API_URL + "/api/image",
-        {
-          method:"POST",
+    /* IMAGE GENERATION */
 
-          headers:{
-            "Content-Type":
-              "application/json"
-          },
+    if(imageMode){
 
-          body:JSON.stringify({
+      const response =
+        await fetch(
+          "/api/image",
+          {
+            method:"POST",
 
-            prompt,
+            headers:{
+              "Content-Type":
+                "application/json"
+            },
 
-            user_id:
-              currentUser?.id || null
+            body:JSON.stringify({
+              prompt:text
+            })
 
-          })
-
-        }
-      );
-
-
-    const data =
-      await response.json();
+          }
+        );
 
 
-    if(!response.ok){
+      const data =
+        await response.json();
 
-      throw new Error(
-        data.detail ||
-        data.error ||
-        "Image generation failed."
-      );
+
+      if(!response.ok){
+
+        throw new Error(
+          data.error ||
+          "Image generation failed."
+        );
+
+      }
+
+
+      addMessage({
+
+        role:"model",
+
+        text:
+          data.text ||
+          "Image generated by ZenX.AI.",
+
+        image:data.image
+
+      });
+
+
+    }
+
+    /* TEXT AI */
+
+    else{
+
+      const history =
+        messages
+          .filter(
+            message =>
+              message.role === "user" ||
+              message.role === "model"
+          )
+          .slice(-20);
+
+
+      const response =
+        await fetch(
+          "/api/chat",
+          {
+            method:"POST",
+
+            headers:{
+              "Content-Type":
+                "application/json"
+            },
+
+            body:JSON.stringify({
+
+              messages:history,
+
+              prompt:text,
+
+              mode:currentMode
+
+            })
+
+          }
+        );
+
+
+      const data =
+        await response.json();
+
+
+      if(!response.ok){
+
+        throw new Error(
+          data.error ||
+          "AI request failed."
+        );
+
+      }
+
+
+      addMessage({
+
+        role:"model",
+
+        content:
+          data.text ||
+          "I couldn't generate a response."
+
+      });
 
     }
 
 
-    const imageUrl =
-      data.image_url ||
-      data.url;
-
-
-    if(!imageUrl){
-
-      throw new Error(
-        "No image was returned by the server."
-      );
-
-    }
-
-
-    closeImagePrompt();
-
-    const chat =
-      document.getElementById("chat");
-
-    const wrapper =
-      document.createElement("div");
-
-    wrapper.className =
-      "message ai";
-
-    wrapper.innerHTML = `
-      <div class="avatar">Z</div>
-      <div class="bubble">
-        <p>Generated image:</p>
-        <img
-          src="${imageUrl}"
-          alt="Generated by ZenX"
-          style="max-width:100%;border-radius:15px;margin-top:10px;"
-        >
-      </div>
-    `;
-
-    chat.appendChild(wrapper);
-
-    wrapper.scrollIntoView({
-      behavior:"smooth"
-    });
-
+    saveCurrentChat();
 
   }catch(error){
 
-    message.textContent =
-      error.message ||
-      "Image generation failed.";
-
-    console.error(error);
-
-  }
-
-}
-
-
-/* =========================
-   ENTER KEY
-========================= */
-
-function handleEnter(event){
-
-  if(
-    event.key === "Enter" &&
-    !event.shiftKey
-  ){
-
-    event.preventDefault();
-
-    sendMessage();
-
-  }
-
-}
-
-
-function setupTextarea(){
-
-  const textarea =
-    document.getElementById("prompt");
-
-  textarea.addEventListener(
-    "input",
-    ()=>{
-      textarea.style.height =
-        "auto";
-
-      textarea.style.height =
-        Math.min(
-          textarea.scrollHeight,
-          150
-        ) + "px";
-    }
-  );
-
-}
-
-
-/* =========================
-   GLOBAL ERROR HANDLING
-========================= */
-
-window.addEventListener(
-  "unhandledrejection",
-  event=>{
-
     console.error(
-      "Unhandled error:",
-      event.reason
+      "ZenX error:",
+      error
     );
+
+
+    addMessage({
+
+      role:"model",
+
+      content:
+        "Sorry, I couldn't complete your request.\n\n" +
+        error.message
+
+    });
+
+  }
+
+
+  sendButton.disabled = false;
+
+  imageMode = false;
+
+  updateImageButton();
+
+  status.textContent =
+    `ZenX.AI • ${currentMode} Mode • Founder: Abhay Srivastava`;
+
+}
+
+
+/* =========================================
+   BUTTON EVENTS
+========================================= */
+
+sendButton.onclick =
+  sendMessage;
+
+
+input.addEventListener(
+  "input",
+  autoResize
+);
+
+
+input.addEventListener(
+  "keydown",
+  event => {
+
+    if(
+      event.key === "Enter" &&
+      !event.shiftKey
+    ){
+
+      event.preventDefault();
+
+      sendMessage();
+
+    }
 
   }
 );
+
+
+$("#newChat").onclick =
+  newChat;
+
+
+$("#mobileMenu").onclick =
+  () => {
+
+    sidebar.classList.add("open");
+
+    overlay.classList.add("show");
+
+  };
+
+
+overlay.onclick =
+  closeSidebar;
+
+
+$("#imageToggle").onclick =
+  () => {
+
+    imageMode =
+      !imageMode;
+
+    updateImageButton();
+
+    input.focus();
+
+  };
+
+
+$("#topMode").onchange =
+  event => {
+
+    setMode(
+      event.target.value
+    );
+
+  };
+
+
+document
+  .querySelectorAll(".mode-btn")
+  .forEach(button => {
+
+    button.onclick = () => {
+
+      setMode(
+        button.dataset.mode
+      );
+
+    };
+
+  });
+
+
+$("#searchInput").oninput =
+  event => {
+
+    renderRecents(
+      event.target.value
+    );
+
+  };
+
+
+$("#recentBtn").onclick =
+  () => {
+
+    renderRecents();
+
+    closeSidebar();
+
+  };
+
+
+$("#folderBtn").onclick =
+  () => {
+
+    alert(
+      "Folders are ready in the ZenX.AI menu. Cloud folders can be connected when a database is enabled."
+    );
+
+  };
+
+
+$("#clearBtn").onclick =
+  () => {
+
+    const confirmClear =
+      confirm(
+        "Clear all recent chats from this browser?"
+      );
+
+
+    if(confirmClear){
+
+      localStorage.removeItem(
+        STORAGE_KEY
+      );
+
+      renderRecents();
+
+    }
+
+  };
+
+
+/* =========================================
+   MESSAGE ACTIONS
+========================================= */
+
+chatArea.addEventListener(
+  "click",
+  async event => {
+
+    const copyIndex =
+      event.target.dataset.copy;
+
+
+    if(copyIndex !== undefined){
+
+      const message =
+        messages[
+          Number(copyIndex)
+        ];
+
+
+      const text =
+        message.content ||
+        message.text ||
+        "";
+
+
+      try{
+
+        await navigator.clipboard.writeText(
+          text
+        );
+
+        event.target.textContent =
+          "Copied";
+
+        setTimeout(
+          () => {
+            event.target.textContent =
+              "Copy";
+          },
+          1000
+        );
+
+      }catch(error){
+
+        console.error(error);
+
+      }
+
+    }
+
+
+    const downloadIndex =
+      event.target.dataset.download;
+
+
+    if(downloadIndex !== undefined){
+
+      const message =
+        messages[
+          Number(downloadIndex)
+        ];
+
+
+      if(message.image){
+
+        const link =
+          document.createElement("a");
+
+        link.href =
+          message.image;
+
+        link.download =
+          "zenx-ai-image.png";
+
+        document.body.appendChild(link);
+
+        link.click();
+
+        link.remove();
+
+      }
+
+    }
+
+  }
+);
+
+
+/* =========================================
+   START APP
+========================================= */
+
+showWelcome();
+
+renderRecents();
+
+updateImageButton();
 
 </script>
 
