@@ -2,226 +2,298 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#070711">
-<meta name="description" content="ZenX.AI - AI for a better tomorrow">
+<meta name="description" content="ZenX.AI — AI for a Better Tomorrow">
 <title>ZenX.AI</title>
 
 <style>
-*{
-  box-sizing:border-box;
-  margin:0;
-  padding:0;
-}
+*{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --bg:#070711;
-  --panel:#0d0d19;
-  --panel2:#11111f;
-  --border:#25253a;
-  --text:#f7f7ff;
-  --muted:#9698ad;
-  --purple:#7c5cff;
-  --blue:#3f8cff;
+  --bg:#05050b;
+  --panel:#0b0b15;
+  --panel2:#10101d;
+  --line:rgba(255,255,255,.09);
+  --text:#f7f7fb;
+  --muted:#9293a5;
+  --cyan:#58e6ff;
+  --violet:#9c7cff;
+  --pink:#e879f9;
+  --green:#65e6a8;
 }
 
-body{
+html,body{
   width:100%;
-  height:100vh;
+  height:100%;
   overflow:hidden;
   background:var(--bg);
   color:var(--text);
-  font-family:Inter,Arial,Helvetica,sans-serif;
+  font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
 }
 
-button,
-input,
-textarea,
-select{
-  font:inherit;
+button,input,textarea{font:inherit}
+button{cursor:pointer;border:0}
+button:focus-visible,input:focus-visible,textarea:focus-visible{
+  outline:2px solid var(--cyan);
+  outline-offset:2px;
 }
 
-button{
-  cursor:pointer;
+/* BACKGROUND */
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:-30%;
+  z-index:-5;
+  background:
+    radial-gradient(circle at 20% 20%,rgba(88,230,255,.12),transparent 25%),
+    radial-gradient(circle at 80% 25%,rgba(156,124,255,.14),transparent 28%),
+    radial-gradient(circle at 50% 85%,rgba(232,121,249,.09),transparent 25%);
+  animation:bgMove 16s ease-in-out infinite alternate;
 }
+
+body:after{
+  content:"";
+  position:fixed;
+  inset:0;
+  z-index:-4;
+  pointer-events:none;
+  background-image:
+    linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:42px 42px;
+  mask-image:linear-gradient(to bottom,transparent,#000 20%,#000 80%,transparent);
+}
+
+@keyframes bgMove{
+  0%{transform:translate3d(-2%,-1%,0) scale(1)}
+  100%{transform:translate3d(2%,2%,0) scale(1.08)}
+}
+
+/* APP */
 
 .app{
   width:100%;
-  height:100vh;
+  height:100%;
   display:flex;
-  background:
-    radial-gradient(circle at 75% 0%,#17143b 0%,#070711 38%);
 }
 
 /* SIDEBAR */
 
 .sidebar{
-  width:290px;
+  width:275px;
   height:100%;
-  background:rgba(10,10,20,.97);
-  border-right:1px solid var(--border);
-  padding:16px;
+  background:rgba(8,8,17,.78);
+  backdrop-filter:blur(28px);
+  border-right:1px solid var(--line);
   display:flex;
   flex-direction:column;
-  gap:14px;
-  z-index:100;
+  padding:18px 14px;
+  position:relative;
+  z-index:20;
 }
 
 .brand{
   display:flex;
   align-items:center;
   gap:11px;
+  padding:4px 8px 20px;
 }
 
-.brand img{
-  width:45px;
-  height:45px;
-  object-fit:cover;
+.brand-mark{
+  width:39px;
+  height:39px;
   border-radius:13px;
-  background:#000;
+  display:grid;
+  place-items:center;
+  background:
+    radial-gradient(circle at 35% 30%,#fff,transparent 8%),
+    conic-gradient(from 0deg,var(--cyan),var(--violet),var(--pink),var(--cyan));
+  box-shadow:0 0 25px rgba(88,230,255,.25);
+  position:relative;
+  animation:brandPulse 4s ease-in-out infinite;
 }
 
-.brand-title{
-  font-size:19px;
+.brand-mark:before{
+  content:"";
+  width:19px;
+  height:19px;
+  border:2px solid #fff;
+  border-radius:50%;
+  opacity:.9;
+}
+
+.brand-mark:after{
+  content:"";
+  position:absolute;
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:white;
+  box-shadow:0 0 12px white;
+}
+
+@keyframes brandPulse{
+  50%{transform:rotate(8deg) scale(1.05);box-shadow:0 0 34px rgba(156,124,255,.38)}
+}
+
+.brand-name{
+  font-size:20px;
   font-weight:800;
+  letter-spacing:-.6px;
 }
 
-.brand-sub{
-  color:var(--muted);
-  font-size:9px;
-  margin-top:3px;
-  letter-spacing:.5px;
+.brand-name span{
+  background:linear-gradient(90deg,var(--cyan),var(--violet),var(--pink));
+  -webkit-background-clip:text;
+  color:transparent;
 }
 
-.new-chat{
-  width:100%;
-  padding:13px;
-  border:none;
-  border-radius:13px;
-  color:white;
-  font-weight:800;
-  background:linear-gradient(135deg,#7c5cff,#427fff);
-  box-shadow:0 12px 35px rgba(100,80,255,.18);
+.brand-tag{
+  display:block;
+  color:#707185;
+  font-size:8px;
+  letter-spacing:1.5px;
+  margin-top:2px;
 }
 
-.menu{
+.nav{
   display:flex;
   flex-direction:column;
-  gap:4px;
+  gap:6px;
 }
 
-.menu-btn,
-.mode-btn{
+.nav-btn{
   width:100%;
-  border:none;
+  height:46px;
+  border-radius:13px;
+  color:#b9bac8;
   background:transparent;
-  color:#cfd0df;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:0 13px;
+  transition:.2s;
   text-align:left;
-  padding:11px 12px;
-  border-radius:11px;
 }
 
-.menu-btn:hover,
-.mode-btn:hover,
-.mode-btn.active{
-  background:#17172a;
-  color:white;
+.nav-btn:hover{
+  background:rgba(255,255,255,.055);
+  color:#fff;
+  transform:translateX(2px);
+}
+
+.nav-btn.primary{
+  background:linear-gradient(110deg,rgba(88,230,255,.13),rgba(156,124,255,.12));
+  color:#fff;
+  border:1px solid rgba(88,230,255,.14);
+}
+
+.icon{
+  width:20px;
+  height:20px;
+  display:grid;
+  place-items:center;
+  flex:none;
+}
+
+.icon svg{
+  width:20px;
+  height:20px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
 .section-title{
-  color:#71738a;
+  color:#666879;
   font-size:10px;
-  letter-spacing:1px;
+  font-weight:700;
+  letter-spacing:1.4px;
+  margin:25px 10px 9px;
   text-transform:uppercase;
-  margin-top:3px;
 }
 
-.search-box{
+.mode-list{
+  display:flex;
+  flex-direction:column;
+  gap:5px;
+}
+
+.mode-btn{
+  height:39px;
+  border-radius:11px;
+  background:transparent;
+  color:#9c9dab;
   display:flex;
   align-items:center;
-  gap:7px;
-  background:#121222;
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:9px 10px;
+  gap:10px;
+  padding:0 11px;
+  font-size:13px;
+  transition:.2s;
 }
 
-.search-box input{
-  width:100%;
-  background:transparent;
-  border:none;
-  outline:none;
-  color:white;
+.mode-btn:hover{
+  color:#fff;
+  background:rgba(255,255,255,.045);
 }
 
-.recents{
-  flex:1;
-  min-height:60px;
-  overflow-y:auto;
+.mode-btn.active{
+  color:#fff;
+  background:rgba(156,124,255,.11);
 }
 
-.chat-item{
-  width:100%;
-  border:none;
-  background:transparent;
-  color:#bfc0d0;
-  text-align:left;
-  padding:10px;
-  border-radius:10px;
-  white-space:nowrap;
-  overflow:hidden;
-  text-overflow:ellipsis;
+.mode-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  box-shadow:0 0 12px rgba(88,230,255,.6);
 }
 
-.chat-item:hover{
-  background:#151527;
-  color:white;
-}
-
-.empty{
-  color:#66687d;
-  font-size:12px;
-  text-align:center;
-  padding:20px 5px;
-}
-
-.student-modes{
-  max-height:170px;
-  overflow-y:auto;
+.sidebar-bottom{
+  margin-top:auto;
 }
 
 .founder{
-  border-top:1px solid var(--border);
-  padding-top:12px;
-  color:#77798e;
+  border-top:1px solid var(--line);
+  padding:15px 10px 2px;
+  color:#6f7080;
   font-size:11px;
-  line-height:1.6;
 }
 
-.founder b{
-  color:#ddd;
+.founder strong{
+  display:block;
+  color:#c9c9d5;
+  margin-top:3px;
+  font-size:12px;
 }
 
 /* MAIN */
 
 .main{
-  flex:1;
   min-width:0;
+  flex:1;
   height:100%;
   display:flex;
   flex-direction:column;
 }
 
+/* TOPBAR */
+
 .topbar{
-  height:70px;
-  flex-shrink:0;
+  height:68px;
+  flex:none;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:0 22px;
-  border-bottom:1px solid var(--border);
-  background:rgba(8,8,18,.88);
-  backdrop-filter:blur(15px);
+  padding:0 24px;
+  border-bottom:1px solid var(--line);
+  background:rgba(5,5,11,.48);
+  backdrop-filter:blur(20px);
 }
 
 .top-left{
@@ -232,297 +304,662 @@ button{
 
 .mobile-menu{
   display:none;
-  border:1px solid var(--border);
-  background:#141424;
-  color:white;
-  padding:9px 11px;
-  border-radius:10px;
 }
 
-.student-badge{
-  border:1px solid #725cff55;
-  background:#725cff18;
-  color:#d0c9ff;
+.mode-pill{
+  height:35px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:0 13px;
   border-radius:999px;
-  padding:8px 13px;
+  background:rgba(88,230,255,.07);
+  border:1px solid rgba(88,230,255,.13);
+  color:#d9fbff;
   font-size:12px;
-  font-weight:800;
+}
+
+.live-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#66f1ae;
+  box-shadow:0 0 12px #66f1ae;
+  animation:live 1.5s infinite;
+}
+
+@keyframes live{
+  50%{opacity:.3;transform:scale(.65)}
 }
 
 .mode-select{
-  background:#121222;
-  border:1px solid var(--border);
-  color:white;
+  height:35px;
+  padding:0 30px 0 11px;
   border-radius:10px;
-  padding:8px 11px;
-  outline:none;
+  color:#c5c5d1;
+  background:#0d0d18;
+  border:1px solid var(--line);
+  outline:0;
+}
+
+.top-actions{
+  display:flex;
+  gap:7px;
+}
+
+.round-btn{
+  width:37px;
+  height:37px;
+  border-radius:11px;
+  color:#aaaab9;
+  background:rgba(255,255,255,.035);
+  border:1px solid var(--line);
+  display:grid;
+  place-items:center;
+  transition:.2s;
+}
+
+.round-btn:hover{
+  color:#fff;
+  border-color:rgba(88,230,255,.3);
+  box-shadow:0 0 18px rgba(88,230,255,.08);
+}
+
+.round-btn svg{
+  width:18px;
+  height:18px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
 }
 
 /* CHAT */
 
-.chat-area{
+.chat{
   flex:1;
+  min-height:0;
   overflow-y:auto;
-  padding:30px max(18px,calc((100% - 900px)/2));
   scroll-behavior:smooth;
 }
 
+.chat::-webkit-scrollbar{
+  width:7px;
+}
+
+.chat::-webkit-scrollbar-thumb{
+  background:#20202e;
+  border-radius:20px;
+}
+
+.chat-inner{
+  width:min(950px,calc(100% - 34px));
+  margin:auto;
+  padding:30px 0 160px;
+}
+
+/* WELCOME */
+
 .welcome{
-  min-height:100%;
+  min-height:calc(100vh - 245px);
   display:flex;
   flex-direction:column;
   align-items:center;
   justify-content:center;
   text-align:center;
-  padding-bottom:70px;
+  padding-top:10px;
 }
 
-.big-logo{
-  width:90px;
-  height:90px;
-  border-radius:24px;
-  object-fit:cover;
-  margin-bottom:18px;
-  box-shadow:0 20px 70px rgba(100,80,255,.2);
+.ai-core{
+  width:145px;
+  height:145px;
+  position:relative;
+  display:grid;
+  place-items:center;
+  margin-bottom:27px;
+}
+
+.core-ring{
+  position:absolute;
+  inset:0;
+  border-radius:50%;
+  border:1px solid rgba(88,230,255,.2);
+  animation:ringRotate 8s linear infinite;
+}
+
+.core-ring:nth-child(2){
+  inset:12px;
+  border-color:rgba(156,124,255,.25);
+  animation-duration:5s;
+  animation-direction:reverse;
+}
+
+.core-ring:nth-child(3){
+  inset:27px;
+  border-color:rgba(232,121,249,.25);
+  animation-duration:3.5s;
+}
+
+.core-ring:before,
+.core-ring:after{
+  content:"";
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#fff;
+  box-shadow:0 0 13px var(--cyan);
+  top:-3px;
+  left:50%;
+}
+
+.core-ring:after{
+  top:auto;
+  bottom:-3px;
+  background:var(--violet);
+  box-shadow:0 0 14px var(--violet);
+}
+
+@keyframes ringRotate{
+  to{transform:rotate(360deg)}
+}
+
+.core-orb{
+  width:65px;
+  height:65px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 28%,white 0 4%,transparent 5%),
+    radial-gradient(circle at 50% 50%,#b8f7ff 0,#58e6ff 17%,#9c7cff 48%,#e879f9 70%,transparent 72%);
+  box-shadow:
+    0 0 20px rgba(88,230,255,.6),
+    0 0 60px rgba(156,124,255,.3);
+  animation:orb 3.2s ease-in-out infinite;
+}
+
+@keyframes orb{
+  0%,100%{transform:scale(.94);filter:hue-rotate(0deg)}
+  50%{transform:scale(1.08);filter:hue-rotate(25deg)}
 }
 
 .welcome h1{
-  font-size:clamp(32px,6vw,52px);
-  margin-bottom:9px;
-}
-
-.gradient{
-  background:linear-gradient(90deg,#fff,#a78cff,#55cfff);
+  font-size:clamp(32px,5vw,55px);
+  letter-spacing:-2.5px;
+  line-height:1;
+  background:linear-gradient(100deg,#fff 20%,#a9f5ff 45%,#aa92ff 72%,#f2a6fa);
   -webkit-background-clip:text;
-  background-clip:text;
   color:transparent;
 }
 
 .welcome p{
-  max-width:650px;
-  color:var(--muted);
-  line-height:1.65;
+  color:#858697;
+  margin-top:13px;
+  max-width:530px;
+  font-size:14px;
+  line-height:1.7;
 }
 
-.quick-actions{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:9px;
-  margin-top:22px;
+.quick-grid{
+  width:min(700px,100%);
+  margin-top:30px;
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:10px;
 }
 
-.quick-actions button{
-  border:1px solid var(--border);
-  background:#121222;
-  color:#c8c9d8;
-  padding:10px 14px;
-  border-radius:999px;
+.quick{
+  min-height:82px;
+  border-radius:15px;
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.025);
+  color:#a7a8b6;
+  padding:14px;
+  text-align:left;
+  transition:.2s;
 }
 
-.quick-actions button:hover{
-  background:#19192b;
-  color:white;
+.quick:hover{
+  transform:translateY(-3px);
+  color:#fff;
+  background:rgba(255,255,255,.05);
+  border-color:rgba(88,230,255,.18);
+}
+
+.quick-icon{
+  width:28px;
+  height:28px;
+  border-radius:9px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,rgba(88,230,255,.12),rgba(156,124,255,.13));
+  margin-bottom:9px;
+}
+
+.quick-icon svg{
+  width:16px;
+  height:16px;
+  stroke:var(--cyan);
+  fill:none;
+  stroke-width:1.7;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.quick span{
+  font-size:11px;
 }
 
 /* MESSAGES */
 
 .message{
   display:flex;
-  gap:12px;
-  margin:19px 0;
-  align-items:flex-start;
+  gap:13px;
+  margin:24px 0;
+  animation:messageIn .3s ease;
+}
+
+@keyframes messageIn{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:none}
 }
 
 .avatar{
-  width:35px;
-  height:35px;
-  flex-shrink:0;
-  border-radius:10px;
+  width:34px;
+  height:34px;
+  flex:none;
+  border-radius:11px;
   display:grid;
   place-items:center;
-  background:#17172b;
-  border:1px solid var(--border);
-  font-size:14px;
-  font-weight:800;
+  background:#131320;
+  border:1px solid var(--line);
+  font-size:12px;
+  font-weight:700;
+}
+
+.avatar.ai{
+  background:radial-gradient(circle at 40% 35%,#d9ffff,#58e6ff 25%,#816bff 60%,#191526);
+  box-shadow:0 0 20px rgba(88,230,255,.13);
 }
 
 .bubble{
-  max-width:min(780px,100%);
-  line-height:1.65;
-  overflow-wrap:anywhere;
+  max-width:calc(100% - 48px);
+  color:#d8d8e2;
+  font-size:14px;
+  line-height:1.75;
+  white-space:pre-wrap;
+  word-break:break-word;
 }
 
 .user .bubble{
-  background:#15152a;
-  border:1px solid var(--border);
   padding:12px 15px;
-  border-radius:16px;
-  white-space:pre-wrap;
+  border-radius:15px 15px 5px 15px;
+  background:rgba(156,124,255,.1);
+  border:1px solid rgba(156,124,255,.13);
 }
 
 .ai .bubble{
-  padding-top:5px;
-  white-space:pre-wrap;
+  padding-top:4px;
 }
 
-.code{
-  display:block;
-  overflow:auto;
-  background:#090914;
-  border:1px solid var(--border);
-  padding:13px;
-  border-radius:12px;
-  margin:8px 0;
-  font-family:monospace;
-  white-space:pre;
-}
-
-.message-actions{
+.message-tools{
   display:flex;
   gap:5px;
-  margin-top:7px;
+  margin-top:8px;
 }
 
-.message-actions button{
-  border:none;
+.tool{
+  height:28px;
+  padding:0 8px;
+  border-radius:8px;
+  color:#747587;
   background:transparent;
-  color:#77798f;
-  padding:5px 7px;
-  border-radius:7px;
   font-size:11px;
 }
 
-.message-actions button:hover{
-  background:#151527;
-  color:white;
+.tool:hover{
+  color:#fff;
+  background:rgba(255,255,255,.05);
 }
 
+/* IMAGE RESULT */
+
 .generated-image{
-  width:min(700px,100%);
-  display:block;
+  max-width:min(600px,100%);
   margin-top:10px;
-  border-radius:16px;
-  border:1px solid var(--border);
+  border-radius:17px;
+  border:1px solid var(--line);
+  display:block;
+  box-shadow:0 15px 50px rgba(0,0,0,.3);
+}
+
+/* TYPING */
+
+.typing{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  padding:10px 0;
+}
+
+.typing i{
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:var(--cyan);
+  animation:typing 1s infinite;
+}
+
+.typing i:nth-child(2){animation-delay:.15s}
+.typing i:nth-child(3){animation-delay:.3s}
+
+@keyframes typing{
+  50%{opacity:.25;transform:translateY(-3px)}
 }
 
 /* COMPOSER */
 
-.composer-area{
-  flex-shrink:0;
-  padding:12px max(16px,calc((100% - 900px)/2)) 18px;
-  background:linear-gradient(transparent,#070711 25%);
+.composer-wrap{
+  position:fixed;
+  bottom:0;
+  left:275px;
+  right:0;
+  z-index:15;
+  padding:15px 20px 20px;
+  background:linear-gradient(transparent,rgba(5,5,11,.94) 30%);
 }
 
 .composer{
+  width:min(900px,100%);
+  margin:auto;
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,.11);
+  background:rgba(12,12,22,.87);
+  backdrop-filter:blur(25px);
+  box-shadow:0 12px 50px rgba(0,0,0,.35);
+  padding:10px;
+}
+
+.composer-top{
   display:flex;
   align-items:flex-end;
-  gap:8px;
-  background:#10101e;
-  border:1px solid #2b2b45;
-  border-radius:18px;
-  padding:9px;
-  box-shadow:0 20px 60px rgba(0,0,0,.35);
+  gap:9px;
 }
 
-.composer textarea{
+textarea{
   flex:1;
-  min-height:44px;
-  max-height:150px;
+  min-width:0;
   resize:none;
-  outline:none;
-  border:none;
+  height:48px;
+  max-height:150px;
   background:transparent;
-  color:white;
-  padding:11px 9px;
-  line-height:1.45;
+  color:#fff;
+  border:0;
+  outline:0;
+  padding:12px 5px;
+  line-height:1.5;
 }
 
-.icon-btn{
-  width:42px;
-  height:42px;
-  flex-shrink:0;
-  border:none;
+textarea::placeholder{
+  color:#676879;
+}
+
+.compose-btn{
+  width:43px;
+  height:43px;
+  border-radius:13px;
+  display:grid;
+  place-items:center;
+  color:#9b9cac;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--line);
+  transition:.2s;
+}
+
+.compose-btn:hover{
+  color:#fff;
+  transform:translateY(-1px);
+}
+
+.compose-btn.active{
+  color:#65e6a8;
+  border-color:rgba(101,230,168,.25);
+  background:rgba(101,230,168,.08);
+}
+
+.send{
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  color:#070711;
+  border:0;
+  box-shadow:0 0 22px rgba(88,230,255,.17);
+}
+
+.send:hover{
+  color:#000;
+  transform:scale(1.04);
+}
+
+.compose-btn svg{
+  width:19px;
+  height:19px;
+  stroke:currentColor;
+  fill:none;
+  stroke-width:1.8;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+}
+
+.composer-bottom{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:4px 5px 0;
+  color:#5e5f6e;
+  font-size:9px;
+}
+
+.image-toggle{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  cursor:pointer;
+}
+
+.image-toggle input{
+  accent-color:var(--violet);
+}
+
+/* RECENTS PANEL */
+
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.55);
+  backdrop-filter:blur(4px);
+  z-index:30;
+  display:none;
+}
+
+.overlay.show{display:block}
+
+.drawer{
+  position:fixed;
+  top:0;
+  right:0;
+  width:min(390px,92vw);
+  height:100%;
+  z-index:31;
+  background:#0a0a13;
+  border-left:1px solid var(--line);
+  transform:translateX(100%);
+  transition:.3s ease;
+  display:flex;
+  flex-direction:column;
+}
+
+.drawer.show{transform:none}
+
+.drawer-head{
+  height:68px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 18px;
+  border-bottom:1px solid var(--line);
+}
+
+.drawer-head h3{
+  font-size:15px;
+}
+
+.recent-list{
+  padding:12px;
+  overflow:auto;
+}
+
+.recent-item{
+  width:100%;
+  display:block;
+  text-align:left;
+  color:#b5b5c2;
+  background:transparent;
   border-radius:12px;
-  background:#17172a;
-  color:#c7c8d8;
+  padding:12px;
+  margin-bottom:5px;
 }
 
-.image-btn.active{
-  background:#261c50;
-  color:#d7d0ff;
-  border:1px solid #735aff66;
+.recent-item:hover{
+  background:rgba(255,255,255,.05);
+  color:#fff;
 }
 
-.send-btn{
-  background:linear-gradient(135deg,#7c5cff,#427fff);
-  color:white;
-  font-weight:900;
+.recent-title{
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size:13px;
 }
 
-.send-btn:disabled{
-  opacity:.5;
-  cursor:not-allowed;
+.recent-date{
+  color:#666777;
+  font-size:9px;
+  margin-top:5px;
 }
 
-.status{
+.empty{
+  color:#666777;
   text-align:center;
-  color:#66687e;
-  font-size:10px;
-  margin-top:7px;
+  padding:40px 20px;
+  font-size:12px;
+}
+
+/* TOAST */
+
+.toast{
+  position:fixed;
+  left:50%;
+  bottom:105px;
+  transform:translate(-50%,20px);
+  opacity:0;
+  pointer-events:none;
+  z-index:50;
+  background:#171722;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:10px 15px;
+  color:#ddd;
+  font-size:12px;
+  transition:.25s;
+}
+
+.toast.show{
+  opacity:1;
+  transform:translate(-50%,0);
 }
 
 /* MOBILE */
 
-.overlay{
-  display:none;
-}
-
 @media(max-width:800px){
-
   .sidebar{
     position:fixed;
-    top:0;
-    bottom:0;
-    left:-310px;
-    transition:.22s;
-    box-shadow:30px 0 80px rgba(0,0,0,.7);
-  }
-
-  .sidebar.open{
     left:0;
+    top:0;
+    transform:translateX(-100%);
+    transition:.3s;
+    box-shadow:20px 0 60px rgba(0,0,0,.45);
   }
 
-  .overlay.show{
-    display:block;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,.65);
-    z-index:90;
-  }
+  .sidebar.open{transform:none}
 
   .mobile-menu{
-    display:block;
+    display:grid;
   }
 
   .topbar{
     padding:0 12px;
   }
 
-  .chat-area{
-    padding:20px 13px;
+  .composer-wrap{
+    left:0;
+    padding:10px 10px 12px;
   }
 
-  .composer-area{
-    padding:9px 9px 14px;
+  .chat-inner{
+    width:calc(100% - 20px);
+    padding-top:18px;
   }
 
-  .mode-select{
-    max-width:125px;
+  .quick-grid{
+    grid-template-columns:repeat(2,1fr);
   }
 
   .welcome{
-    padding-bottom:40px;
+    min-height:calc(100vh - 220px);
+  }
+
+  .welcome h1{
+    font-size:38px;
+  }
+
+  .mode-select{
+    display:none;
+  }
+
+  .top-actions .hide-mobile{
+    display:none;
+  }
+}
+
+@media(max-width:480px){
+  .mode-pill{
+    font-size:10px;
+    padding:0 9px;
+  }
+
+  .ai-core{
+    width:120px;
+    height:120px;
+  }
+
+  .core-orb{
+    width:55px;
+    height:55px;
+  }
+
+  .quick{
+    min-height:72px;
+  }
+
+  .quick-icon{
+    margin-bottom:6px;
+  }
+
+  .composer-bottom{
+    font-size:8px;
+  }
+
+  .bubble{
+    font-size:13px;
   }
 }
 </style>
@@ -536,85 +973,104 @@ button{
   <aside class="sidebar" id="sidebar">
 
     <div class="brand">
-      <img src="/zenx-logo.png" alt="ZenX.AI">
+      <div class="brand-mark"></div>
       <div>
-        <div class="brand-title">ZenX.AI</div>
-        <div class="brand-sub">AI FOR A BETTER TOMORROW</div>
+        <div class="brand-name">ZenX<span>.AI</span></div>
+        <small class="brand-tag">AI FOR A BETTER TOMORROW</small>
       </div>
     </div>
 
-    <button class="new-chat" id="newChat">
-      ＋ New Chat
-    </button>
+    <nav class="nav">
 
-    <div class="menu">
-
-      <button class="menu-btn" id="recentBtn">
-        🕘 Recent Search
+      <button class="nav-btn primary" id="newChatBtn">
+        <span class="icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 5v14M5 12h14"/>
+          </svg>
+        </span>
+        New Chat
       </button>
 
-      <button class="menu-btn" id="folderBtn">
-        📁 Folders
+      <button class="nav-btn" id="recentBtn">
+        <span class="icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 6h16M4 12h10M4 18h13"/>
+            <circle cx="18" cy="12" r="2"/>
+          </svg>
+        </span>
+        Recent
       </button>
 
-      <button class="menu-btn" id="clearBtn">
-        🧹 Clear Recents
+      <button class="nav-btn" id="searchBtn">
+        <span class="icon">
+          <svg viewBox="0 0 24 24">
+            <circle cx="10.8" cy="10.8" r="6.8"/>
+            <path d="m16 16 5 5"/>
+          </svg>
+        </span>
+        Search Chats
       </button>
 
-    </div>
+      <button class="nav-btn" id="folderBtn">
+        <span class="icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M3 7.5A2.5 2.5 0 0 1 5.5 5H10l2 2h6.5A2.5 2.5 0 0 1 21 9.5v7A2.5 2.5 0 0 1 18.5 19h-13A2.5 2.5 0 0 1 3 16.5z"/>
+          </svg>
+        </span>
+        Folders
+      </button>
 
-    <div class="section-title">
-      Search Recents
-    </div>
+    </nav>
 
-    <div class="search-box">
-      🔎
-      <input
-        id="searchInput"
-        type="text"
-        placeholder="Search chats..."
-      >
-    </div>
+    <div class="section-title">Student Modes</div>
 
-    <div class="recents" id="recents"></div>
-
-    <div class="section-title">
-      Student Modes
-    </div>
-
-    <div class="student-modes">
+    <div class="mode-list">
 
       <button class="mode-btn active" data-mode="Student">
-        🎓 Student
+        <span class="mode-dot"></span>
+        Student
       </button>
 
       <button class="mode-btn" data-mode="JEE">
-        ⚡ JEE
+        <span class="mode-dot"></span>
+        JEE
       </button>
 
       <button class="mode-btn" data-mode="NEET">
-        🧬 NEET
+        <span class="mode-dot"></span>
+        NEET
       </button>
 
       <button class="mode-btn" data-mode="Coding">
-        💻 Coding
+        <span class="mode-dot"></span>
+        Coding
       </button>
 
       <button class="mode-btn" data-mode="Study Planner">
-        📚 Study Planner
+        <span class="mode-dot"></span>
+        Study Planner
       </button>
 
     </div>
 
-    <div class="founder">
-      Founder:
-      <b>Abhay Srivastava</b>
-      <br>
-      ZenX.AI © 2026
+    <div class="sidebar-bottom">
+      <button class="nav-btn" id="clearBtn">
+        <span class="icon">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 7h16M9 7V4h6v3M7 7l1 13h8l1-13"/>
+            <path d="M10 11v5M14 11v5"/>
+          </svg>
+        </span>
+        Clear Recents
+      </button>
+
+      <div class="founder">
+        Founded by
+        <strong>Abhay Srivastava</strong>
+      </div>
     </div>
 
   </aside>
-
 
   <!-- MAIN -->
   <main class="main">
@@ -623,112 +1079,313 @@ button{
 
       <div class="top-left">
 
-        <button class="mobile-menu" id="mobileMenu">
-          ☰
+        <button class="round-btn mobile-menu" id="menuBtn" aria-label="Menu">
+          <svg viewBox="0 0 24 24">
+            <path d="M4 7h16M4 12h16M4 17h16"/>
+          </svg>
         </button>
 
-        <span class="student-badge">
-          🎓 Student Mode
-        </span>
+        <div class="mode-pill">
+          <span class="live-dot"></span>
+          <span id="topMode">Student Mode</span>
+        </div>
+
+        <select class="mode-select" id="modeSelect">
+          <option>Student</option>
+          <option>JEE</option>
+          <option>NEET</option>
+          <option>Coding</option>
+          <option>Study Planner</option>
+        </select>
 
       </div>
 
-      <select class="mode-select" id="topMode">
-        <option>Student</option>
-        <option>JEE</option>
-        <option>NEET</option>
-        <option>Coding</option>
-        <option>Study Planner</option>
-      </select>
+      <div class="top-actions">
+
+        <button class="round-btn hide-mobile" id="focusBtn" title="Focus mode">
+          <svg viewBox="0 0 24 24">
+            <circle cx="12" cy="12" r="7"/>
+            <circle cx="12" cy="12" r="2"/>
+          </svg>
+        </button>
+
+        <button class="round-btn" id="themeBtn" title="Visual mode">
+          <svg viewBox="0 0 24 24">
+            <path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/>
+            <circle cx="12" cy="12" r="4"/>
+          </svg>
+        </button>
+
+      </div>
 
     </header>
 
-
     <!-- CHAT -->
-    <section class="chat-area" id="chatArea"></section>
+    <section class="chat" id="chat">
 
+      <div class="chat-inner" id="chatInner">
 
-    <!-- COMPOSER -->
-    <div class="composer-area">
+        <div class="welcome" id="welcome">
 
-      <div class="composer">
+          <div class="ai-core">
+            <div class="core-ring"></div>
+            <div class="core-ring"></div>
+            <div class="core-ring"></div>
+            <div class="core-orb"></div>
+          </div>
 
-        <button
-          class="icon-btn image-btn"
-          id="imageToggle"
-          title="AI Image Generation"
-        >
-          🖼️
-        </button>
+          <h1>Think beyond.</h1>
 
-        <textarea
-          id="input"
-          rows="1"
-          placeholder="Message ZenX.AI..."
-          autocomplete="off"
-        ></textarea>
+          <p>
+            Welcome to ZenX.AI — your intelligent AI companion
+            for learning, coding, planning and discovering new ideas.
+          </p>
 
-        <button
-          class="icon-btn send-btn"
-          id="send"
-          title="Send"
-        >
-          ➤
-        </button>
+          <div class="quick-grid">
+
+            <button class="quick" data-prompt="Explain an important JEE concept in a simple way.">
+              <div class="quick-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M9 18h6M10 21h4M8 14c-2-1.2-3-3.1-3-5.5A7 7 0 0 1 19 8.5c0 2.4-1 4.3-3 5.5-1 .7-1.5 1.4-1.5 2.5h-5c0-1.1-.5-1.8-1.5-2.5z"/>
+                </svg>
+              </div>
+              <span>Explain a concept</span>
+            </button>
+
+            <button class="quick" data-prompt="Create a smart study plan for today with focused sessions and revision.">
+              <div class="quick-icon">
+                <svg viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="8"/>
+                  <path d="M12 7v5l3 2"/>
+                </svg>
+              </div>
+              <span>Plan my study</span>
+            </button>
+
+            <button class="quick" data-prompt="Help me debug this code and explain the mistake clearly.">
+              <div class="quick-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="m8 8-4 4 4 4M16 8l4 4-4 4M14 5l-4 14"/>
+                </svg>
+              </div>
+              <span>Help with coding</span>
+            </button>
+
+            <button class="quick" data-prompt="Give me a challenging JEE level problem and then guide me through the solution.">
+              <div class="quick-icon">
+                <svg viewBox="0 0 24 24">
+                  <path d="M12 3v18M3 12h18"/>
+                  <circle cx="12" cy="12" r="8"/>
+                </svg>
+              </div>
+              <span>Challenge me</span>
+            </button>
+
+          </div>
+
+        </div>
 
       </div>
 
-      <div class="status" id="status">
-        ZenX.AI • Student Mode • Founder: Abhay Srivastava
-      </div>
-
-    </div>
+    </section>
 
   </main>
 
 </div>
 
+<!-- COMPOSER -->
+
+<div class="composer-wrap">
+
+  <div class="composer">
+
+    <div class="composer-top">
+
+      <button class="compose-btn" id="attachBtn" title="Attach">
+        <svg viewBox="0 0 24 24">
+          <path d="m20 11-8.5 8.5a5 5 0 0 1-7-7L13 4a3.5 3.5 0 0 1 5 5l-8.5 8.5a2 2 0 0 1-3-3L14 7"/>
+        </svg>
+      </button>
+
+      <textarea
+        id="input"
+        placeholder="Ask ZenX.AI anything..."
+        rows="1"
+        autocomplete="off"
+      ></textarea>
+
+      <button class="compose-btn" id="micBtn" title="Voice input">
+        <svg viewBox="0 0 24 24">
+          <rect x="9" y="3" width="6" height="12" rx="3"/>
+          <path d="M5 11a7 7 0 0 0 14 0M12 18v3M9 21h6"/>
+        </svg>
+      </button>
+
+      <button class="compose-btn send" id="sendBtn" title="Send">
+        <svg viewBox="0 0 24 24">
+          <path d="M21 3 10 14"/>
+          <path d="m21 3-7 18-4-7-7-4z"/>
+        </svg>
+      </button>
+
+    </div>
+
+    <div class="composer-bottom">
+
+      <label class="image-toggle">
+        <input type="checkbox" id="imageMode">
+        <span>AI Image Generation</span>
+      </label>
+
+      <span>ZenX.AI • AI for a Better Tomorrow</span>
+
+    </div>
+
+  </div>
+
+</div>
+
+<!-- RECENT DRAWER -->
 
 <div class="overlay" id="overlay"></div>
 
+<aside class="drawer" id="drawer">
+
+  <div class="drawer-head">
+    <h3>Recent Chats</h3>
+
+    <button class="round-btn" id="closeDrawer">
+      <svg viewBox="0 0 24 24">
+        <path d="m7 7 10 10M17 7 7 17"/>
+      </svg>
+    </button>
+  </div>
+
+  <div class="recent-list" id="recentList"></div>
+
+</aside>
+
+<div class="toast" id="toast"></div>
 
 <script>
+"use strict";
 
-/* =========================================
-   ZENX.AI CORE
-========================================= */
-
-const $ = selector => document.querySelector(selector);
-
-const chatArea = $("#chatArea");
-const input = $("#input");
-const sendButton = $("#send");
-const status = $("#status");
-
-const sidebar = $("#sidebar");
-const overlay = $("#overlay");
+/* =========================
+   STATE
+========================= */
 
 let messages = [];
 let currentMode = "Student";
-let imageMode = false;
-let currentTitle = "New Chat";
+let busy = false;
+let recognition = null;
 
-const STORAGE_KEY = "zenx_recent_chats_v1";
+const STORAGE_KEY = "zenx_ai_recent_v1";
 
+/* =========================
+   ELEMENTS
+========================= */
 
-/* =========================================
-   LOCAL STORAGE
-========================================= */
+const chatInner = document.getElementById("chatInner");
+const chat = document.getElementById("chat");
+const welcome = document.getElementById("welcome");
+const input = document.getElementById("input");
+const sendBtn = document.getElementById("sendBtn");
+const imageMode = document.getElementById("imageMode");
+const topMode = document.getElementById("topMode");
+const modeSelect = document.getElementById("modeSelect");
+const recentList = document.getElementById("recentList");
+const drawer = document.getElementById("drawer");
+const overlay = document.getElementById("overlay");
+const sidebar = document.getElementById("sidebar");
+const toast = document.getElementById("toast");
+
+/* =========================
+   ICONS
+========================= */
+
+const copyIcon = `
+<svg viewBox="0 0 24 24">
+<rect x="8" y="8" width="11" height="11" rx="2"/>
+<path d="M5 16H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+</svg>`;
+
+const downloadIcon = `
+<svg viewBox="0 0 24 24">
+<path d="M12 3v12M7 10l5 5 5-5M5 21h14"/>
+</svg>`;
+
+/* =========================
+   UTILITIES
+========================= */
+
+function escapeHTML(value){
+  return String(value)
+    .replaceAll("&","&amp;")
+    .replaceAll("<","&lt;")
+    .replaceAll(">","&gt;")
+    .replaceAll('"',"&quot;")
+    .replaceAll("'","&#039;");
+}
+
+function showToast(text){
+  toast.textContent = text;
+  toast.classList.add("show");
+
+  clearTimeout(showToast.timer);
+
+  showToast.timer = setTimeout(()=>{
+    toast.classList.remove("show");
+  },2200);
+}
+
+function scrollBottom(){
+  requestAnimationFrame(()=>{
+    chat.scrollTop = chat.scrollHeight;
+  });
+}
+
+function formatDate(date){
+  return new Date(date).toLocaleString([],{
+    month:"short",
+    day:"numeric",
+    hour:"2-digit",
+    minute:"2-digit"
+  });
+}
+
+/* =========================
+   RECENT STORAGE
+========================= */
+
+function saveRecents(){
+
+  try{
+
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify(messages)
+    );
+
+  }catch(error){
+
+    console.warn("Could not save recents",error);
+
+  }
+
+}
 
 function getRecents(){
 
   try{
 
-    return JSON.parse(
-      localStorage.getItem(STORAGE_KEY) || "[]"
-    );
+    const data =
+      JSON.parse(
+        localStorage.getItem(STORAGE_KEY) || "[]"
+      );
 
-  }catch(error){
+    return Array.isArray(data) ? data : [];
+
+  }catch{
 
     return [];
 
@@ -736,161 +1393,91 @@ function getRecents(){
 
 }
 
+/* =========================
+   RENDER
+========================= */
 
-function saveRecents(list){
+function renderMessages(){
 
-  try{
+  chatInner.innerHTML = "";
 
-    localStorage.setItem(
-      STORAGE_KEY,
-      JSON.stringify(list.slice(0,50))
-    );
+  if(!messages.length){
 
-  }catch(error){
+    chatInner.appendChild(createWelcome());
 
-    console.error(error);
+    return;
 
   }
 
-}
+  messages.forEach(message=>{
+    chatInner.appendChild(
+      createMessage(message)
+    );
+  });
 
-
-/* =========================================
-   SAFE TEXT
-========================================= */
-
-function escapeHTML(text){
-
-  return String(text).replace(
-    /[&<>"']/g,
-    character => ({
-      "&":"&amp;",
-      "<":"&lt;",
-      ">":"&gt;",
-      '"':"&quot;",
-      "'":"&#039;"
-    }[character])
-  );
+  scrollBottom();
 
 }
 
+function createWelcome(){
 
-/* =========================================
-   SIMPLE MARKDOWN
-========================================= */
+  const el = document.createElement("div");
 
-function formatAIText(text){
+  el.className = "welcome";
 
-  let safe = escapeHTML(text);
-
-  safe = safe.replace(
-    /```([\s\S]*?)```/g,
-    '<pre class="code">$1</pre>'
-  );
-
-  safe = safe.replace(
-    /\*\*(.*?)\*\*/g,
-    "<strong>$1</strong>"
-  );
-
-  safe = safe.replace(
-    /`([^`]+)`/g,
-    "<code>$1</code>"
-  );
-
-  return safe;
-
-}
-
-
-/* =========================================
-   WELCOME SCREEN
-========================================= */
-
-function showWelcome(){
-
-  chatArea.innerHTML = `
-
-    <div class="welcome">
-
-      <img
-        class="big-logo"
-        src="/zenx-logo.png"
-        alt="ZenX.AI"
-      >
-
-      <h1>
-        Meet
-        <span class="gradient">
-          ZenX.AI
-        </span>
-      </h1>
-
-      <p>
-        Your fast AI assistant for learning, coding,
-        ideas and creative work.
-        Student Mode is ready for JEE, NEET,
-        school and study planning.
-      </p>
-
-      <div class="quick-actions">
-
-        <button data-query="Explain this topic in simple language">
-          📖 Explain a Topic
-        </button>
-
-        <button data-query="Make me a focused study plan for today">
-          📚 Study Plan
-        </button>
-
-        <button data-query="Help me debug my code">
-          💻 Debug Code
-        </button>
-
-        <button data-query="Create an image of a futuristic study room">
-          🖼️ Generate Image
-        </button>
-
-      </div>
-
+  el.innerHTML = `
+    <div class="ai-core">
+      <div class="core-ring"></div>
+      <div class="core-ring"></div>
+      <div class="core-ring"></div>
+      <div class="core-orb"></div>
     </div>
 
+    <h1>Think beyond.</h1>
+
+    <p>
+      Welcome to ZenX.AI — your intelligent AI companion
+      for learning, coding, planning and discovering new ideas.
+    </p>
+
+    <div class="quick-grid">
+
+      <button class="quick" data-prompt="Explain an important JEE concept in a simple way.">
+        <div class="quick-icon">💡</div>
+        <span>Explain a concept</span>
+      </button>
+
+      <button class="quick" data-prompt="Create a smart study plan for today with focused sessions and revision.">
+        <div class="quick-icon">◷</div>
+        <span>Plan my study</span>
+      </button>
+
+      <button class="quick" data-prompt="Help me debug this code and explain the mistake clearly.">
+        <div class="quick-icon">&lt;/&gt;</div>
+        <span>Help with coding</span>
+      </button>
+
+      <button class="quick" data-prompt="Give me a challenging JEE level problem and then guide me through the solution.">
+        <div class="quick-icon">✦</div>
+        <span>Challenge me</span>
+      </button>
+
+    </div>
   `;
 
-
-  document
-    .querySelectorAll("[data-query]")
-    .forEach(button => {
-
-      button.onclick = () => {
-
-        const query = button.dataset.query;
-
-        input.value = query;
-
-        if(
-          query.toLowerCase().includes("image")
-        ){
-
-          imageMode = true;
-          updateImageButton();
-
-        }
-
-        sendMessage();
-
-      };
-
+  el.querySelectorAll(".quick").forEach(button=>{
+    button.addEventListener("click",()=>{
+      input.value = button.dataset.prompt;
+      autoResize();
+      input.focus();
     });
+  });
+
+  return el;
 
 }
 
-
-/* =========================================
-   RENDER MESSAGE
-========================================= */
-
-function renderMessage(message,index){
+function createMessage(message){
 
   const row = document.createElement("div");
 
@@ -898,812 +1485,615 @@ function renderMessage(message,index){
     "message " +
     (message.role === "user" ? "user" : "ai");
 
-
-  const avatar = document.createElement("div");
-
-  avatar.className = "avatar";
-
-  avatar.textContent =
+  const avatar =
     message.role === "user"
-      ? "U"
-      : "Z";
+      ? `<div class="avatar">YOU</div>`
+      : `<div class="avatar ai">Z</div>`;
 
-
-  const bubble = document.createElement("div");
-
-  bubble.className = "bubble";
-
+  let content = "";
 
   if(message.image){
 
-    bubble.innerHTML = `
-
-      ${
-        message.text
-          ? `<div>${formatAIText(message.text)}</div>`
-          : ""
-      }
-
+    content += `
       <img
         class="generated-image"
         src="${message.image}"
         alt="Generated by ZenX.AI"
       >
+    `;
 
-      <div class="message-actions">
+  }
 
-        <button data-copy="${index}">
+  if(message.content){
+
+    content += `
+      <div>${escapeHTML(message.content)}</div>
+    `;
+
+  }
+
+  let tools = "";
+
+  if(message.role === "model"){
+
+    tools = `
+      <div class="message-tools">
+
+        <button
+          class="tool copy-response"
+          type="button"
+        >
+          ${copyIcon}
           Copy
         </button>
 
-        <button data-download="${index}">
-          Download
-        </button>
+        ${
+          message.image
+          ? `
+          <a
+            class="tool"
+            href="${message.image}"
+            download="zenx-ai-image.png"
+          >
+            ${downloadIcon}
+            Save
+          </a>
+          `
+          : ""
+        }
 
       </div>
-
     `;
 
-  }else{
+  }
 
-    bubble.innerHTML =
-      formatAIText(
-        message.content || ""
-      );
+  row.innerHTML = `
+    ${avatar}
 
+    <div class="bubble">
 
-    if(message.role === "model"){
+      ${content}
 
-      bubble.innerHTML += `
+      ${tools}
 
-        <div class="message-actions">
+    </div>
+  `;
 
-          <button data-copy="${index}">
-            Copy
-          </button>
+  const copy =
+    row.querySelector(".copy-response");
 
-        </div>
+  if(copy){
 
-      `;
+    copy.addEventListener("click",async()=>{
 
-    }
+      try{
+
+        await navigator.clipboard.writeText(
+          message.content || ""
+        );
+
+        showToast("Response copied");
+
+      }catch{
+
+        showToast("Copy failed");
+
+      }
+
+    });
 
   }
 
-
-  row.appendChild(avatar);
-  row.appendChild(bubble);
-
-  chatArea.appendChild(row);
+  return row;
 
 }
 
-
-/* =========================================
-   RENDER ALL MESSAGES
-========================================= */
-
-function renderMessages(){
-
-  chatArea.innerHTML = "";
-
-  if(!messages.length){
-
-    showWelcome();
-    return;
-
-  }
-
-  messages.forEach(
-    renderMessage
-  );
-
-  requestAnimationFrame(() => {
-
-    chatArea.scrollTop =
-      chatArea.scrollHeight;
-
-  });
-
-}
-
-
-/* =========================================
-   ADD MESSAGE
-========================================= */
-
-function addMessage(message){
-
-  messages.push(message);
-
-  renderMessages();
-
-}
-
-
-/* =========================================
-   IMAGE BUTTON
-========================================= */
-
-function updateImageButton(){
-
-  const button = $("#imageToggle");
-
-  if(imageMode){
-
-    button.textContent = "✨";
-
-    button.classList.add("active");
-
-    input.placeholder =
-      "Describe the image you want...";
-
-  }else{
-
-    button.textContent = "🖼️";
-
-    button.classList.remove("active");
-
-    input.placeholder =
-      "Message ZenX.AI...";
-
-  }
-
-}
-
-
-/* =========================================
+/* =========================
    MODE
-========================================= */
+========================= */
 
 function setMode(mode){
 
   currentMode = mode;
 
-  $("#topMode").value = mode;
+  topMode.textContent =
+    mode + " Mode";
+
+  modeSelect.value = mode;
 
   document
     .querySelectorAll(".mode-btn")
-    .forEach(button => {
-
+    .forEach(button=>{
       button.classList.toggle(
         "active",
         button.dataset.mode === mode
       );
-
     });
 
-
-  status.textContent =
-    `ZenX.AI • ${mode} Mode • Founder: Abhay Srivastava`;
+  showToast(mode + " mode active");
 
 }
 
+/* =========================
+   CHAT MESSAGE
+========================= */
 
-/* =========================================
+function addMessage(role,content="",extra={}){
+
+  messages.push({
+    role,
+    content,
+    ...extra,
+    time:Date.now()
+  });
+
+  saveRecents();
+
+  renderMessages();
+
+}
+
+/* =========================
+   TYPING
+========================= */
+
+function showTyping(){
+
+  const row =
+    document.createElement("div");
+
+  row.className = "message ai";
+  row.id = "typingMessage";
+
+  row.innerHTML = `
+    <div class="avatar ai">Z</div>
+
+    <div class="bubble">
+
+      <div class="typing">
+        <i></i>
+        <i></i>
+        <i></i>
+      </div>
+
+    </div>
+  `;
+
+  chatInner.appendChild(row);
+
+  scrollBottom();
+
+}
+
+function removeTyping(){
+
+  document
+    .getElementById("typingMessage")
+    ?.remove();
+
+}
+
+/* =========================
+   SEND
+========================= */
+
+async function sendMessage(){
+
+  if(busy) return;
+
+  const prompt =
+    input.value.trim();
+
+  if(!prompt) return;
+
+  busy = true;
+
+  sendBtn.disabled = true;
+
+  input.value = "";
+
+  autoResize();
+
+  if(welcome){
+    welcome.remove();
+  }
+
+  addMessage(
+    "user",
+    prompt
+  );
+
+  showTyping();
+
+  try{
+
+    if(imageMode.checked){
+
+      await generateImage(prompt);
+
+    }else{
+
+      await askAI(prompt);
+
+    }
+
+  }catch(error){
+
+    removeTyping();
+
+    addMessage(
+      "model",
+      "Sorry, ZenX.AI couldn't complete that request.\n\n" +
+      (error.message || "Please try again.")
+    );
+
+  }finally{
+
+    busy = false;
+
+    sendBtn.disabled = false;
+
+    input.focus();
+
+  }
+
+}
+
+/* =========================
+   REAL GEMINI CHAT API
+========================= */
+
+async function askAI(prompt){
+
+  const history =
+    messages
+      .filter(
+        m =>
+          m.role === "user" ||
+          m.role === "model"
+      )
+      .slice(-20)
+      .map(m=>({
+        role:m.role,
+        content:m.content
+      }));
+
+  const response =
+    await fetch(
+      "/api/chat",
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          prompt,
+          mode:currentMode,
+          messages:history
+        })
+      }
+    );
+
+  const data =
+    await response.json()
+      .catch(()=>({}));
+
+  if(!response.ok){
+
+    throw new Error(
+      data.error ||
+      "AI server returned an error."
+    );
+
+  }
+
+  removeTyping();
+
+  addMessage(
+    "model",
+    data.text ||
+    "I couldn't generate a response."
+  );
+
+}
+
+/* =========================
+   REAL IMAGE API
+========================= */
+
+async function generateImage(prompt){
+
+  const response =
+    await fetch(
+      "/api/image",
+      {
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          prompt
+        })
+      }
+    );
+
+  const data =
+    await response.json()
+      .catch(()=>({}));
+
+  if(!response.ok){
+
+    throw new Error(
+      data.error ||
+      "Image generation failed."
+    );
+
+  }
+
+  removeTyping();
+
+  addMessage(
+    "model",
+    data.text ||
+    "Image generated by ZenX.AI.",
+    {
+      image:data.image
+    }
+  );
+
+}
+
+/* =========================
    NEW CHAT
-========================================= */
+========================= */
 
 function newChat(){
 
   messages = [];
 
-  currentTitle = "New Chat";
-
-  imageMode = false;
-
   input.value = "";
 
-  updateImageButton();
+  autoResize();
 
-  showWelcome();
+  renderMessages();
 
-  closeSidebar();
+  closeDrawer();
+
+  sidebar.classList.remove("open");
+
+  showToast("New chat started");
 
   input.focus();
 
 }
 
+/* =========================
+   RECENTS
+========================= */
 
-/* =========================================
-   SAVE CURRENT CHAT
-========================================= */
-
-function saveCurrentChat(){
-
-  if(!messages.length) return;
-
-
-  const firstUserMessage =
-    messages.find(
-      message =>
-        message.role === "user"
-    );
-
-
-  if(!firstUserMessage) return;
-
-
-  const title =
-    currentTitle === "New Chat"
-      ? String(
-          firstUserMessage.content || ""
-        ).slice(0,70)
-      : currentTitle;
-
-
-  const recents = getRecents();
-
-
-  recents.unshift({
-
-    id:Date.now(),
-
-    title,
-
-    mode:currentMode,
-
-    messages,
-
-    date:new Date().toISOString()
-
-  });
-
-
-  saveRecents(recents);
+function openDrawer(){
 
   renderRecents();
 
+  drawer.classList.add("show");
+
+  overlay.classList.add("show");
+
 }
 
+function closeDrawer(){
 
-/* =========================================
-   RECENTS
-========================================= */
+  drawer.classList.remove("show");
 
-function renderRecents(filter=""){
+  overlay.classList.remove("show");
 
-  const container = $("#recents");
+}
 
-  container.innerHTML = "";
+function renderRecents(){
 
-  const list =
-    getRecents().filter(item =>
-      String(item.title || "")
-        .toLowerCase()
-        .includes(
-          filter.toLowerCase()
-        )
-    );
+  recentList.innerHTML = "";
 
+  const data =
+    getRecents();
 
-  if(!list.length){
+  if(!data.length){
 
-    container.innerHTML =
+    recentList.innerHTML =
       `<div class="empty">
-        No recent chats
+        No recent chats yet.
       </div>`;
 
     return;
 
   }
 
+  const groups = [];
 
-  list.forEach(item => {
+  for(let i=data.length-1;i>=0;i--){
 
-    const button =
-      document.createElement("button");
+    if(data[i].role !== "user")
+      continue;
 
-    button.className =
-      "chat-item";
+    groups.push(data[i]);
 
-    button.textContent =
-      item.title;
+  }
 
-    button.title =
-      item.title;
+  if(!groups.length){
 
-
-    button.onclick = () => {
-
-      messages =
-        item.messages || [];
-
-      currentTitle =
-        item.title || "New Chat";
-
-      setMode(
-        item.mode || "Student"
-      );
-
-      renderMessages();
-
-      closeSidebar();
-
-    };
-
-
-    container.appendChild(button);
-
-  });
-
-}
-
-
-/* =========================================
-   SIDEBAR
-========================================= */
-
-function closeSidebar(){
-
-  sidebar.classList.remove("open");
-
-  overlay.classList.remove("show");
-
-}
-
-
-/* =========================================
-   AUTO TEXTAREA
-========================================= */
-
-function autoResize(){
-
-  input.style.height = "auto";
-
-  input.style.height =
-    Math.min(
-      input.scrollHeight,
-      150
-    ) + "px";
-
-}
-
-
-/* =========================================
-   SEND MESSAGE
-========================================= */
-
-async function sendMessage(){
-
-  const text =
-    input.value.trim();
-
-
-  if(!text || sendButton.disabled){
+    recentList.innerHTML =
+      `<div class="empty">
+        No recent chats yet.
+      </div>`;
 
     return;
 
   }
 
+  groups.slice(0,50).forEach(item=>{
 
-  if(currentTitle === "New Chat"){
+    const button =
+      document.createElement("button");
 
-    currentTitle =
-      text.slice(0,70);
+    button.className =
+      "recent-item";
 
-  }
+    button.innerHTML = `
+      <div class="recent-title">
+        ${escapeHTML(item.content)}
+      </div>
 
+      <div class="recent-date">
+        ${formatDate(item.time)}
+      </div>
+    `;
 
-  input.value = "";
-
-  autoResize();
-
-
-  addMessage({
-
-    role:"user",
-
-    content:text
-
-  });
-
-
-  sendButton.disabled = true;
-
-
-  status.textContent =
-    imageMode
-      ? "ZenX.AI is generating your image..."
-      : "ZenX.AI is thinking...";
-
-
-  try{
-
-    /* IMAGE GENERATION */
-
-    if(imageMode){
-
-      const response =
-        await fetch(
-          "/api/image",
-          {
-            method:"POST",
-
-            headers:{
-              "Content-Type":
-                "application/json"
-            },
-
-            body:JSON.stringify({
-              prompt:text
-            })
-
-          }
-        );
-
-
-      const data =
-        await response.json();
-
-
-      if(!response.ok){
-
-        throw new Error(
-          data.error ||
-          "Image generation failed."
-        );
-
+    button.addEventListener(
+      "click",
+      ()=>{
+        loadRecent(item);
       }
-
-
-      addMessage({
-
-        role:"model",
-
-        text:
-          data.text ||
-          "Image generated by ZenX.AI.",
-
-        image:data.image
-
-      });
-
-
-    }
-
-    /* TEXT AI */
-
-    else{
-
-      const history =
-        messages
-          .filter(
-            message =>
-              message.role === "user" ||
-              message.role === "model"
-          )
-          .slice(-20);
-
-
-      const response =
-        await fetch(
-          "/api/chat",
-          {
-            method:"POST",
-
-            headers:{
-              "Content-Type":
-                "application/json"
-            },
-
-            body:JSON.stringify({
-
-              messages:history,
-
-              prompt:text,
-
-              mode:currentMode
-
-            })
-
-          }
-        );
-
-
-      const data =
-        await response.json();
-
-
-      if(!response.ok){
-
-        throw new Error(
-          data.error ||
-          "AI request failed."
-        );
-
-      }
-
-
-      addMessage({
-
-        role:"model",
-
-        content:
-          data.text ||
-          "I couldn't generate a response."
-
-      });
-
-    }
-
-
-    saveCurrentChat();
-
-  }catch(error){
-
-    console.error(
-      "ZenX error:",
-      error
     );
 
+    recentList.appendChild(button);
 
-    addMessage({
-
-      role:"model",
-
-      content:
-        "Sorry, I couldn't complete your request.\n\n" +
-        error.message
-
-    });
-
-  }
-
-
-  sendButton.disabled = false;
-
-  imageMode = false;
-
-  updateImageButton();
-
-  status.textContent =
-    `ZenX.AI • ${currentMode} Mode • Founder: Abhay Srivastava`;
+  });
 
 }
 
+function loadRecent(target){
 
-/* =========================================
-   BUTTON EVENTS
-========================================= */
+  const all =
+    getRecents();
 
-sendButton.onclick =
-  sendMessage;
+  const index =
+    all.findIndex(
+      item =>
+        item.time === target.time &&
+        item.role === "user"
+    );
 
+  if(index < 0) return;
 
-input.addEventListener(
-  "input",
-  autoResize
-);
+  messages =
+    all.slice(
+      0,
+      index + 1
+    );
 
+  renderMessages();
 
-input.addEventListener(
-  "keydown",
-  event => {
+  closeDrawer();
 
-    if(
-      event.key === "Enter" &&
-      !event.shiftKey
-    ){
+  showToast("Recent chat loaded");
 
-      event.preventDefault();
+}
 
-      sendMessage();
+/* =========================
+   CLEAR
+========================= */
 
-    }
+function clearRecents(){
+
+  if(!confirm("Clear all recent chats?"))
+    return;
+
+  localStorage.removeItem(
+    STORAGE_KEY
+  );
+
+  messages = [];
+
+  renderMessages();
+
+  showToast("Recents cleared");
+
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+function searchChats(){
+
+  const query =
+    prompt("Search your recent chats:");
+
+  if(!query) return;
+
+  const all =
+    getRecents();
+
+  const found =
+    all.filter(
+      item =>
+        String(item.content || "")
+          .toLowerCase()
+          .includes(
+            query.toLowerCase()
+          )
+    );
+
+  if(!found.length){
+
+    showToast("No matching chats");
+
+    return;
 
   }
-);
 
+  recentList.innerHTML = "";
 
-$("#newChat").onclick =
-  newChat;
+  found
+    .slice()
+    .reverse()
+    .forEach(item=>{
 
+      const button =
+        document.createElement("button");
 
-$("#mobileMenu").onclick =
-  () => {
+      button.className =
+        "recent-item";
 
-    sidebar.classList.add("open");
+      button.innerHTML = `
+        <div class="recent-title">
+          ${escapeHTML(item.content)}
+        </div>
+        <div class="recent-date">
+          ${formatDate(item.time)}
+        </div>
+      `;
 
-    overlay.classList.add("show");
+      button.onclick = ()=>{
+        loadRecent(item);
+      };
 
-  };
+      recentList.appendChild(button);
 
+    });
 
-overlay.onclick =
-  closeSidebar;
+  drawer.classList.add("show");
+  overlay.classList.add("show");
 
+}
 
-$("#imageToggle").onclick =
-  () => {
+/* =========================
+   FOLDERS
+========================= */
 
-    imageMode =
-      !imageMode;
+function folders(){
 
-    updateImageButton();
+  showToast(
+    "Folders are ready for chat organization."
+  );
 
-    input.focus();
+}
 
-  };
+/* =========================
+   TEXTAREA
+========================= */
 
+function autoResize(){
 
-$("#topMode").onchange =
-  event => {
+  input.style.height = "auto";
 
-    setMode(
-      event.target.value
-    );
-
-  };
-
-
-document
-  .querySelectorAll(".mode-btn")
-  .forEach(button => {
-
-    button.onclick = () => {
-
-      setMode(
-        button.dataset.mode
-      );
-
-    };
-
-  });
-
-
-$("#searchInput").oninput =
-  event => {
-
-    renderRecents(
-      event.target.value
-    );
-
-  };
-
-
-$("#recentBtn").onclick =
-  () => {
-
-    renderRecents();
-
-    closeSidebar();
-
-  };
-
-
-$("#folderBtn").onclick =
-  () => {
-
-    alert(
-      "Folders are ready in the ZenX.AI menu. Cloud folders can be connected when a database is enabled."
-    );
-
-  };
-
-
-$("#clearBtn").onclick =
-  () => {
-
-    const confirmClear =
-      confirm(
-        "Clear all recent chats from this browser?"
-      );
-
-
-    if(confirmClear){
-
-      localStorage.removeItem(
-        STORAGE_KEY
-      );
-
-      renderRecents();
-
-    }
-
-  };
-
-
-/* =========================================
-   MESSAGE ACTIONS
-========================================= */
-
-chatArea.addEventListener(
-  "click",
-  async event => {
-
-    const copyIndex =
-      event.target.dataset.copy;
-
-
-    if(copyIndex !== undefined){
-
-      const message =
-        messages[
-          Number(copyIndex)
-        ];
-
-
-      const text =
-        message.content ||
-        message.text ||
-        "";
-
-
-      try{
-
-        await navigator.clipboard.writeText(
-          text
-        );
-
-        event.target.textContent =
-          "Copied";
-
-        setTimeout(
-          () => {
-            event.target.textContent =
-              "Copy";
-          },
-          1000
-        );
-
-      }catch(error){
-
-        console.error(error);
-
-      }
-
-    }
-
-
-    const downloadIndex =
-      event.target.dataset.download;
-
-
-    if(downloadIndex !== undefined){
-
-      const message =
-        messages[
-          Number(downloadIndex)
-        ];
-
-
-      if(message.image){
-
-        const link =
-          document.createElement("a");
-
-        link.href =
-          message.image;
-
-        link.download =
-          "zenx-ai-image.png";
-
-        document.body.appendChild(link);
-
-        link.click();
-
-        link.remove();
-
-      }
-
-    }
-
-  }
-);
-
-
-/* =========================================
-   START APP
-========================================= */
-
-showWelcome();
-
-renderRecents();
-
-updateImageButton();
-
-</script>
-
-</body>
-</html>
+ 
