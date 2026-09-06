@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <meta name="theme-color" content="#080812">
 <title>ZenX AI</title>
 
@@ -31,6 +31,8 @@ body{
   font-family:Arial,sans-serif;
 }
 
+button{font-family:inherit}
+
 #loginPage{
   min-height:100vh;
   display:flex;
@@ -43,7 +45,7 @@ body{
   width:100%;
   max-width:430px;
   padding:35px;
-  background:rgba(17,17,27,.94);
+  background:rgba(17,17,27,.95);
   border:1px solid var(--border);
   border-radius:25px;
   box-shadow:0 25px 80px #0008;
@@ -72,9 +74,7 @@ body{
   outline:none;
 }
 
-.input:focus{
-  border-color:var(--accent);
-}
+.input:focus{border-color:var(--accent)}
 
 .primary{
   width:100%;
@@ -88,8 +88,6 @@ body{
   cursor:pointer;
 }
 
-.primary:hover{opacity:.9}
-
 .primary:disabled{
   opacity:.5;
   cursor:not-allowed;
@@ -98,6 +96,7 @@ body{
 .link-row{
   display:flex;
   justify-content:space-between;
+  gap:10px;
   margin-top:15px;
 }
 
@@ -126,11 +125,17 @@ body{
   justify-content:space-between;
   padding:0 20px;
   border-bottom:1px solid var(--border);
-  background:#090910dd;
+  background:#090910ee;
   backdrop-filter:blur(15px);
   position:sticky;
   top:0;
-  z-index:20;
+  z-index:50;
+}
+
+.top-left{
+  display:flex;
+  gap:10px;
+  align-items:center;
 }
 
 .top-logo{
@@ -154,8 +159,9 @@ body{
 
 .sidebar{
   width:260px;
+  flex-shrink:0;
   border-right:1px solid var(--border);
-  background:#0b0b13ee;
+  background:#0b0b13f5;
   padding:18px;
   transition:.25s;
 }
@@ -199,9 +205,10 @@ body{
 
 .main{
   flex:1;
+  min-width:0;
   display:flex;
   justify-content:center;
-  padding:30px 20px;
+  padding:25px 20px 35px;
 }
 
 .content{
@@ -211,7 +218,7 @@ body{
 
 .hero{
   text-align:center;
-  padding:20px 0 25px;
+  padding:10px 0 22px;
 }
 
 .hero h1{font-size:40px}
@@ -225,11 +232,11 @@ body{
   display:grid;
   grid-template-columns:repeat(4,1fr);
   gap:12px;
-  margin-bottom:20px;
+  margin-bottom:18px;
 }
 
 .tool{
-  padding:16px;
+  padding:15px;
   background:#11111b;
   border:1px solid var(--border);
   border-radius:15px;
@@ -245,8 +252,8 @@ body{
 }
 
 .tool-icon{
-  font-size:25px;
-  margin-bottom:8px;
+  font-size:24px;
+  margin-bottom:7px;
 }
 
 .tool-title{font-weight:700}
@@ -279,6 +286,7 @@ body{
   margin-bottom:12px;
   line-height:1.55;
   white-space:pre-wrap;
+  overflow-wrap:anywhere;
 }
 
 .user{
@@ -294,7 +302,7 @@ body{
 
 .input-area{
   display:flex;
-  gap:10px;
+  gap:8px;
   margin-top:15px;
 }
 
@@ -314,14 +322,27 @@ textarea{
 
 textarea:focus{border-color:var(--accent)}
 
+.voice-btn,
 .send{
-  min-width:100px;
+  min-width:62px;
   border:0;
   border-radius:15px;
-  background:white;
-  color:#08080d;
+  background:#191925;
+  color:white;
   font-weight:800;
   cursor:pointer;
+  border:1px solid var(--border);
+}
+
+.send{
+  min-width:90px;
+  background:white;
+  color:#08080d;
+}
+
+.voice-btn.listening{
+  background:#5d3b75;
+  border-color:#9d7cff;
 }
 
 .send:disabled{
@@ -334,6 +355,7 @@ textarea:focus{border-color:var(--accent)}
   color:#77778c;
   font-size:12px;
   margin-top:10px;
+  min-height:16px;
 }
 
 .panel{
@@ -342,7 +364,6 @@ textarea:focus{border-color:var(--accent)}
   border:1px solid var(--border);
   border-radius:18px;
   padding:22px;
-  margin-bottom:20px;
 }
 
 .panel h2{margin-bottom:12px}
@@ -353,6 +374,25 @@ textarea:focus{border-color:var(--accent)}
   background:#0c0c15;
   border-radius:10px;
   color:#ddd;
+  overflow-wrap:anywhere;
+}
+
+.file-chip{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:10px 12px;
+  margin-bottom:10px;
+  background:#171720;
+  border:1px solid var(--border);
+  border-radius:10px;
+  color:#ddd;
+}
+
+@media(max-width:900px){
+  .tools{
+    grid-template-columns:repeat(2,1fr);
+  }
 }
 
 @media(max-width:800px){
@@ -361,42 +401,64 @@ textarea:focus{border-color:var(--accent)}
     left:-280px;
     top:70px;
     bottom:0;
-    z-index:30;
+    z-index:40;
+    overflow-y:auto;
+    box-shadow:20px 0 50px #0008;
   }
 
   .sidebar.open{left:0}
 
-  .tools{
-    grid-template-columns:repeat(2,1fr);
+  .main{
+    padding:20px 12px 30px;
   }
 }
 
 @media(max-width:500px){
-  .login-card{padding:25px}
+  .topbar{
+    padding:0 12px;
+  }
+
+  .top-logo{
+    font-size:20px;
+  }
+
+  .login-card{
+    padding:25px 20px;
+  }
+
   .brand{font-size:38px}
+
   .hero h1{font-size:30px}
 
   .tools{
     grid-template-columns:1fr 1fr;
+    gap:8px;
+  }
+
+  .tool{
+    padding:12px;
   }
 
   .input-area{
-    flex-direction:column;
+    align-items:stretch;
   }
 
-  .send{min-height:52px}
+  .voice-btn,
+  .send{
+    min-width:58px;
+  }
 
   .user{
-    margin-left:5%;
+    margin-left:3%;
   }
 
   .ai{
-    margin-right:5%;
+    margin-right:3%;
   }
 
-  .link-row{gap:10px}
-
-  .link-btn{font-size:12px}
+  .link-row{
+    flex-direction:column;
+  }
 }
 </style>
 </head>
@@ -410,7 +472,6 @@ textarea:focus{border-color:var(--accent)}
 <div id="loginForm">
 
 <div class="brand">ZenX</div>
-
 <div class="tagline">Welcome back</div>
 
 <input id="loginEmail"
@@ -432,16 +493,15 @@ Login
 </button>
 
 <div class="link-row">
-
-<button class="link-btn" onclick="showSignup()">
-Sign up
-</button>
-
-<button class="link-btn" onclick="showForgot()">
-Forgot password?
-</button>
-
+<button class="link-btn" onclick="showSignup()">Sign up</button>
+<button class="link-btn" onclick="showForgot()">Forgot password?</button>
 </div>
+
+<button class="link-btn"
+style="margin-top:14px"
+onclick="showResend()">
+Didn't receive confirmation email?
+</button>
 
 </div>
 
@@ -449,7 +509,6 @@ Forgot password?
 <div id="signupForm" style="display:none">
 
 <div class="brand">ZenX</div>
-
 <div class="tagline">Create your ZenX account</div>
 
 <input id="signupName"
@@ -475,9 +534,33 @@ onclick="signup()">
 Create Account
 </button>
 
-<button
-onclick="showLogin()"
-style="margin-top:15px;background:none;border:0;color:#9d91ff;cursor:pointer;">
+<button onclick="showLogin()"
+style="margin-top:15px;background:none;border:0;color:#9d91ff;cursor:pointer">
+← Back to Login
+</button>
+
+</div>
+
+
+<div id="resendForm" style="display:none">
+
+<div class="brand">ZenX</div>
+<div class="tagline">Resend confirmation email</div>
+
+<input id="resendEmail"
+class="input"
+type="email"
+placeholder="Enter your signup email"
+autocomplete="email">
+
+<button id="resendButton"
+class="primary"
+onclick="resendConfirmation()">
+Resend Confirmation
+</button>
+
+<button onclick="showLogin()"
+style="margin-top:15px;background:none;border:0;color:#9d91ff;cursor:pointer">
 ← Back to Login
 </button>
 
@@ -487,7 +570,6 @@ style="margin-top:15px;background:none;border:0;color:#9d91ff;cursor:pointer;">
 <div id="forgotForm" style="display:none">
 
 <div class="brand">ZenX</div>
-
 <div class="tagline">Reset your password</div>
 
 <input id="forgotEmail"
@@ -502,10 +584,35 @@ onclick="forgotPassword()">
 Send Reset Link
 </button>
 
-<button
-onclick="showLogin()"
-style="margin-top:15px;background:none;border:0;color:#9d91ff;cursor:pointer;">
+<button onclick="showLogin()"
+style="margin-top:15px;background:none;border:0;color:#9d91ff;cursor:pointer">
 ← Back to Login
+</button>
+
+</div>
+
+
+<div id="resetForm" style="display:none">
+
+<div class="brand">ZenX</div>
+<div class="tagline">Create a new password</div>
+
+<input id="newPassword"
+class="input"
+type="password"
+placeholder="New password"
+autocomplete="new-password">
+
+<input id="confirmPassword"
+class="input"
+type="password"
+placeholder="Confirm password"
+autocomplete="new-password">
+
+<button id="resetButton"
+class="primary"
+onclick="updatePassword()">
+Update Password
 </button>
 
 </div>
@@ -522,17 +629,12 @@ Student AI • Coding • Study • Creativity
 
 <header class="topbar">
 
-<div style="display:flex;gap:10px;align-items:center">
-
+<div class="top-left">
 <button class="menu-btn" onclick="toggleSidebar()">☰</button>
-
 <div class="top-logo">ZenX AI</div>
-
 </div>
 
-<button class="menu-btn" onclick="logout()">
-Logout
-</button>
+<button class="menu-btn" onclick="logout()">Logout</button>
 
 </header>
 
@@ -541,17 +643,9 @@ Logout
 
 <aside id="sidebar" class="sidebar">
 
-<button class="side-btn" onclick="showHome()">
-🏠 Home
-</button>
-
-<button class="side-btn" onclick="showPanel('recent')">
-🕘 Recent
-</button>
-
-<button class="side-btn" onclick="showPanel('files')">
-📁 Recent Files
-</button>
+<button class="side-btn" onclick="showHome()">🏠 Home</button>
+<button class="side-btn" onclick="showPanel('recent')">🕘 Recent</button>
+<button class="side-btn" onclick="showPanel('files')">📁 Recent Files</button>
 
 <h3>AI Tools</h3>
 
@@ -586,17 +680,9 @@ onclick="setPrompt('Summarize this text: ')">
 </button>
 
 <div class="founder">
-
 <div class="founder-title">FOUNDER</div>
-
-<div class="founder-name">
-Abhay Srivastava
-</div>
-
-<div class="small" style="margin-top:7px">
-ZenX Private Limited
-</div>
-
+<div class="founder-name">Abhay Srivastava</div>
+<div class="small" style="margin-top:7px">ZenX Private Limited</div>
 </div>
 
 </aside>
@@ -614,9 +700,7 @@ ZenX Private Limited
 Hello, <span id="userName">User</span> 👋
 </h1>
 
-<p>
-What can ZenX AI help you with today?
-</p>
+<p>What can ZenX AI help you with today?</p>
 
 </section>
 
@@ -669,14 +753,14 @@ onclick="setPrompt('Summarize the following text: ')">
 onclick="document.getElementById('imageInput').click()">
 <div class="tool-icon">🖼️</div>
 <div class="tool-title">Image AI</div>
-<div class="tool-sub">Upload an image</div>
+<div class="tool-sub">Analyze image</div>
 </button>
 
 <button class="tool"
 onclick="document.getElementById('fileInput').click()">
 <div class="tool-icon">📄</div>
 <div class="tool-title">Files</div>
-<div class="tool-sub">Select documents</div>
+<div class="tool-sub">Analyze documents</div>
 </button>
 
 </section>
@@ -698,14 +782,10 @@ onchange="fileSelected(event)">
 <section id="chatBox" class="chat">
 
 <div class="welcome">
-
 <h2>ZenX AI</h2>
-
 <p style="margin-top:10px">
-Your AI assistant for study,
-coding and creativity.
+Your AI assistant for study, coding and creativity.
 </p>
-
 </div>
 
 </section>
@@ -716,8 +796,14 @@ coding and creativity.
 <textarea
 id="message"
 placeholder="Ask ZenX AI anything..."
-onkeydown="handleKey(event)"
-></textarea>
+onkeydown="handleKey(event)"></textarea>
+
+<button id="voiceButton"
+class="voice-btn"
+onclick="toggleVoice()"
+title="Voice Assist">
+🎙️
+</button>
 
 <button id="sendButton"
 class="send"
@@ -737,10 +823,7 @@ ZenX AI is ready
 <section id="recentPanel" class="panel">
 
 <h2>🕘 Recent Chats</h2>
-
-<div id="recentList">
-No recent chats yet.
-</div>
+<div id="recentList">No recent chats yet.</div>
 
 </section>
 
@@ -748,33 +831,34 @@ No recent chats yet.
 <section id="filesPanel" class="panel">
 
 <h2>📁 Recent Files</h2>
-
-<div id="filesList">
-No recent files yet.
-</div>
+<div id="filesList">No recent files yet.</div>
 
 </section>
 
 </div>
-
 </main>
 
 </div>
-
 </section>
 
 
 <script>
 
 /* =====================================
-   SUPABASE CONFIG
+   SUPABASE
 ===================================== */
 
 const SUPABASE_URL =
 "https://hbkcqjzitlrysqimuquk.supabase.co";
 
+/*
+  IMPORTANT:
+  Put your NEW rotated Supabase anon/publishable key here.
+  Do not use the old exposed key.
+*/
+
 const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhia2NxanppdGxyeXNxaW11cXVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2ODc1MDksImV4cCI6MjEwNDI2MzUwOX0.YTy3E6ktJAFf2pNfSzISw3K0vNbNkUDlt8ndz1w1vXw";
+"PASTE_NEW_ANON_KEY_HERE";
 
 const supabaseClient =
 window.supabase.createClient(
@@ -784,44 +868,43 @@ window.supabase.createClient(
 
 
 /* =====================================
-   AUTH UI
+   AUTH FORMS
 ===================================== */
 
 function hideForms(){
-
-document.getElementById("loginForm").style.display="none";
-
-document.getElementById("signupForm").style.display="none";
-
-document.getElementById("forgotForm").style.display="none";
-
+  document.getElementById("loginForm").style.display="none";
+  document.getElementById("signupForm").style.display="none";
+  document.getElementById("resendForm").style.display="none";
+  document.getElementById("forgotForm").style.display="none";
+  document.getElementById("resetForm").style.display="none";
 }
-
 
 function showLogin(){
-
-hideForms();
-
-document.getElementById("loginForm").style.display="block";
-
+  hideForms();
+  document.getElementById("loginForm").style.display="block";
 }
-
 
 function showSignup(){
-
-hideForms();
-
-document.getElementById("signupForm").style.display="block";
-
+  hideForms();
+  document.getElementById("signupForm").style.display="block";
 }
 
+function showResend(){
+  hideForms();
+  document.getElementById("resendForm").style.display="block";
+}
 
 function showForgot(){
+  hideForms();
+  document.getElementById("forgotForm").style.display="block";
+}
 
-hideForms();
+function showReset(){
+  document.getElementById("loginPage").style.display="flex";
+  document.getElementById("app").style.display="none";
 
-document.getElementById("forgotForm").style.display="block";
-
+  hideForms();
+  document.getElementById("resetForm").style.display="block";
 }
 
 
@@ -831,94 +914,115 @@ document.getElementById("forgotForm").style.display="block";
 
 async function signup(){
 
-const name =
-document.getElementById("signupName").value.trim();
+  const name =
+    document.getElementById("signupName").value.trim();
 
-const email =
-document.getElementById("signupEmail")
-.value.trim()
-.toLowerCase();
+  const email =
+    document.getElementById("signupEmail").value.trim().toLowerCase();
 
-const password =
-document.getElementById("signupPassword").value;
+  const password =
+    document.getElementById("signupPassword").value;
 
-const button =
-document.getElementById("signupButton");
+  const button =
+    document.getElementById("signupButton");
 
+  if(!name || !email || !password){
+    alert("Please fill all fields.");
+    return;
+  }
 
-if(!name || !email || !password){
+  if(password.length < 6){
+    alert("Password must be at least 6 characters.");
+    return;
+  }
 
-alert("Please fill all fields.");
+  button.disabled=true;
+  button.textContent="Creating...";
 
-return;
+  try{
 
+    const {data,error} =
+      await supabaseClient.auth.signUp({
+        email,
+        password,
+        options:{
+          data:{name:name}
+        }
+      });
+
+    if(error) throw error;
+
+    if(data.session){
+      alert("Account created successfully!");
+      openApp();
+    }else{
+      alert(
+        "Account created. Please check your email and confirm your account."
+      );
+
+      document.getElementById("resendEmail").value=email;
+      showLogin();
+    }
+
+  }catch(error){
+
+    alert("Signup failed: " + error.message);
+
+  }finally{
+
+    button.disabled=false;
+    button.textContent="Create Account";
+
+  }
 }
 
-if(password.length < 6){
 
-alert("Password must be at least 6 characters.");
+/* =====================================
+   RESEND CONFIRMATION
+===================================== */
 
-return;
+async function resendConfirmation(){
 
-}
+  const email =
+    document.getElementById("resendEmail")
+    .value.trim()
+    .toLowerCase();
 
-button.disabled=true;
-button.textContent="Creating...";
+  const button =
+    document.getElementById("resendButton");
 
-try{
+  if(!email){
+    alert("Please enter your signup email.");
+    return;
+  }
 
-const {data,error} =
-await supabaseClient.auth.signUp({
+  button.disabled=true;
+  button.textContent="Sending...";
 
-email:email,
+  try{
 
-password:password,
+    const {error} =
+      await supabaseClient.auth.resend({
+        type:"signup",
+        email:email
+      });
 
-options:{
-data:{
-name:name
-}
-}
+    if(error) throw error;
 
-});
+    alert(
+      "Confirmation email sent again. Please check your inbox and spam folder."
+    );
 
-if(error) throw error;
+  }catch(error){
 
+    alert("Could not resend email: " + error.message);
 
-/*
-  If email confirmation is enabled,
-  user must confirm email first.
-*/
+  }finally{
 
-if(data.session){
+    button.disabled=false;
+    button.textContent="Resend Confirmation";
 
-alert("Account created successfully!");
-
-openApp();
-
-}else{
-
-alert(
-"Account created! Please check your email and confirm your account."
-);
-
-showLogin();
-
-}
-
-}catch(error){
-
-alert(
-"Signup failed: " + error.message
-);
-
-}finally{
-
-button.disabled=false;
-button.textContent="Create Account";
-
-}
-
+  }
 }
 
 
@@ -928,59 +1032,46 @@ button.textContent="Create Account";
 
 async function login(){
 
-const email =
-document.getElementById("loginEmail")
-.value.trim()
-.toLowerCase();
+  const email =
+    document.getElementById("loginEmail").value.trim().toLowerCase();
 
-const password =
-document.getElementById("loginPassword").value;
+  const password =
+    document.getElementById("loginPassword").value;
 
-const button =
-document.getElementById("loginButton");
+  const button =
+    document.getElementById("loginButton");
 
+  if(!email || !password){
+    alert("Please enter email and password.");
+    return;
+  }
 
-if(!email || !password){
+  button.disabled=true;
+  button.textContent="Logging in...";
 
-alert("Please enter email and password.");
+  try{
 
-return;
+    const {error} =
+      await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
 
-}
+    if(error) throw error;
 
-button.disabled=true;
-button.textContent="Logging in...";
+    document.getElementById("loginPassword").value="";
+    openApp();
 
-try{
+  }catch(error){
 
-const {data,error} =
-await supabaseClient.auth.signInWithPassword({
+    alert("Login failed: " + error.message);
 
-email:email,
+  }finally{
 
-password:password
+    button.disabled=false;
+    button.textContent="Login";
 
-});
-
-if(error) throw error;
-
-document.getElementById("loginPassword").value="";
-
-openApp();
-
-}catch(error){
-
-alert(
-"Login failed: " + error.message
-);
-
-}finally{
-
-button.disabled=false;
-button.textContent="Login";
-
-}
-
+  }
 }
 
 
@@ -990,63 +1081,107 @@ button.textContent="Login";
 
 async function forgotPassword(){
 
-const email =
-document.getElementById("forgotEmail")
-.value.trim()
-.toLowerCase();
+  const email =
+    document.getElementById("forgotEmail").value.trim().toLowerCase();
 
-const button =
-document.getElementById("forgotButton");
+  const button =
+    document.getElementById("forgotButton");
 
+  if(!email){
+    alert("Please enter your email.");
+    return;
+  }
 
-if(!email){
+  button.disabled=true;
+  button.textContent="Sending...";
 
-alert("Please enter your email.");
+  try{
 
-return;
+    const redirectUrl =
+      window.location.origin +
+      window.location.pathname +
+      "?reset=true";
 
+    const {error} =
+      await supabaseClient.auth.resetPasswordForEmail(
+        email,
+        {redirectTo:redirectUrl}
+      );
+
+    if(error) throw error;
+
+    alert(
+      "Password reset link sent. Check your email."
+    );
+
+    showLogin();
+
+  }catch(error){
+
+    alert("Reset failed: " + error.message);
+
+  }finally{
+
+    button.disabled=false;
+    button.textContent="Send Reset Link";
+
+  }
 }
 
-button.disabled=true;
-button.textContent="Sending...";
 
-try{
+/* =====================================
+   UPDATE PASSWORD
+===================================== */
 
-const redirectUrl =
-window.location.origin +
-window.location.pathname +
-"?reset=true";
+async function updatePassword(){
 
+  const password =
+    document.getElementById("newPassword").value;
 
-const {error} =
-await supabaseClient.auth.resetPasswordForEmail(
-email,
-{
-redirectTo:redirectUrl
-}
-);
+  const confirm =
+    document.getElementById("confirmPassword").value;
 
-if(error) throw error;
+  const button =
+    document.getElementById("resetButton");
 
-alert(
-"Password reset link has been sent. Check your email."
-);
+  if(password.length < 6){
+    alert("Password must be at least 6 characters.");
+    return;
+  }
 
-showLogin();
+  if(password !== confirm){
+    alert("Passwords do not match.");
+    return;
+  }
 
-}catch(error){
+  button.disabled=true;
+  button.textContent="Updating...";
 
-alert(
-"Reset failed: " + error.message
-);
+  try{
 
-}finally{
+    const {error} =
+      await supabaseClient.auth.updateUser({
+        password:password
+      });
 
-button.disabled=false;
-button.textContent="Send Reset Link";
+    if(error) throw error;
 
-}
+    alert("Password updated successfully. Please login again.");
 
+    await supabaseClient.auth.signOut();
+
+    showLogin();
+
+  }catch(error){
+
+    alert("Password update failed: " + error.message);
+
+  }finally{
+
+    button.disabled=false;
+    button.textContent="Update Password";
+
+  }
 }
 
 
@@ -1056,37 +1191,28 @@ button.textContent="Send Reset Link";
 
 async function openApp(){
 
-const {data} =
-await supabaseClient.auth.getUser();
+  const {data} =
+    await supabaseClient.auth.getUser();
 
-const user =
-data.user;
+  const user=data.user;
 
+  if(!user){
 
-if(!user){
+    document.getElementById("loginPage").style.display="flex";
+    document.getElementById("app").style.display="none";
 
-document.getElementById("loginPage").style.display="flex";
+    return;
+  }
 
-document.getElementById("app").style.display="none";
+  document.getElementById("loginPage").style.display="none";
+  document.getElementById("app").style.display="block";
 
-return;
+  const name =
+    user.user_metadata?.name ||
+    user.email?.split("@")[0] ||
+    "User";
 
-}
-
-
-document.getElementById("loginPage").style.display="none";
-
-document.getElementById("app").style.display="block";
-
-
-const name =
-user.user_metadata?.name ||
-user.email?.split("@")[0] ||
-"User";
-
-
-document.getElementById("userName").textContent=name;
-
+  document.getElementById("userName").textContent=name;
 }
 
 
@@ -1096,14 +1222,12 @@ document.getElementById("userName").textContent=name;
 
 async function logout(){
 
-await supabaseClient.auth.signOut();
+  await supabaseClient.auth.signOut();
 
-document.getElementById("app").style.display="none";
+  document.getElementById("app").style.display="none";
+  document.getElementById("loginPage").style.display="flex";
 
-document.getElementById("loginPage").style.display="flex";
-
-showLogin();
-
+  showLogin();
 }
 
 
@@ -1112,31 +1236,36 @@ showLogin();
 ===================================== */
 
 supabaseClient.auth.onAuthStateChange(
-(event,session)=>{
+  (event,session)=>{
 
-if(session){
+    if(event==="PASSWORD_RECOVERY"){
+      showReset();
+      return;
+    }
 
-openApp();
+    if(session){
+      openApp();
+    }else{
+      document.getElementById("app").style.display="none";
+      document.getElementById("loginPage").style.display="flex";
+    }
 
-}else{
-
-document.getElementById("app").style.display="none";
-
-document.getElementById("loginPage").style.display="flex";
-
-}
-
-}
+  }
 );
 
 
 /* =====================================
-   CHECK SESSION
+   INITIAL SESSION
 ===================================== */
 
-window.addEventListener("load",()=>{
+window.addEventListener("load",async()=>{
 
-openApp();
+  if(window.location.search.includes("reset=true")){
+    showReset();
+    return;
+  }
+
+  await openApp();
 
 });
 
@@ -1147,50 +1276,48 @@ openApp();
 
 function toggleSidebar(){
 
-document
-.getElementById("sidebar")
-.classList.toggle("open");
+  document
+    .getElementById("sidebar")
+    .classList.toggle("open");
 
 }
 
+function closeSidebarMobile(){
+
+  if(window.innerWidth<=800){
+    document
+      .getElementById("sidebar")
+      .classList.remove("open");
+  }
+
+}
 
 function showHome(){
 
-document.getElementById("home").style.display="block";
+  document.getElementById("home").style.display="block";
+  document.getElementById("recentPanel").style.display="none";
+  document.getElementById("filesPanel").style.display="none";
 
-document.getElementById("recentPanel").style.display="none";
-
-document.getElementById("filesPanel").style.display="none";
-
+  closeSidebarMobile();
 }
-
 
 function showPanel(panel){
 
-document.getElementById("home").style.display="none";
+  document.getElementById("home").style.display="none";
+  document.getElementById("recentPanel").style.display="none";
+  document.getElementById("filesPanel").style.display="none";
 
-document.getElementById("recentPanel").style.display="none";
+  if(panel==="recent"){
+    document.getElementById("recentPanel").style.display="block";
+    loadRecent();
+  }
 
-document.getElementById("filesPanel").style.display="none";
+  if(panel==="files"){
+    document.getElementById("filesPanel").style.display="block";
+    loadFiles();
+  }
 
-
-if(panel==="recent"){
-
-document.getElementById("recentPanel").style.display="block";
-
-loadRecent();
-
-}
-
-
-if(panel==="files"){
-
-document.getElementById("filesPanel").style.display="block";
-
-loadFiles();
-
-}
-
+  closeSidebarMobile();
 }
 
 
@@ -1199,350 +1326,495 @@ loadFiles();
 ===================================== */
 
 const messageInput =
-document.getElementById("message");
+  document.getElementById("message");
 
 const chatBox =
-document.getElementById("chatBox");
+  document.getElementById("chatBox");
 
 const sendButton =
-document.getElementById("sendButton");
+  document.getElementById("sendButton");
 
 const statusText =
-document.getElementById("status");
+  document.getElementById("status");
 
 
 function addMessage(text,type){
 
-const welcome =
-document.querySelector(".welcome");
+  const welcome =
+    document.querySelector(".welcome");
 
-if(welcome) welcome.remove();
+  if(welcome) welcome.remove();
 
-const div =
-document.createElement("div");
+  const div=document.createElement("div");
 
-div.className =
-"message " + type;
+  div.className="message "+type;
+  div.textContent=text;
 
-div.textContent=text;
+  chatBox.appendChild(div);
+  chatBox.scrollTop=chatBox.scrollHeight;
 
-chatBox.appendChild(div);
-
-chatBox.scrollTop =
-chatBox.scrollHeight;
-
-return div;
-
+  return div;
 }
 
 
 function handleKey(event){
 
-if(
-event.key==="Enter" &&
-!event.shiftKey
-){
+  if(event.key==="Enter" && !event.shiftKey){
 
-event.preventDefault();
+    event.preventDefault();
+    sendMessage();
 
-sendMessage();
-
-}
-
+  }
 }
 
 
 function setPrompt(text){
 
-showHome();
+  showHome();
 
-messageInput.value=text;
-
-messageInput.focus();
-
-}
-
-
-async function sendMessage(){
-
-const message =
-messageInput.value.trim();
-
-if(!message)return;
-
-
-addMessage(message,"user");
-
-messageInput.value="";
-
-sendButton.disabled=true;
-
-statusText.textContent=
-"ZenX AI is thinking...";
-
-
-const loading =
-addMessage("Thinking...","ai");
-
-saveRecent(message);
-
-
-try{
-
-const response =
-await fetch(
-"/api/chat",
-{
-method:"POST",
-
-headers:{
-"Content-Type":"application/json"
-},
-
-body:JSON.stringify({
-message:message
-})
-
-}
-);
-
-
-const data =
-await response.json();
-
-
-if(!response.ok){
-
-throw new Error(
-data.detail ||
-"AI request failed"
-);
-
-}
-
-
-loading.textContent =
-data.response ||
-"No response received.";
-
-statusText.textContent =
-"ZenX AI is ready";
-
-
-}catch(error){
-
-loading.textContent =
-"Error: " + error.message;
-
-statusText.textContent =
-"Something went wrong";
-
-}finally{
-
-sendButton.disabled=false;
-
-messageInput.focus();
-
-}
+  messageInput.value=text;
+  messageInput.focus();
 
 }
 
 
 /* =====================================
-   RECENT CHAT
+   NORMAL CHAT
+===================================== */
+
+async function sendMessage(){
+
+  const message =
+    messageInput.value.trim();
+
+  if(!message)return;
+
+  addMessage(message,"user");
+
+  messageInput.value="";
+
+  sendButton.disabled=true;
+
+  statusText.textContent="ZenX AI is thinking...";
+
+  const loading =
+    addMessage("Thinking...","ai");
+
+  saveRecent(message);
+
+  try{
+
+    const response =
+      await fetch("/api/chat",{
+        method:"POST",
+        headers:{
+          "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+          message:message
+        })
+      });
+
+    const data=await response.json();
+
+    if(!response.ok){
+      throw new Error(
+        data.detail || "AI request failed"
+      );
+    }
+
+    loading.textContent =
+      data.response || "No response received.";
+
+    statusText.textContent="ZenX AI is ready";
+
+    speakText(data.response);
+
+  }catch(error){
+
+    loading.textContent="Error: "+error.message;
+    statusText.textContent="Something went wrong";
+
+  }finally{
+
+    sendButton.disabled=false;
+    messageInput.focus();
+
+  }
+}
+
+
+/* =====================================
+   IMAGE
+===================================== */
+
+async function imageSelected(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file)return;
+
+  saveFile(file.name);
+
+  const prompt =
+    "Analyze this image carefully. If it contains a JEE question, solve it step by step. Read all visible text, equations, diagrams and options.";
+
+  addMessage("🖼️ "+file.name,"user");
+
+  const loading =
+    addMessage("Analyzing image...","ai");
+
+  statusText.textContent="Uploading image...";
+
+  try{
+
+    const formData=new FormData();
+
+    formData.append("message",prompt);
+    formData.append("image",file);
+
+    const response =
+      await fetch("/api/analyze-image",{
+        method:"POST",
+        body:formData
+      });
+
+    const data=await response.json();
+
+    if(!response.ok){
+      throw new Error(
+        data.detail || "Image analysis failed"
+      );
+    }
+
+    loading.textContent=data.response;
+
+    statusText.textContent="Image analyzed ✓";
+
+    speakText(data.response);
+
+  }catch(error){
+
+    loading.textContent=
+      "Image analysis error: "+error.message;
+
+    statusText.textContent="Image analysis failed";
+
+  }finally{
+
+    event.target.value="";
+
+  }
+}
+
+
+/* =====================================
+   FILE
+===================================== */
+
+async function fileSelected(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file)return;
+
+  saveFile(file.name);
+
+  addMessage("📄 "+file.name,"user");
+
+  const loading =
+    addMessage("Analyzing file...","ai");
+
+  statusText.textContent="Uploading file...";
+
+  try{
+
+    const formData=new FormData();
+
+    formData.append(
+      "message",
+      "Analyze this document carefully and explain the important content. If it contains a JEE question, solve it step by step."
+    );
+
+    formData.append("file",file);
+
+    const response =
+      await fetch("/api/analyze-file",{
+        method:"POST",
+        body:formData
+      });
+
+    const data=await response.json();
+
+    if(!response.ok){
+      throw new Error(
+        data.detail || "File analysis failed"
+      );
+    }
+
+    loading.textContent=data.response;
+
+    statusText.textContent="File analyzed ✓";
+
+    speakText(data.response);
+
+  }catch(error){
+
+    loading.textContent=
+      "File analysis error: "+error.message;
+
+    statusText.textContent="File analysis failed";
+
+  }finally{
+
+    event.target.value="";
+
+  }
+}
+
+
+/* =====================================
+   RECENT
 ===================================== */
 
 function saveRecent(message){
 
-let recent =
-JSON.parse(
-localStorage.getItem("zenx_recent") || "[]"
-);
+  let recent =
+    JSON.parse(
+      localStorage.getItem("zenx_recent") || "[]"
+    );
 
+  recent.unshift({
+    message,
+    time:new Date().toLocaleString()
+  });
 
-recent.unshift({
+  recent=recent.slice(0,20);
 
-message:message,
-
-time:new Date().toLocaleString()
-
-});
-
-
-recent=recent.slice(0,20);
-
-
-localStorage.setItem(
-"zenx_recent",
-JSON.stringify(recent)
-);
-
+  localStorage.setItem(
+    "zenx_recent",
+    JSON.stringify(recent)
+  );
 }
 
 
 function loadRecent(){
 
-const list =
-document.getElementById("recentList");
+  const list =
+    document.getElementById("recentList");
 
+  const recent =
+    JSON.parse(
+      localStorage.getItem("zenx_recent") || "[]"
+    );
 
-const recent =
-JSON.parse(
-localStorage.getItem("zenx_recent") || "[]"
-);
+  if(!recent.length){
 
+    list.textContent="No recent chats yet.";
+    return;
 
-if(!recent.length){
+  }
 
-list.textContent="No recent chats yet.";
+  list.innerHTML="";
 
-return;
+  recent.forEach(item=>{
 
-}
+    const div=document.createElement("div");
 
+    div.className="item";
 
-list.innerHTML="";
+    div.textContent =
+      item.message+" • "+item.time;
 
+    list.appendChild(div);
 
-recent.forEach(item=>{
-
-const div =
-document.createElement("div");
-
-div.className="item";
-
-div.textContent =
-item.message +
-" • " +
-item.time;
-
-list.appendChild(div);
-
-});
-
+  });
 }
 
 
 /* =====================================
-   FILES
+   FILE HISTORY
 ===================================== */
-
-function imageSelected(event){
-
-const file =
-event.target.files[0];
-
-if(!file)return;
-
-
-saveFile(file.name);
-
-
-setPrompt(
-"I selected this image: " +
-file.name +
-"\nPlease tell me what I should analyze about it."
-);
-
-
-statusText.textContent =
-"Image selected: " + file.name;
-
-}
-
-
-function fileSelected(event){
-
-const file =
-event.target.files[0];
-
-if(!file)return;
-
-
-saveFile(file.name);
-
-
-setPrompt(
-"I selected this file: " +
-file.name +
-"\nPlease help me analyze it."
-);
-
-
-statusText.textContent =
-"File selected: " + file.name;
-
-}
-
 
 function saveFile(name){
 
-let files =
-JSON.parse(
-localStorage.getItem("zenx_files") || "[]"
-);
+  let files =
+    JSON.parse(
+      localStorage.getItem("zenx_files") || "[]"
+    );
 
+  files.unshift({
+    name,
+    time:new Date().toLocaleString()
+  });
 
-files.unshift({
+  files=files.slice(0,20);
 
-name:name,
-
-time:new Date().toLocaleString()
-
-});
-
-
-files=files.slice(0,20);
-
-
-localStorage.setItem(
-"zenx_files",
-JSON.stringify(files)
-);
-
+  localStorage.setItem(
+    "zenx_files",
+    JSON.stringify(files)
+  );
 }
 
 
 function loadFiles(){
 
-const list =
-document.getElementById("filesList");
+  const list =
+    document.getElementById("filesList");
+
+  const files =
+    JSON.parse(
+      localStorage.getItem("zenx_files") || "[]"
+    );
+
+  if(!files.length){
+
+    list.textContent="No recent files yet.";
+    return;
+
+  }
+
+  list.innerHTML="";
+
+  files.forEach(file=>{
+
+    const div=document.createElement("div");
+
+    div.className="file-chip";
+
+    div.textContent =
+      "📄 "+file.name+" • "+file.time;
+
+    list.appendChild(div);
+
+  });
+}
 
 
-const files =
-JSON.parse(
-localStorage.getItem("zenx_files") || "[]"
-);
+/* =====================================
+   VOICE ASSIST
+===================================== */
+
+let recognition=null;
+let isListening=false;
+
+function createRecognition(){
+
+  const SpeechRecognition =
+    window.SpeechRecognition ||
+    window.webkitSpeechRecognition;
+
+  if(!SpeechRecognition){
+
+    alert(
+      "Voice input is not supported in this browser."
+    );
+
+    return null;
+  }
+
+  const r=new SpeechRecognition();
+
+  r.lang="en-IN";
+  r.continuous=false;
+  r.interimResults=true;
+
+  r.onstart=()=>{
+
+    isListening=true;
+
+    document
+      .getElementById("voiceButton")
+      .classList.add("listening");
+
+    statusText.textContent="Listening...";
+
+  };
+
+  r.onresult=(event)=>{
+
+    let text="";
+
+    for(
+      let i=event.resultIndex;
+      i<event.results.length;
+      i++
+    ){
+
+      text+=event.results[i][0].transcript;
+
+    }
+
+    messageInput.value=text;
+
+  };
+
+  r.onerror=(event)=>{
+
+    statusText.textContent=
+      "Voice error: "+event.error;
+
+  };
+
+  r.onend=()=>{
+
+    isListening=false;
+
+    document
+      .getElementById("voiceButton")
+      .classList.remove("listening");
+
+    statusText.textContent="Voice ready";
+
+  };
+
+  return r;
+}
 
 
-if(!files.length){
+function toggleVoice(){
 
-list.textContent="No recent files yet.";
+  if(!recognition){
 
-return;
+    recognition=createRecognition();
+
+  }
+
+  if(!recognition)return;
+
+  if(isListening){
+
+    recognition.stop();
+
+  }else{
+
+    recognition.start();
+
+  }
 
 }
 
 
-list.innerHTML="";
+function speakText(text){
 
+  if(!text)return;
 
-files.forEach(file=>{
+  if(!("speechSynthesis" in window))return;
 
-const div =
-document.createElement("div");
+  window.speechSynthesis.cancel();
 
-div.className="item";
+  const cleanText =
+    String(text).slice(0,5000);
 
-div.textContent =
-"📄 " +
-file.name +
-" • " +
-file.time;
+  const utterance =
+    new SpeechSynthesisUtterance(cleanText);
 
-list.appendChild(div);
+  utterance.lang="en-IN";
+  utterance.rate=.95;
 
-});
+  window.speechSynthesis.speak(utterance);
 
 }
 
