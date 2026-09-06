@@ -1,3 +1,15 @@
 {
-  "version": 2
+  "name": "zenx-ai",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "dev": "vercel dev"
+  },
+  "dependencies": {
+    "@google/genai": "^1.17.0"
+  }
 }
