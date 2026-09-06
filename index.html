@@ -22,6 +22,7 @@ window.MathJax = {
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js" async></script>
+
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 
@@ -299,19 +300,117 @@ button{font-family:inherit}
   border-radius:15px;
   margin-bottom:12px;
   line-height:1.55;
-  white-space:pre-wrap;
   overflow-wrap:anywhere;
 }
 
 .user{
   margin-left:15%;
   background:#29234e;
+  white-space:pre-wrap;
 }
 
 .ai{
   margin-right:10%;
   background:#171720;
   border:1px solid var(--border);
+}
+
+/* Markdown formatting */
+
+.ai h1,
+.ai h2,
+.ai h3,
+.ai h4{
+  margin:16px 0 10px;
+  line-height:1.3;
+}
+
+.ai h1{font-size:26px}
+.ai h2{font-size:23px}
+.ai h3{font-size:20px}
+.ai h4{font-size:18px}
+
+.ai p{
+  margin:8px 0;
+}
+
+.ai ul,
+.ai ol{
+  margin:10px 0 10px 24px;
+}
+
+.ai li{
+  margin:5px 0;
+}
+
+.ai strong{
+  font-weight:800;
+}
+
+.ai em{
+  font-style:italic;
+}
+
+.ai blockquote{
+  margin:12px 0;
+  padding:10px 14px;
+  border-left:3px solid var(--accent);
+  background:#10101a;
+}
+
+.ai code{
+  background:#0b0b13;
+  padding:2px 6px;
+  border-radius:6px;
+  font-family:monospace;
+}
+
+.ai pre{
+  background:#090910;
+  padding:14px;
+  border-radius:10px;
+  overflow-x:auto;
+  margin:12px 0;
+}
+
+.ai pre code{
+  padding:0;
+  background:none;
+}
+
+.ai hr{
+  border:0;
+  border-top:1px solid var(--border);
+  margin:15px 0;
+}
+
+.ai table{
+  width:100%;
+  border-collapse:collapse;
+  margin:12px 0;
+  overflow-x:auto;
+}
+
+.ai th,
+.ai td{
+  border:1px solid var(--border);
+  padding:8px;
+  text-align:left;
+}
+
+.ai th{
+  background:#10101a;
+}
+
+.ai img{
+  max-width:100%;
+  border-radius:10px;
+}
+
+.ai mjx-container{
+  max-width:100%;
+  overflow-x:auto;
+  overflow-y:hidden;
 }
 
 .input-area{
@@ -475,23 +574,6 @@ textarea:focus{border-color:var(--accent)}
   }
 }
 </style>
-<script>
-window.MathJax = {
-  tex: {
-    inlineMath: [['\\(', '\\)']],
-    displayMath: [['$$', '$$'], ['\\[', '\\]']]
-  },
-  svg: {
-    fontCache: 'global'
-  }
-};
-</script>
-
-<script
-  src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"
-  async>
-</script>
-  
 </head>
 
 <body>
@@ -536,7 +618,6 @@ Didn't receive confirmation email?
 
 </div>
 
-
 <div id="signupForm" style="display:none">
 
 <div class="brand">ZenX</div>
@@ -572,7 +653,6 @@ style="margin-top:15px;background:none;border:0;color:#9d91ff;cursor:pointer">
 
 </div>
 
-
 <div id="resendForm" style="display:none">
 
 <div class="brand">ZenX</div>
@@ -597,7 +677,6 @@ style="margin-top:15px;background:none;border:0;color:#9d91ff;cursor:pointer">
 
 </div>
 
-
 <div id="forgotForm" style="display:none">
 
 <div class="brand">ZenX</div>
@@ -621,7 +700,6 @@ style="margin-top:15px;background:none;border:0;color:#9d91ff;cursor:pointer">
 </button>
 
 </div>
-
 
 <div id="resetForm" style="display:none">
 
@@ -655,7 +733,6 @@ Student AI • Coding • Study • Creativity
 </div>
 </section>
 
-
 <section id="app">
 
 <header class="topbar">
@@ -668,7 +745,6 @@ Student AI • Coding • Study • Creativity
 <button class="menu-btn" onclick="logout()">Logout</button>
 
 </header>
-
 
 <div class="layout">
 
@@ -718,7 +794,6 @@ onclick="setPrompt('Summarize this text: ')">
 
 </aside>
 
-
 <main class="main">
 
 <div class="content">
@@ -734,7 +809,6 @@ Hello, <span id="userName">User</span> 👋
 <p>What can ZenX AI help you with today?</p>
 
 </section>
-
 
 <section class="tools">
 
@@ -796,7 +870,6 @@ onclick="document.getElementById('fileInput').click()">
 
 </section>
 
-
 <input id="imageInput"
 type="file"
 accept="image/*"
@@ -809,7 +882,6 @@ accept=".pdf,.txt,.doc,.docx"
 hidden
 onchange="fileSelected(event)">
 
-
 <section id="chatBox" class="chat">
 
 <div class="welcome">
@@ -820,7 +892,6 @@ Your AI assistant for study, coding and creativity.
 </div>
 
 </section>
-
 
 <section class="input-area">
 
@@ -838,7 +909,7 @@ title="Voice Assist">
 
 <button id="sendButton"
 class="send"
-onclick="sendMessage()">
+onclick="sendMessage">
 Send
 </button>
 
@@ -850,14 +921,12 @@ ZenX AI is ready
 
 </div>
 
-
 <section id="recentPanel" class="panel">
 
 <h2>🕘 Recent Chats</h2>
 <div id="recentList">No recent chats yet.</div>
 
 </section>
-
 
 <section id="filesPanel" class="panel">
 
@@ -872,7 +941,6 @@ ZenX AI is ready
 </div>
 </section>
 
-
 <script>
 
 /* =====================================
@@ -885,11 +953,11 @@ const SUPABASE_URL =
 /*
   IMPORTANT:
   Put your NEW rotated Supabase anon/publishable key here.
-  Do not use the old exposed key.
+  Never use a service-role key in frontend code.
 */
 
 const SUPABASE_ANON_KEY =
-"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imhia2NxanppdGxyeXNxaW11cXVrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODg2ODc1MDksImV4cCI6MjEwNDI2MzUwOX0.YTy3E6ktJAFf2pNfSzISw3K0vNbNkUDlt8ndz1w1vXw";
+"PASTE_NEW_ANON_KEY_HERE";
 
 const supabaseClient =
 window.supabase.createClient(
@@ -1369,6 +1437,10 @@ const statusText =
   document.getElementById("status");
 
 
+/* =====================================
+   MESSAGE RENDERER
+===================================== */
+
 function addMessage(text,type){
 
   const welcome =
@@ -1379,14 +1451,43 @@ function addMessage(text,type){
   const div=document.createElement("div");
 
   div.className="message "+type;
-  div.textContent=text;
+
+  /*
+    User messages stay as plain text.
+    AI messages are rendered as Markdown,
+    then MathJax renders LaTeX equations.
+  */
+
+  if(type==="ai"){
+
+    div.innerHTML =
+      marked.parse(String(text || ""));
+
+  }else{
+
+    div.textContent=text;
+
+  }
 
   chatBox.appendChild(div);
   chatBox.scrollTop=chatBox.scrollHeight;
 
+  if(type==="ai" && window.MathJax){
+
+    MathJax.typesetPromise([div])
+      .catch(error=>{
+        console.error("MathJax error:",error);
+      });
+
+  }
+
   return div;
 }
 
+
+/* =====================================
+   KEYBOARD
+===================================== */
 
 function handleKey(event){
 
@@ -1398,6 +1499,10 @@ function handleKey(event){
   }
 }
 
+
+/* =====================================
+   PROMPT
+===================================== */
 
 function setPrompt(text){
 
@@ -1454,8 +1559,25 @@ async function sendMessage(){
       );
     }
 
-    loading.textContent =
-      data.response || "No response received.";
+    /*
+      IMPORTANT:
+      Use innerHTML + Markdown renderer,
+      NOT textContent, for AI responses.
+    */
+
+    loading.innerHTML =
+      marked.parse(
+        data.response || "No response received."
+      );
+
+    if(window.MathJax){
+
+      MathJax.typesetPromise([loading])
+        .catch(error=>{
+          console.error("MathJax error:",error);
+        });
+
+    }
 
     statusText.textContent="ZenX AI is ready";
 
@@ -1489,7 +1611,7 @@ async function imageSelected(event){
   saveFile(file.name);
 
   const prompt =
-    "Analyze this image carefully. If it contains a JEE question, solve it step by step. Read all visible text, equations, diagrams and options.";
+    "Analyze this image carefully. If it contains a JEE question, solve it step by step. Read all visible text, equations, diagrams and options. Format mathematical equations using LaTeX.";
 
   addMessage("🖼️ "+file.name,"user");
 
@@ -1519,7 +1641,17 @@ async function imageSelected(event){
       );
     }
 
-    loading.textContent=data.response;
+    loading.innerHTML =
+      marked.parse(data.response || "No response received.");
+
+    if(window.MathJax){
+
+      MathJax.typesetPromise([loading])
+        .catch(error=>{
+          console.error("MathJax error:",error);
+        });
+
+    }
 
     statusText.textContent="Image analyzed ✓";
 
@@ -1566,7 +1698,7 @@ async function fileSelected(event){
 
     formData.append(
       "message",
-      "Analyze this document carefully and explain the important content. If it contains a JEE question, solve it step by step."
+      "Analyze this document carefully and explain the important content. If it contains a JEE question, solve it step by step. Format mathematical equations using LaTeX."
     );
 
     formData.append("file",file);
@@ -1585,7 +1717,17 @@ async function fileSelected(event){
       );
     }
 
-    loading.textContent=data.response;
+    loading.innerHTML =
+      marked.parse(data.response || "No response received.");
+
+    if(window.MathJax){
+
+      MathJax.typesetPromise([loading])
+        .catch(error=>{
+          console.error("MathJax error:",error);
+        });
+
+    }
 
     statusText.textContent="File analyzed ✓";
 
@@ -1827,6 +1969,10 @@ function toggleVoice(){
 
 }
 
+
+/* =====================================
+   SPEECH
+===================================== */
 
 function speakText(text){
 
