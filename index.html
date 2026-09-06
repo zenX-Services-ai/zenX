@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+    <title>ZenX AI</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
+            background: #080812;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #aaa;
+        }
+
+        textarea {
+            width: 100%;
+            min-height: 130px;
+            margin-top: 25px;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #333;
+            background: #11111d;
+            color: white;
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 13px 25px;
+            border: 0;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        #response {
+            margin-top: 25px;
+            padding: 20px;
+            background: #11111d;
+            border-radius: 12px;
+            text-align: left;
+            white-space: pre-wrap;
+            min-height: 60px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>ZenX AI</h1>
+
+    <p>Your AI Student Assistant</p>
+
+    <textarea
+        id="message"
+        placeholder="Ask ZenX AI anything..."
+    ></textarea>
+
+    <br>
+
+    <button onclick="sendMessage()">
+        Ask ZenX AI
+    </button>
+
+    <div id="response">
+        Ready.
+    </div>
+
+</div>
+
+<script>
+async function sendMessage() {
+
+    const message =
+        document.getElementById("message").value.trim();
+
+    const responseBox =
+        document.getElementById("response");
+
+    if (!message) {
+        responseBox.textContent =
+            "Please enter a question.";
+        return;
+    }
+
+    responseBox.textContent =
+        "Thinking...";
+
+    try {
+
+        const response = await fetch("/api/chat", {
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify({
+                message: message
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw new Error(
+                data.detail || "Something went wrong"
+            );
+        }
+
+        responseBox.textContent =
+            data.response;
+
+    } catch (error) {
+
+        responseBox.textContent =
+            "Error: " + error.message;
+    }
+}
+</script>
+
+</body>
+</html>
