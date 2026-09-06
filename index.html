@@ -1,322 +1,1178 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#080812">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#080812">
+<title>ZenX AI</title>
 
-  <title>ZenX AI</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+:root{
+  --bg:#07070d;
+  --panel:#11111b;
+  --panel2:#171722;
+  --border:#29293a;
+  --text:#fff;
+  --muted:#9696aa;
+  --accent:#8b7cff;
+}
 
-    body {
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at top left, #24245c 0%, transparent 35%),
-        radial-gradient(circle at bottom right, #351b4f 0%, transparent 35%),
-        #080812;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 10% 0%,#29205c 0%,transparent 30%),
+    radial-gradient(circle at 100% 100%,#3a174b 0%,transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:Arial,sans-serif;
+}
 
-    .app {
-      width: 100%;
-      max-width: 850px;
-      min-height: 600px;
-      background: rgba(17, 17, 30, 0.92);
-      border: 1px solid #292941;
-      border-radius: 24px;
-      padding: 28px;
-      box-shadow: 0 20px 70px rgba(0,0,0,.45);
-    }
+/* LOGIN */
 
-    .header {
-      text-align: center;
-      margin-bottom: 30px;
-    }
+#loginPage{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
 
-    .logo {
-      font-size: 42px;
-      font-weight: 800;
-      letter-spacing: -1px;
-    }
+.login-card{
+  width:100%;
+  max-width:430px;
+  padding:35px;
+  background:rgba(17,17,27,.94);
+  border:1px solid var(--border);
+  border-radius:25px;
+  box-shadow:0 25px 80px #0008;
+  text-align:center;
+}
 
-    .subtitle {
-      margin-top: 8px;
-      color: #a9a9bd;
-      font-size: 15px;
-    }
+.brand{
+  font-size:45px;
+  font-weight:900;
+  margin-bottom:8px;
+}
 
-    .chat-box {
-      min-height: 320px;
-      max-height: 400px;
-      overflow-y: auto;
-      background: #0d0d19;
-      border: 1px solid #25253b;
-      border-radius: 18px;
-      padding: 18px;
-      margin-bottom: 18px;
-    }
+.tagline{
+  color:var(--muted);
+  margin-bottom:28px;
+}
 
-    .welcome {
-      color: #aaaabe;
-      text-align: center;
-      padding: 100px 20px;
-    }
+.input{
+  width:100%;
+  padding:15px;
+  margin:7px 0;
+  border-radius:13px;
+  border:1px solid var(--border);
+  background:#0b0b14;
+  color:white;
+  outline:none;
+}
 
-    .message {
-      padding: 14px 16px;
-      border-radius: 14px;
-      margin-bottom: 12px;
-      line-height: 1.5;
-      white-space: pre-wrap;
-    }
+.primary{
+  width:100%;
+  padding:15px;
+  margin-top:12px;
+  border:0;
+  border-radius:13px;
+  background:white;
+  color:#08080d;
+  font-weight:800;
+  cursor:pointer;
+}
 
-    .user {
-      background: #202044;
-      margin-left: 15%;
-    }
+.small{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:18px;
+}
 
-    .ai {
-      background: #171725;
-      border: 1px solid #29293d;
-      margin-right: 10%;
-    }
+/* APP */
 
-    .input-area {
-      display: flex;
-      gap: 10px;
-    }
+#app{
+  display:none;
+  min-height:100vh;
+}
 
-    textarea {
-      flex: 1;
-      min-height: 60px;
-      max-height: 160px;
-      resize: vertical;
-      border: 1px solid #303047;
-      border-radius: 15px;
-      padding: 16px;
-      outline: none;
-      background: #0d0d19;
-      color: white;
-      font-size: 16px;
-    }
+.topbar{
+  height:70px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 20px;
+  border-bottom:1px solid var(--border);
+  background:#090910dd;
+  backdrop-filter:blur(15px);
+  position:sticky;
+  top:0;
+  z-index:20;
+}
 
-    textarea:focus {
-      border-color: #6666a8;
-    }
+.top-logo{
+  font-size:25px;
+  font-weight:900;
+}
 
-    button {
-      align-self: stretch;
-      min-width: 120px;
-      border: none;
-      border-radius: 15px;
-      background: white;
-      color: #09090f;
-      font-weight: 700;
-      font-size: 15px;
-      cursor: pointer;
-      transition: .2s;
-    }
+.menu-btn{
+  background:#191925;
+  color:white;
+  border:1px solid var(--border);
+  padding:10px 13px;
+  border-radius:10px;
+  cursor:pointer;
+}
 
-    button:hover {
-      transform: translateY(-2px);
-    }
+.layout{
+  display:flex;
+  min-height:calc(100vh - 70px);
+}
 
-    button:disabled {
-      opacity: .5;
-      cursor: not-allowed;
-      transform: none;
-    }
+/* SIDEBAR */
 
-    .status {
-      text-align: center;
-      margin-top: 15px;
-      color: #77778e;
-      font-size: 13px;
-    }
+.sidebar{
+  width:260px;
+  border-right:1px solid var(--border);
+  background:#0b0b13ee;
+  padding:18px;
+  transition:.25s;
+}
 
-    @media (max-width: 600px) {
-      .app {
-        padding: 18px;
-        border-radius: 18px;
-      }
+.sidebar h3{
+  color:#aaaabe;
+  font-size:12px;
+  margin:18px 8px 8px;
+  text-transform:uppercase;
+}
 
-      .logo {
-        font-size: 34px;
-      }
+.side-btn{
+  width:100%;
+  padding:12px;
+  margin:3px 0;
+  text-align:left;
+  background:transparent;
+  border:0;
+  color:#ddd;
+  border-radius:10px;
+  cursor:pointer;
+}
 
-      .input-area {
-        flex-direction: column;
-      }
+.side-btn:hover{
+  background:#191925;
+}
 
-      button {
-        min-height: 52px;
-      }
+.founder{
+  margin-top:25px;
+  padding:15px;
+  border:1px solid var(--border);
+  border-radius:15px;
+  background:#12121e;
+}
 
-      .user {
-        margin-left: 5%;
-      }
+.founder-title{
+  color:var(--muted);
+  font-size:11px;
+  margin-bottom:6px;
+}
 
-      .ai {
-        margin-right: 5%;
-      }
-    }
-  </style>
+.founder-name{
+  font-weight:800;
+}
+
+/* MAIN */
+
+.main{
+  flex:1;
+  display:flex;
+  justify-content:center;
+  padding:30px 20px;
+}
+
+.content{
+  width:100%;
+  max-width:950px;
+}
+
+.hero{
+  text-align:center;
+  padding:20px 0 25px;
+}
+
+.hero h1{
+  font-size:40px;
+}
+
+.hero p{
+  color:var(--muted);
+  margin-top:8px;
+}
+
+.tools{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:20px;
+}
+
+.tool{
+  padding:16px;
+  background:#11111b;
+  border:1px solid var(--border);
+  border-radius:15px;
+  color:white;
+  cursor:pointer;
+  text-align:left;
+}
+
+.tool:hover{
+  transform:translateY(-2px);
+  background:#181824;
+}
+
+.tool-icon{
+  font-size:25px;
+  margin-bottom:8px;
+}
+
+.tool-title{
+  font-weight:700;
+}
+
+.tool-sub{
+  color:var(--muted);
+  font-size:12px;
+  margin-top:4px;
+}
+
+/* CHAT */
+
+.chat{
+  min-height:380px;
+  max-height:500px;
+  overflow-y:auto;
+  padding:20px;
+  background:#0c0c15;
+  border:1px solid var(--border);
+  border-radius:20px;
+}
+
+.welcome{
+  text-align:center;
+  color:var(--muted);
+  padding:100px 20px;
+}
+
+.message{
+  padding:14px 16px;
+  border-radius:15px;
+  margin-bottom:12px;
+  line-height:1.55;
+  white-space:pre-wrap;
+}
+
+.user{
+  margin-left:15%;
+  background:#29234e;
+}
+
+.ai{
+  margin-right:10%;
+  background:#171720;
+  border:1px solid var(--border);
+}
+
+.input-area{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+textarea{
+  flex:1;
+  min-height:62px;
+  max-height:180px;
+  resize:vertical;
+  padding:16px;
+  border-radius:15px;
+  border:1px solid var(--border);
+  background:#0d0d16;
+  color:white;
+  font-size:16px;
+  outline:none;
+}
+
+.send{
+  min-width:100px;
+  border:0;
+  border-radius:15px;
+  background:white;
+  color:#08080d;
+  font-weight:800;
+  cursor:pointer;
+}
+
+.status{
+  text-align:center;
+  color:#77778c;
+  font-size:12px;
+  margin-top:10px;
+}
+
+/* PANELS */
+
+.panel{
+  display:none;
+  background:#11111b;
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:20px;
+}
+
+.panel h2{
+  margin-bottom:12px;
+}
+
+.item{
+  padding:13px;
+  margin:7px 0;
+  background:#0c0c15;
+  border-radius:10px;
+  color:#ddd;
+}
+
+/* MOBILE */
+
+@media(max-width:800px){
+
+  .sidebar{
+    position:fixed;
+    left:-280px;
+    top:70px;
+    bottom:0;
+    z-index:30;
+  }
+
+  .sidebar.open{
+    left:0;
+  }
+
+  .tools{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+}
+
+@media(max-width:500px){
+
+  .hero h1{
+    font-size:30px;
+  }
+
+  .tools{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .input-area{
+    flex-direction:column;
+  }
+
+  .send{
+    min-height:52px;
+  }
+
+  .user{
+    margin-left:5%;
+  }
+
+  .ai{
+    margin-right:5%;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <main class="app">
+<!-- LOGIN -->
 
-    <header class="header">
-      <div class="logo">ZenX AI</div>
-      <div class="subtitle">
-        Your intelligent AI student assistant
-      </div>
-    </header>
+<section id="loginPage">
 
-    <section id="chatBox" class="chat-box">
-      <div class="welcome">
-        <h2>Welcome to ZenX AI 👋</h2>
-        <p style="margin-top:10px;">
-          Ask anything about studies, coding, concepts or general questions.
-        </p>
-      </div>
-    </section>
+  <div class="login-card">
 
-    <section class="input-area">
+    <div class="brand">ZenX</div>
 
-      <textarea
-        id="message"
-        placeholder="Ask ZenX AI anything..."
-        onkeydown="handleKey(event)"
-      ></textarea>
-
-      <button id="sendButton" onclick="sendMessage()">
-        Send
-      </button>
-
-    </section>
-
-    <div id="status" class="status">
-      ZenX AI is ready
+    <div class="tagline">
+      AI that understands you.
     </div>
 
-  </main>
+    <input
+      id="loginName"
+      class="input"
+      placeholder="Your name"
+    >
+
+    <input
+      id="loginEmail"
+      class="input"
+      type="email"
+      placeholder="Email"
+    >
+
+    <button class="primary" onclick="login()">
+      Continue to ZenX
+    </button>
+
+    <div class="small">
+      Student AI • Coding • Study • Creativity
+    </div>
+
+  </div>
+
+</section>
+
+
+<!-- APP -->
+
+<section id="app">
+
+  <header class="topbar">
+
+    <div style="display:flex;gap:10px;align-items:center">
+
+      <button class="menu-btn" onclick="toggleSidebar()">
+        ☰
+      </button>
+
+      <div class="top-logo">
+        ZenX AI
+      </div>
+
+    </div>
+
+    <button class="menu-btn" onclick="logout()">
+      Logout
+    </button>
+
+  </header>
+
+
+  <div class="layout">
+
+
+    <!-- SIDEBAR -->
+
+    <aside id="sidebar" class="sidebar">
+
+      <button class="side-btn" onclick="showHome()">
+        🏠 Home
+      </button>
+
+      <button class="side-btn" onclick="showPanel('recent')">
+        🕘 Recent
+      </button>
+
+      <button class="side-btn" onclick="showPanel('files')">
+        📁 Recent Files
+      </button>
+
+      <h3>AI Tools</h3>
+
+      <button class="side-btn" onclick="setPrompt('Solve this question step by step: ')">
+        🧮 Mathematics
+      </button>
+
+      <button class="side-btn" onclick="setPrompt('Explain this Physics concept clearly: ')">
+        ⚛️ Physics
+      </button>
+
+      <button class="side-btn" onclick="setPrompt('Explain this Chemistry question: ')">
+        🧪 Chemistry
+      </button>
+
+      <button class="side-btn" onclick="setPrompt('Help me understand and fix this code: ')">
+        💻 Coding
+      </button>
+
+      <button class="side-btn" onclick="setPrompt('Create a study plan for: ')">
+        📚 Study Planner
+      </button>
+
+      <button class="side-btn" onclick="setPrompt('Summarize this text: ')">
+        📝 Summarizer
+      </button>
+
+      <div class="founder">
+
+        <div class="founder-title">
+          FOUNDER
+        </div>
+
+        <div class="founder-name">
+          Abhay Srivastava
+        </div>
+
+        <div class="small" style="margin-top:7px">
+          ZenX Private Limited
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+
+    <main class="main">
+
+      <div class="content">
+
+
+        <div id="home">
+
+
+          <section class="hero">
+
+            <h1>
+              Hello, <span id="userName">User</span> 👋
+            </h1>
+
+            <p>
+              What can ZenX AI help you with today?
+            </p>
+
+          </section>
+
+
+          <!-- TOOLS -->
+
+          <section class="tools">
+
+            <button class="tool"
+              onclick="setPrompt('Help me solve this JEE Mathematics problem: ')">
+
+              <div class="tool-icon">🧮</div>
+              <div class="tool-title">JEE Maths</div>
+              <div class="tool-sub">Solve step by step</div>
+
+            </button>
+
+
+            <button class="tool"
+              onclick="setPrompt('Explain this JEE Physics problem: ')">
+
+              <div class="tool-icon">⚛️</div>
+              <div class="tool-title">JEE Physics</div>
+              <div class="tool-sub">Concept + solution</div>
+
+            </button>
+
+
+            <button class="tool"
+              onclick="setPrompt('Explain this Chemistry question: ')">
+
+              <div class="tool-icon">🧪</div>
+              <div class="tool-title">Chemistry</div>
+              <div class="tool-sub">NCERT + JEE</div>
+
+            </button>
+
+
+            <button class="tool"
+              onclick="setPrompt('Help me write or debug this code: ')">
+
+              <div class="tool-icon">💻</div>
+              <div class="tool-title">Coding</div>
+              <div class="tool-sub">Debug & explain</div>
+
+            </button>
+
+
+            <button class="tool"
+              onclick="setPrompt('Make a practical study plan for: ')">
+
+              <div class="tool-icon">📚</div>
+              <div class="tool-title">Study Plan</div>
+              <div class="tool-sub">Smart planning</div>
+
+            </button>
+
+
+            <button class="tool"
+              onclick="setPrompt('Summarize the following text: ')">
+
+              <div class="tool-icon">📝</div>
+              <div class="tool-title">Summarize</div>
+              <div class="tool-sub">Short & clear</div>
+
+            </button>
+
+
+            <button class="tool"
+              onclick="document.getElementById('imageInput').click()">
+
+              <div class="tool-icon">🖼️</div>
+              <div class="tool-title">Image AI</div>
+              <div class="tool-sub">Upload an image</div>
+
+            </button>
+
+
+            <button class="tool"
+              onclick="document.getElementById('fileInput').click()">
+
+              <div class="tool-icon">📄</div>
+              <div class="tool-title">Files</div>
+              <div class="tool-sub">Select documents</div>
+
+            </button>
+
+          </section>
+
+
+          <!-- HIDDEN INPUTS -->
+
+          <input
+            id="imageInput"
+            type="file"
+            accept="image/*"
+            hidden
+            onchange="imageSelected(event)"
+          >
+
+          <input
+            id="fileInput"
+            type="file"
+            accept=".pdf,.txt,.doc,.docx"
+            hidden
+            onchange="fileSelected(event)"
+          >
+
+
+          <!-- CHAT -->
+
+          <section id="chatBox" class="chat">
+
+            <div class="welcome">
+
+              <h2>ZenX AI</h2>
+
+              <p style="margin-top:10px">
+                Your AI assistant for study, coding and creativity.
+              </p>
+
+            </div>
+
+          </section>
+
+
+          <section class="input-area">
+
+            <textarea
+              id="message"
+              placeholder="Ask ZenX AI anything..."
+              onkeydown="handleKey(event)"
+            ></textarea>
+
+            <button
+              id="sendButton"
+              class="send"
+              onclick="sendMessage()"
+            >
+              Send
+            </button>
+
+          </section>
+
+          <div id="status" class="status">
+            ZenX AI is ready
+          </div>
+
+
+        </div>
+
+
+        <!-- RECENT -->
+
+        <section id="recentPanel" class="panel">
+
+          <h2>🕘 Recent Chats</h2>
+
+          <div id="recentList">
+            No recent chats yet.
+          </div>
+
+        </section>
+
+
+        <!-- FILES -->
+
+        <section id="filesPanel" class="panel">
+
+          <h2>📁 Recent Files</h2>
+
+          <div id="filesList">
+            No recent files yet.
+          </div>
+
+        </section>
+
+      </div>
+
+    </main>
+
+  </div>
+
+</section>
+
 
 <script>
 
-const messageInput = document.getElementById("message");
-const chatBox = document.getElementById("chatBox");
-const sendButton = document.getElementById("sendButton");
-const statusText = document.getElementById("status");
+/* =========================
+   LOGIN
+========================= */
 
-function addMessage(text, type) {
+function login(){
 
-  const welcome = document.querySelector(".welcome");
+  const name =
+    document.getElementById("loginName").value.trim();
 
-  if (welcome) {
-    welcome.remove();
+  const email =
+    document.getElementById("loginEmail").value.trim();
+
+  if(!name || !email){
+
+    alert("Please enter your name and email.");
+
+    return;
   }
 
-  const div = document.createElement("div");
+  localStorage.setItem(
+    "zenx_user",
+    JSON.stringify({
+      name:name,
+      email:email
+    })
+  );
 
-  div.className = "message " + type;
-  div.textContent = text;
+  openApp();
+}
+
+
+function openApp(){
+
+  const user =
+    JSON.parse(localStorage.getItem("zenx_user"));
+
+  if(!user) return;
+
+  document.getElementById("loginPage").style.display="none";
+
+  document.getElementById("app").style.display="block";
+
+  document.getElementById("userName").textContent =
+    user.name;
+}
+
+
+function logout(){
+
+  localStorage.removeItem("zenx_user");
+
+  location.reload();
+}
+
+
+window.addEventListener("load",()=>{
+
+  if(localStorage.getItem("zenx_user")){
+
+    openApp();
+
+  }
+
+});
+
+
+/* =========================
+   SIDEBAR
+========================= */
+
+function toggleSidebar(){
+
+  document
+    .getElementById("sidebar")
+    .classList.toggle("open");
+}
+
+
+function showHome(){
+
+  document.getElementById("home").style.display="block";
+
+  document.getElementById("recentPanel").style.display="none";
+
+  document.getElementById("filesPanel").style.display="none";
+
+}
+
+
+function showPanel(panel){
+
+  document.getElementById("home").style.display="none";
+
+  document.getElementById("recentPanel").style.display="none";
+
+  document.getElementById("filesPanel").style.display="none";
+
+  if(panel==="recent"){
+
+    document.getElementById("recentPanel").style.display="block";
+
+    loadRecent();
+
+  }
+
+  if(panel==="files"){
+
+    document.getElementById("filesPanel").style.display="block";
+
+    loadFiles();
+
+  }
+
+}
+
+
+/* =========================
+   CHAT
+========================= */
+
+const messageInput =
+  document.getElementById("message");
+
+const chatBox =
+  document.getElementById("chatBox");
+
+const sendButton =
+  document.getElementById("sendButton");
+
+const statusText =
+  document.getElementById("status");
+
+
+function addMessage(text,type){
+
+  const welcome =
+    document.querySelector(".welcome");
+
+  if(welcome){
+
+    welcome.remove();
+
+  }
+
+  const div =
+    document.createElement("div");
+
+  div.className =
+    "message " + type;
+
+  div.textContent =
+    text;
 
   chatBox.appendChild(div);
 
-  chatBox.scrollTop = chatBox.scrollHeight;
+  chatBox.scrollTop =
+    chatBox.scrollHeight;
 
   return div;
 }
 
-function handleKey(event) {
 
-  if (event.key === "Enter" && !event.shiftKey) {
+function handleKey(event){
+
+  if(
+    event.key==="Enter" &&
+    !event.shiftKey
+  ){
 
     event.preventDefault();
 
     sendMessage();
+
   }
+
 }
 
-async function sendMessage() {
 
-  const message = messageInput.value.trim();
+function setPrompt(text){
 
-  if (!message) {
-    return;
-  }
+  showHome();
 
-  addMessage(message, "user");
+  messageInput.value=text;
 
-  messageInput.value = "";
+  messageInput.focus();
 
-  sendButton.disabled = true;
+}
 
-  statusText.textContent = "ZenX AI is thinking...";
 
-  const loadingMessage =
-    addMessage("Thinking...", "ai");
+async function sendMessage(){
 
-  try {
+  const message =
+    messageInput.value.trim();
 
-    const response = await fetch("/api/chat", {
+  if(!message) return;
 
-      method: "POST",
+  addMessage(message,"user");
 
-      headers: {
-        "Content-Type": "application/json"
-      },
+  messageInput.value="";
 
-      body: JSON.stringify({
-        message: message
-      })
+  sendButton.disabled=true;
 
-    });
+  statusText.textContent=
+    "ZenX AI is thinking...";
 
-    const data = await response.json();
+  const loading =
+    addMessage("Thinking...","ai");
 
-    if (!response.ok) {
+  saveRecent(message);
+
+  try{
+
+    const response =
+      await fetch("/api/chat",{
+
+        method:"POST",
+
+        headers:{
+          "Content-Type":"application/json"
+        },
+
+        body:JSON.stringify({
+          message:message
+        })
+
+      });
+
+
+    const data =
+      await response.json();
+
+
+    if(!response.ok){
 
       throw new Error(
-        data.detail || "AI request failed"
+        data.detail ||
+        "AI request failed"
       );
 
     }
 
-    loadingMessage.textContent =
-      data.response || "No response received.";
+
+    loading.textContent =
+      data.response ||
+      "No response received.";
 
     statusText.textContent =
       "ZenX AI is ready";
 
-  } catch (error) {
 
-    loadingMessage.textContent =
+  }catch(error){
+
+    loading.textContent =
       "Error: " + error.message;
 
     statusText.textContent =
       "Something went wrong";
 
-  } finally {
+  }finally{
 
-    sendButton.disabled = false;
+    sendButton.disabled=false;
 
     messageInput.focus();
 
   }
+
+}
+
+
+/* =========================
+   RECENT CHAT
+========================= */
+
+function saveRecent(message){
+
+  let recent =
+    JSON.parse(
+      localStorage.getItem("zenx_recent") || "[]"
+    );
+
+  recent.unshift({
+
+    message:message,
+
+    time:new Date().toLocaleString()
+
+  });
+
+  recent =
+    recent.slice(0,20);
+
+  localStorage.setItem(
+    "zenx_recent",
+    JSON.stringify(recent)
+  );
+
+}
+
+
+function loadRecent(){
+
+  const list =
+    document.getElementById("recentList");
+
+  const recent =
+    JSON.parse(
+      localStorage.getItem("zenx_recent") || "[]"
+    );
+
+  if(!recent.length){
+
+    list.textContent =
+      "No recent chats yet.";
+
+    return;
+
+  }
+
+  list.innerHTML="";
+
+  recent.forEach(item=>{
+
+    const div =
+      document.createElement("div");
+
+    div.className="item";
+
+    div.textContent =
+      item.message +
+      " • " +
+      item.time;
+
+    list.appendChild(div);
+
+  });
+
+}
+
+
+/* =========================
+   FILES
+========================= */
+
+function imageSelected(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file) return;
+
+  saveFile(file.name);
+
+  setPrompt(
+    "I selected this image: " +
+    file.name +
+    "\nPlease tell me what I should analyze about it."
+  );
+
+}
+
+
+function fileSelected(event){
+
+  const file =
+    event.target.files[0];
+
+  if(!file) return;
+
+  saveFile(file.name);
+
+  setPrompt(
+    "I selected this file: " +
+    file.name +
+    "\nPlease help me analyze it."
+  );
+
+}
+
+
+function saveFile(name){
+
+  let files =
+    JSON.parse(
+      localStorage.getItem("zenx_files") || "[]"
+    );
+
+  files.unshift({
+
+    name:name,
+
+    time:new Date().toLocaleString()
+
+  });
+
+  files =
+    files.slice(0,20);
+
+  localStorage.setItem(
+    "zenx_files",
+    JSON.stringify(files)
+  );
+
+}
+
+
+function loadFiles(){
+
+  const list =
+    document.getElementById("filesList");
+
+  const files =
+    JSON.parse(
+      localStorage.getItem("zenx_files") || "[]"
+    );
+
+  if(!files.length){
+
+    list.textContent =
+      "No recent files yet.";
+
+    return;
+
+  }
+
+  list.innerHTML="";
+
+  files.forEach(file=>{
+
+    const div =
+      document.createElement("div");
+
+    div.className="item";
+
+    div.textContent =
+      "📄 " +
+      file.name +
+      " • " +
+      file.time;
+
+    list.appendChild(div);
+
+  });
+
 }
 
 </script>
