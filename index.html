@@ -1,152 +1,324 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
-    <title>ZenX AI</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080812">
 
-    <style>
-        * {
-            box-sizing: border-box;
-        }
+  <title>ZenX AI</title>
 
-        body {
-            margin: 0;
-            min-height: 100vh;
-            font-family: Arial, sans-serif;
-            background: #080812;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        .container {
-            width: 90%;
-            max-width: 700px;
-            padding: 30px;
-            text-align: center;
-        }
+    body {
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top left, #24245c 0%, transparent 35%),
+        radial-gradient(circle at bottom right, #351b4f 0%, transparent 35%),
+        #080812;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
 
-        h1 {
-            font-size: 42px;
-            margin-bottom: 10px;
-        }
+    .app {
+      width: 100%;
+      max-width: 850px;
+      min-height: 600px;
+      background: rgba(17, 17, 30, 0.92);
+      border: 1px solid #292941;
+      border-radius: 24px;
+      padding: 28px;
+      box-shadow: 0 20px 70px rgba(0,0,0,.45);
+    }
 
-        p {
-            color: #aaa;
-        }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
 
-        textarea {
-            width: 100%;
-            min-height: 130px;
-            margin-top: 25px;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid #333;
-            background: #11111d;
-            color: white;
-            resize: vertical;
-        }
+    .logo {
+      font-size: 42px;
+      font-weight: 800;
+      letter-spacing: -1px;
+    }
 
-        button {
-            margin-top: 15px;
-            padding: 13px 25px;
-            border: 0;
-            border-radius: 10px;
-            cursor: pointer;
-            font-weight: bold;
-        }
+    .subtitle {
+      margin-top: 8px;
+      color: #a9a9bd;
+      font-size: 15px;
+    }
 
-        #response {
-            margin-top: 25px;
-            padding: 20px;
-            background: #11111d;
-            border-radius: 12px;
-            text-align: left;
-            white-space: pre-wrap;
-            min-height: 60px;
-        }
-    </style>
+    .chat-box {
+      min-height: 320px;
+      max-height: 400px;
+      overflow-y: auto;
+      background: #0d0d19;
+      border: 1px solid #25253b;
+      border-radius: 18px;
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .welcome {
+      color: #aaaabe;
+      text-align: center;
+      padding: 100px 20px;
+    }
+
+    .message {
+      padding: 14px 16px;
+      border-radius: 14px;
+      margin-bottom: 12px;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    }
+
+    .user {
+      background: #202044;
+      margin-left: 15%;
+    }
+
+    .ai {
+      background: #171725;
+      border: 1px solid #29293d;
+      margin-right: 10%;
+    }
+
+    .input-area {
+      display: flex;
+      gap: 10px;
+    }
+
+    textarea {
+      flex: 1;
+      min-height: 60px;
+      max-height: 160px;
+      resize: vertical;
+      border: 1px solid #303047;
+      border-radius: 15px;
+      padding: 16px;
+      outline: none;
+      background: #0d0d19;
+      color: white;
+      font-size: 16px;
+    }
+
+    textarea:focus {
+      border-color: #6666a8;
+    }
+
+    button {
+      align-self: stretch;
+      min-width: 120px;
+      border: none;
+      border-radius: 15px;
+      background: white;
+      color: #09090f;
+      font-weight: 700;
+      font-size: 15px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+    }
+
+    button:disabled {
+      opacity: .5;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .status {
+      text-align: center;
+      margin-top: 15px;
+      color: #77778e;
+      font-size: 13px;
+    }
+
+    @media (max-width: 600px) {
+      .app {
+        padding: 18px;
+        border-radius: 18px;
+      }
+
+      .logo {
+        font-size: 34px;
+      }
+
+      .input-area {
+        flex-direction: column;
+      }
+
+      button {
+        min-height: 52px;
+      }
+
+      .user {
+        margin-left: 5%;
+      }
+
+      .ai {
+        margin-right: 5%;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div class="container">
+  <main class="app">
 
-    <h1>ZenX AI</h1>
+    <header class="header">
+      <div class="logo">ZenX AI</div>
+      <div class="subtitle">
+        Your intelligent AI student assistant
+      </div>
+    </header>
 
-    <p>Your AI Student Assistant</p>
+    <section id="chatBox" class="chat-box">
+      <div class="welcome">
+        <h2>Welcome to ZenX AI 👋</h2>
+        <p style="margin-top:10px;">
+          Ask anything about studies, coding, concepts or general questions.
+        </p>
+      </div>
+    </section>
 
-    <textarea
+    <section class="input-area">
+
+      <textarea
         id="message"
         placeholder="Ask ZenX AI anything..."
-    ></textarea>
+        onkeydown="handleKey(event)"
+      ></textarea>
 
-    <br>
+      <button id="sendButton" onclick="sendMessage()">
+        Send
+      </button>
 
-    <button onclick="sendMessage()">
-        Ask ZenX AI
-    </button>
+    </section>
 
-    <div id="response">
-        Ready.
+    <div id="status" class="status">
+      ZenX AI is ready
     </div>
 
-</div>
+  </main>
 
 <script>
+
+const messageInput = document.getElementById("message");
+const chatBox = document.getElementById("chatBox");
+const sendButton = document.getElementById("sendButton");
+const statusText = document.getElementById("status");
+
+function addMessage(text, type) {
+
+  const welcome = document.querySelector(".welcome");
+
+  if (welcome) {
+    welcome.remove();
+  }
+
+  const div = document.createElement("div");
+
+  div.className = "message " + type;
+  div.textContent = text;
+
+  chatBox.appendChild(div);
+
+  chatBox.scrollTop = chatBox.scrollHeight;
+
+  return div;
+}
+
+function handleKey(event) {
+
+  if (event.key === "Enter" && !event.shiftKey) {
+
+    event.preventDefault();
+
+    sendMessage();
+  }
+}
+
 async function sendMessage() {
 
-    const message =
-        document.getElementById("message").value.trim();
+  const message = messageInput.value.trim();
 
-    const responseBox =
-        document.getElementById("response");
+  if (!message) {
+    return;
+  }
 
-    if (!message) {
-        responseBox.textContent =
-            "Please enter a question.";
-        return;
+  addMessage(message, "user");
+
+  messageInput.value = "";
+
+  sendButton.disabled = true;
+
+  statusText.textContent = "ZenX AI is thinking...";
+
+  const loadingMessage =
+    addMessage("Thinking...", "ai");
+
+  try {
+
+    const response = await fetch("/api/chat", {
+
+      method: "POST",
+
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        message: message
+      })
+
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+
+      throw new Error(
+        data.detail || "AI request failed"
+      );
+
     }
 
-    responseBox.textContent =
-        "Thinking...";
+    loadingMessage.textContent =
+      data.response || "No response received.";
 
-    try {
+    statusText.textContent =
+      "ZenX AI is ready";
 
-        const response = await fetch("/api/chat", {
-            method: "POST",
+  } catch (error) {
 
-            headers: {
-                "Content-Type": "application/json"
-            },
+    loadingMessage.textContent =
+      "Error: " + error.message;
 
-            body: JSON.stringify({
-                message: message
-            })
-        });
+    statusText.textContent =
+      "Something went wrong";
 
-        const data = await response.json();
+  } finally {
 
-        if (!response.ok) {
-            throw new Error(
-                data.detail || "Something went wrong"
-            );
-        }
+    sendButton.disabled = false;
 
-        responseBox.textContent =
-            data.response;
+    messageInput.focus();
 
-    } catch (error) {
-
-        responseBox.textContent =
-            "Error: " + error.message;
-    }
+  }
 }
+
 </script>
 
 </body>
