@@ -1,6 +1,7 @@
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
+from google import genai
 import os
 
 app = FastAPI(
@@ -15,6 +16,14 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
+MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-3.6-flash")
+
+if GEMINI_API_KEY:
+    client = genai.Client(api_key=GEMINI_API_KEY)
+else:
+    client = None
 
 
 class ChatRequest(BaseModel):
@@ -34,7 +43,8 @@ async def root():
 async def health():
     return {
         "status": "healthy",
-        "gemini_configured": bool(os.getenv("GEMINI_API_KEY"))
+        "gemini_configured": bool(GEMINI_API_KEY),
+        "model": MODEL_NAME
     }
 
 
@@ -44,37 +54,29 @@ async def chat(request: ChatRequest):
     if not request.message.strip():
         raise HTTPException(
             status_code=400,
-            detail="Message cannot be empty"
+            detail="Message cannot be empty."
         )
 
-    api_key = os.getenv("GEMINI_API_KEY")
-
-    if not api_key:
+    if client is None:
         raise HTTPException(
             status_code=500,
-            detail="GEMINI_API_KEY is not configured"
+            detail="GEMINI_API_KEY is not configured."
         )
 
     try:
-        from google import genai
-
-        client = genai.Client(api_key=api_key)
-
-        response = client.models.generate_content(
-            model=os.getenv(
-                "GEMINI_MODEL",
-                "gemini-2.5-flash"
-            ),
-            contents=request.message
+        interaction = client.interactions.create(
+            model=MODEL_NAME,
+            input=request.message.strip()
         )
 
         return {
             "success": True,
-            "response": response.text
+            "response": interaction.output_text,
+            "model": MODEL_NAME
         }
 
     except Exception as e:
         raise HTTPException(
             status_code=500,
-            detail=str(e)
+            detail=f"Gemini error: {str(e)}"
         )
