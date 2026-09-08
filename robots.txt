@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://zen-x-zeta.vercel.app/sitemap.xml
